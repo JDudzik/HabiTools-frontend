@@ -1,3 +1,6 @@
+## TODO:
+- After the app is online and has a public URL, use https://www.pwabuilder.com/ to analyze additional details for PWA configuration
+
 ## Getting Started with the `development` environment
 - Install `yarn` globally with `npm install --global yarn`.
 - Install packages with: `yarn install`.
@@ -23,15 +26,6 @@
 - The build process can be quite resource intensive, so a good strategy is to use a build pipeline such as Github Actions to build the static site and push the assets to another branch, which can then be loaded into your production environment and served directly.
   - [This is the provided Github Action in this repo](./.github/workflows/Build%20&%20Push%20static%20files.yml). If you use this one, you will also need to add your environment variables into Github so it can inject them into the code.
 
-## Spawning a New Repo from Boilerplate
-- Create PWA manifest: https://app-manifest.firebaseapp.com/
-- Meta tags and manifest properties for PWAs: https://github.com/gokulkrishh/awesome-meta-and-manifest
-- Generate favicon and app icons: https://www.favicon-generator.org/ and
-  drop-in: `favicon.ico`, `apple-icon.png` `favicon-16x16px.png`, and `favicon-32x32px.png`
-- Validate PWA status by building, launching and using lighthouse on app. Fix any errors.
-- Do a project-wide search for `NEW REPO` and `NEW-REPO` text and change to appropriate values.
-- After the app is online and has a public URL, use https://www.pwabuilder.com/ to analyze additional details for PWA configuration
-- Open `/modules/_app` and enable landing page redirection if desired from within the `RenderApp`. Otherwise remove that chunk of code.
 
 
 ## License

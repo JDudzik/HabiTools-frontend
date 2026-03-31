@@ -4,7 +4,7 @@ import Head from 'next/head';
 export const PageHead = (props) => {
   const { children, title, hidePrefix } = props;
 
-  const prefix = hidePrefix ? '' : 'New Repo';
+  const prefix = hidePrefix ? '' : 'HabiTools';
   const delimiterSymbol = (!hidePrefix && title) ? ' - ' : '';
 
   return (

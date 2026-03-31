@@ -77,20 +77,24 @@ const InnerApp = (props) => {
               <meta charSet="UTF-8" />
               <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
               <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-              <meta name="description" content="NEW REPO DESCRIPTION" />
-              <meta name="keywords" content="NEW REPO KEYWORDS" />
-              <title>NEW REPO</title>
+              <meta name="description" content="A suite of tools to automate and expand Habitica" />
+              <meta name="keywords" content="Habitica, automation, tools" />
+              <title>HabiTools</title>
                 
               <link rel="manifest" href="/manifest.json" />
+              <link href="/android-icon-72x72.png" rel="icon" type="image/png" sizes="72x72" />
+              <link href="/android-icon-192x192.png" rel="icon" type="image/png" sizes="192x192" />
               <link href="/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
               <link href="/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
+              <link href="/favicon-96x96.png" rel="icon" type="image/png" sizes="96x96" />
               <link href="/apple-icon.png" rel="apple-touch-icon" />
+              <link href="/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76" />
               <link rel="icon" href="/favicon.ico" />
               <meta name="theme-color" content="#317EFB" />
 
-              <meta property="og:title" content="NEW REPO" />
+              <meta property="og:title" content="HabiTools" />
               <meta property="og:type" content="website" />
-              <meta property="og:description" content="NEW REPO DESCRIPTION" />
+              <meta property="og:description" content="A suite of tools to automate and expand Habitica" />
               <meta property="og:image" content="BASE_URL/images/icons/icon-512x512.png" />
               <meta property="og:url" content="BASE_URL/" />
               <meta name="twitter:card" content="summary_large_image" />

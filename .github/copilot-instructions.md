@@ -1,7 +1,7 @@
-# Copilot AI Agent Instructions for boilerplate-frontend
+# Copilot AI Agent Instructions for habitools-frontend
 
 ## Project Overview
-- This is a Next.js-based frontend boilerplate with modular structure under `src/` and `modules/`.
+- This is a Next.js-based frontend habitools with modular structure under `src/` and `modules/`.
 - Major UI components are in `src/components/`, organized by feature or type (e.g., `BadgeIconButton`, `LoadingElement`).
 - Business logic, API calls, and context providers are in `src/lib/` (see `api/`, `contexts/`, `hooks/`, `utils/`).
 - Page-level logic and routing are handled in `modules/` and `pages/`.
