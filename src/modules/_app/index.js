@@ -90,8 +90,8 @@ const InnerApp = (props) => {
               <link href="/apple-icon.png" rel="apple-touch-icon" />
               <link href="/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76" />
               <link rel="icon" href="/favicon.ico" />
-              <meta name="theme-color" content="#317EFB" />
 
+              <meta name="theme-color" content="#0094A2" />
               <meta property="og:title" content="HabiTools" />
               <meta property="og:type" content="website" />
               <meta property="og:description" content="A suite of tools to automate and expand Habitica" />

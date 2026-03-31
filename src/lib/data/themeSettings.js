@@ -1,29 +1,29 @@
 // Color picking tool:
 // https://m2.material.io/inline-tools/color/
-// The standard is that lights and darks and one pick left/right of the main color.
+// The standard is that lights and darks are one pick left/right of the main color.
 
 
 export const themeSettings = {
   palette: {
     primary: {
-      main: '#00897b',
-      light: '#009688',
-      veryLight: '#26a69a',
-      dark: '#00796b',
-      veryDark: '#00695c',
-      100: '#b2dfdb',
-      50: '#e0f2f1',
-      900: '#004d40',
+      main: '#0094A2',
+      light: '#00a9bc',
+      veryLight: '#00b9ce',
+      dark: '#01818a',
+      veryDark: '#025e60',
+      300: '#4ccedc',
+      100: '#b1eaf0',
+      50: '#e0f7f9',
     },
     secondary: {
-      main: '#1095d2',
-      light: '#16a2e0',
-      veryLight: '#32b0e4',
-      dark: '#0882bf',
-      veryDark: '#0771ab',
-      100: '#b2e3f5',
-      50: '#e1f4fb',
-      900: '#005289',
+      main: '#404fbd',
+      light: '#5d69c8',
+      veryLight: '#7a85d1',
+      dark: '#3a47b3',
+      veryDark: '#313ca7',
+      100: '#c6caec',
+      50: '#e8eaf7',
+      900: '#1a1f87',
     },
     error: {
       main: '#f44336',
