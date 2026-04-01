@@ -8,7 +8,7 @@ const BASE_QUERY_KEY = 'useApiSearchUsers';
 export const useApiSearchUsers = (payload) => {
   const axios = useAxios();
   const sanitizedPayload = sanitizeProperties(payload, {
-    optionalKeys: [ 'id', 'coach_id', 'first_name', 'last_name', 'email', 'is_paid_user', 'minimal_results', 'allow_deleted' ],
+    optionalKeys: [ 'id', 'first_name', 'last_name', 'email', 'is_paid_user', 'minimal_results', 'allow_deleted' ],
   });
 
   const queryFn = () => axios

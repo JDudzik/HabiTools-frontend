@@ -8,7 +8,7 @@ export const useMutateUpdateMyUser = (mutateOptions) => {
 
   const mutationFn = (payload) => {
     const sanitizedPayload = sanitizeProperties(payload, {
-      optionalKeys: [ 'age', 'gender', 'coach_id', 'last_name', 'first_name' ],
+      optionalKeys: [ 'last_name', 'first_name' ],
       atLeastOneOptionalProp: true,
     });
 

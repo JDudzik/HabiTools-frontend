@@ -8,8 +8,7 @@ export const useMutateSignUp = (mutateOptions) => {
 
   const mutationFn = (payload) => {
     const sanitizedPayload = sanitizeProperties(payload, {
-      requiredKeys: [ 'first_name', 'last_name', 'email', 'password', 'dob_utc', 'hcaptchaToken' ],
-      optionalKeys: [ 'gender', 'coach_id' ],
+      requiredKeys: [ 'first_name', 'last_name', 'email', 'password', 'hcaptchaToken' ],
     });
 
     return axios

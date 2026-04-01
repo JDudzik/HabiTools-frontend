@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Stack, Button } from '@mui/material';
 import { FormFields } from './FormFields';
 import { LoadingElement, PageHead, Link, L } from 'components';
 import { PageErrors } from './PageErrors';
-import { useRouter } from 'next/router';
 import { usePageManager } from 'lib/hooks';
 import { useMutateSignUp } from 'lib/api/methods/userApi';
 
@@ -13,15 +12,11 @@ const formFieldDefaults = {
   password: '',
   firstName: 'fname',
   lastName: 'lname',
-  dob: null,
-  gender: 'male',
 };
 
 const SignUp = () => {
-  const [ coachId, setCoachId ] = useState();
   const [ formFieldValues, setFormFields ] = useState({ ...formFieldDefaults });
   const { mutate: mutateSignUp } = useMutateSignUp();
-  const router = useRouter();
 
   const {
     pageStage,
@@ -36,13 +31,6 @@ const SignUp = () => {
     },
     defaultPageStage: 'main',
   });
-
-  useEffect(() => {
-    const coachIdQuery = router.query.coach_id;
-    if (coachIdQuery) {
-      setCoachId(coachIdQuery, 10);
-    }
-  }, [ router.query.coach_id ]);
 
   const resetForm = (fullReset = true) => {
     if (fullReset) {
@@ -70,9 +58,6 @@ const SignUp = () => {
       password: formValues.password,
       first_name: formValues.firstName,
       last_name: formValues.lastName,
-      gender: formValues.gender, // Optional
-      coach_id: coachId, // Optional
-      dob_utc: Number(new Date(formValues.dob)),
       hcaptchaToken: formValues.hcaptchaToken,
     };
 
