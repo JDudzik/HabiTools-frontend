@@ -1,0 +1,15 @@
+name: Stg - Deploy
+
+on:
+  push:
+    branches:
+      - staging-deployed
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    uses: ./.github/workflows/Build and Push Static Files.yml
+    with:
+      github_environment: staging
+      source_branch: staging-deployed
+      push_branch: staging-static-build
