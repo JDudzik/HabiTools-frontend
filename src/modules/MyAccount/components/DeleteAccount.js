@@ -30,7 +30,7 @@ export const DeleteAccount = (props) => {
     validationSchema: Yup.object({
       email: Yup.string()
         .required('Required')
-        .test('match-email', 'Must match your current email address', value => value === userState?.user?.email),
+        .test('match-email', 'Must match your current email address', value => value?.toLowerCase() === userState?.user?.email?.toLowerCase()),
       password: Yup.string()
         .required('Required'),
     }),
