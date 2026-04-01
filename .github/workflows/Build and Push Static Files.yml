@@ -1,0 +1,70 @@
+name: Build and Push Static Files
+
+on:
+  workflow_call:
+    inputs:
+      github_environment:
+        required: true
+        type: string
+      source_branch:
+        required: true
+        type: string
+      push_branch:
+        required: true
+        type: string
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.github_environment }}
+    env:
+      # Note: All public variables must be listed here:
+      NEXT_PUBLIC_BACKEND_HOST: ${{ vars.NEXT_PUBLIC_BACKEND_HOST }}
+      NEXT_PUBLIC_POSTHOG_URL: ${{ vars.NEXT_PUBLIC_POSTHOG_URL }}
+      NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
+      NEXT_PUBLIC_HCAPTCHA_SITE_KEY: ${{ vars.NEXT_PUBLIC_HCAPTCHA_SITE_KEY }}
+      NEXT_PUBLIC_HCAPTCHA_SITE_KEY_SIGNUP: ${{ vars.NEXT_PUBLIC_HCAPTCHA_SITE_KEY_SIGNUP }}
+      NEXT_PUBLIC_HCAPTCHA_SITE_KEY_PASSWORD_RESET: ${{ vars.NEXT_PUBLIC_HCAPTCHA_SITE_KEY_PASSWORD_RESET }}
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Ensure workflow only runs on ${{ inputs.source_branch }} branch
+        if: ${{ github.ref != format('refs/heads/{0}', inputs.source_branch) }}
+        run: |
+          echo "❌ This workflow can only be run on the ${{ inputs.source_branch }} branch. Got ${{github.ref}}"
+          exit 1
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.source_branch }}
+
+      - name: Use Yarn cache
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --production --prefer-offline --frozen-lock-file
+
+      - name: Build static files
+        run: yarn build:prod
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "out" ]; then
+            echo "Build output folder 'out' does not exist!"
+            exit 1
+          fi
+
+      - name: Push to ${{ inputs.push_branch }} branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B ${{ inputs.push_branch }}
+          git add -f out  # Force add ignored files
+          git commit -m "Build static files: $(date -u +"%Y-%m-%d %I:%M:%S %p UTC")"
+          git push origin ${{ inputs.push_branch }} --force

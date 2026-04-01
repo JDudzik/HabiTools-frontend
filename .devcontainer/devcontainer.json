@@ -1,0 +1,7 @@
+{
+  "name": "Main version",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {},
+  "postCreateCommand": "yarn install",
+  "postAttachCommand": "cp -n .env.example .env.development.local && code .env.development.local && yarn"
+}

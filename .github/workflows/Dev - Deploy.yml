@@ -1,0 +1,15 @@
+name: Dev - Deploy
+
+on:
+  push:
+    branches:
+      - development-deployed
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    uses: ./.github/workflows/Build and Push Static Files.yml
+    with:
+      github_environment: development
+      source_branch: development-deployed
+      push_branch: development-static-build

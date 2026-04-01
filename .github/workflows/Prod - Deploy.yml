@@ -1,0 +1,15 @@
+name: Prod - Deploy
+
+on:
+  push:
+    branches:
+      - production-deployed
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    uses: ./.github/workflows/Build and Push Static Files.yml
+    with:
+      github_environment: production
+      source_branch: production-deployed
+      push_branch: production-static-build

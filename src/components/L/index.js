@@ -1,0 +1,33 @@
+import {
+  Box,
+  Typography,
+} from '@mui/material';
+
+export const L = {
+  'div': props => <Box component="div" { ...props } />,
+  'span': props => <Box component="span" { ...props } />,
+  'button': props => <Box component="button" { ...props } />,
+  'a': props => <Box component="a" { ...props } />,
+  'h1': props => <Typography variant="h1" { ...props } />,
+  'h2': props => <Typography variant="h2" { ...props } />,
+  'h3': props => <Typography variant="h3" { ...props } />,
+  'h4': props => <Typography variant="h4" { ...props } />,
+  'h5': props => <Typography variant="h5" { ...props } />,
+  'h6': props => <Typography variant="h6" { ...props } />,
+  'img': props => <Box component="img" { ...props } />,
+  'main': props => <Box component="main" { ...props } />,
+  'article': props => <Box component="article" { ...props } />,
+  'section': props => <Box component="section" { ...props } />,
+  'nav': props => <Box component="nav" { ...props } />,
+  'aside': props => <Box component="aside" { ...props } />,
+  'header': props => <Box component="header" { ...props } />,
+  'footer': props => <Box component="footer" { ...props } />,
+  'form': props => <Box component="form" { ...props } />,
+  'ul': props => <Box component="ul" { ...props } />,
+  'li': props => <Box component="li" { ...props } />,
+  'ol': props => <Box component="ol" { ...props } />,
+  'p': props => <Typography variant="body1" { ...props } />,
+  'p2': props => <Typography variant="body2" { ...props } />,
+  'b': props => <Box component="b" { ...props } />,
+  'hr': props => <Box component="hr" { ...props } />,
+};
