@@ -8,10 +8,10 @@ import { useMutateSignUp } from 'lib/api/methods/userApi';
 
 
 const formFieldDefaults = {
-  email: 'asd@asd.com',
+  email: '',
   password: '',
-  firstName: 'fname',
-  lastName: 'lname',
+  firstName: '',
+  lastName: '',
 };
 
 const SignUp = () => {

@@ -11,7 +11,7 @@ import { Link } from 'components/Link';
 
 
 const initialValues = {
-  email: 'masterlink950@gmail.com',
+  email: '',
   password: '',
 };
 const validationSchema = Yup.object({
