@@ -2,7 +2,7 @@
   "name": "HabiTools",
   "id": "com.habitools.online",
   "short_name": "HabiTools",
-  "theme_color": "#4b21f3",
+  "theme_color": "#0094A2",
   "background_color": "#cfd8dc",
   "display": "minimal-ui",
   "scope": "https://habitools.online/",
