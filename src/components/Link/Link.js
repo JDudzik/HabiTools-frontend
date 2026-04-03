@@ -31,7 +31,7 @@ export const Link = (props) => {
         {children}
       </UnstyledNextLink>
     ) : (
-      <MuiLink color="secondary" component="span" { ...remainingProps } >
+      <MuiLink color="secondary.light" component="span" { ...remainingProps } >
         <UnstyledNextLink href={ href } { ...anchorProps }>
           {children || text}
         </UnstyledNextLink>
