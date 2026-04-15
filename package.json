@@ -32,7 +32,7 @@
     "@tanstack/react-query-devtools": "^5.94.4",
     "abort-controller": "^3.0.0",
     "add": "^2.0.6",
-    "axios": "^1.8.4",
+    "axios": "^1.15.0",
     "dayjs": "^1.11.13",
     "deep-trim": "^1.0.0",
     "dexie": "^4.0.11",
@@ -72,5 +72,8 @@
     "eslint-plugin-react": "^7.28.0",
     "globals": "^16.0.0",
     "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "axios": "^1.15.0"
   }
 }
