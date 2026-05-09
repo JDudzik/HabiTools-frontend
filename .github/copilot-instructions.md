@@ -24,6 +24,7 @@
 - **Page Layouts:** Whenever possible, utilize the `L` component, which is a wrapper on top of most common layout components. For example, `L.div` instead of `div`. `L.h2` instead of `Typography variant="h2"`.
 - **Modules:** This project uses ESmodules (import/export) throughout except in very specific scenarios. Whenever possible, look at sibling content to determine the standards of how to implement (eg: Should you use an index file? Should you `export default` or just `export`, etc).
 - **Functions:** Use async/await for asynchronous code. Use arrow functions whenever possible.
+- **Validation:** When validating input data inside a function or method, prefer using `sanitizeProperties` at the top of the function rather than writing manual if-blocks. Use its `requiredKeys`, `optionalKeys`, and related config options to handle presence/type checks. Use `propertyValidations` (via `propertyValidator`) sparingly — only when a validation truly cannot be expressed through key presence and type checks alone.
 
 ## Integration & Cross-Component Communication
 - Use context providers for cross-cutting concerns (auth, navigation, modals).
