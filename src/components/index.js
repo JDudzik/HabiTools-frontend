@@ -1,7 +1,6 @@
 export * from './AuthCtaButtons';
 export * from './BadgeIconButton';
 export * from './ConfirmationModal';
-export * from './DelayedRender';
 export * from './HiddenAccordion';
 export * from './L';
 export * from './Link';

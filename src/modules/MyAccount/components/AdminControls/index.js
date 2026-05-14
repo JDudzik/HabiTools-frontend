@@ -27,7 +27,9 @@ export const AdminControls = (props) => {
             <>
               <SimpleDisplay sensitive title="User Permissions" sx={{ flexGrow: 1, m: 1 }} color="secondary.main">
                 <L.div pl={ 2 }>
-                  { userState.user.permissions.map(perm => <li key={ perm }>{perm}</li>) }
+                  <ul>
+                    { userState.user.permissions.map(perm => <li key={ perm }>{perm}</li>) }
+                  </ul>
                 </L.div>
               </SimpleDisplay>
             </>
