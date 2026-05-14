@@ -9,7 +9,7 @@ import {
   LayoutErrorBoundary,
   GlobalConfirmationModal,
 } from './components';
-import { defaultNavItems, appConfig } from 'lib/data';
+import { defaultNavItems } from 'lib/data';
 import { navigationContext } from 'lib/contexts/NavigationContext';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useMutateSubmitError } from 'lib/api/methods/errorApi';
@@ -17,7 +17,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { getCredentialHeaders } from 'lib/hooks/helpers/getCredentialHeaders';
 
 
 const errorQueryClient = new QueryClient({
@@ -36,7 +35,6 @@ const RenderApp = (props) => {
   const { children } = props;
   const { navigationDispatch } = useContext(navigationContext);
   const router = useRouter();
-  const credentialHeaders = getCredentialHeaders();
 
   // When the app initially mounts
   useEffect(() => {
@@ -49,24 +47,12 @@ const RenderApp = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // If the user is logged in and hits the landing page, redirect them to the initial page of the app to skip unecessary navigation.
-  useEffect(() => {
-    const isLoggedIn = !!(credentialHeaders['x-key'] && credentialHeaders['x-access-token']);
-    if (router.pathname === '/') {
-      if (isLoggedIn) {
-        router.replace(appConfig?.authorizedUserHome || '/my-account');
-      }
-    }
-  }, [ credentialHeaders, router, router.pathname ]);
-
-
-
   return children;
 };
 
 const InnerApp = (props) => {
   const { Component, pageProps } = props;
-  const { mutate: mutateSubmitError } = useMutateSubmitError();  
+  const { mutate: mutateSubmitError } = useMutateSubmitError();
 
   return (
     <TopErrorReport mutateSubmitError={ mutateSubmitError }>

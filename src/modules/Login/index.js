@@ -7,6 +7,7 @@ import { userContext } from 'lib/contexts/UserContext';
 import { usePageManager } from 'lib/hooks';
 import { useMutateLogin } from 'lib/api/methods/userApi';
 import { getQueryString } from 'lib/utils/misc';
+import { appConfig } from 'lib/data';
 
 
 const Login = () => {
@@ -25,7 +26,7 @@ const Login = () => {
       returnPath: '/login',
       handledErrors: [ 'INVALID_CREDENTIALS', 'USER_IS_DELETED', 'UNVERIFIED_EMAIL' ],
     },
-    defaultRoutingPath: '/my-account',
+    defaultRoutingPath: appConfig?.authorizedUserHome || '/my-account',
   });
 
   // When this page mounts
