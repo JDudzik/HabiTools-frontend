@@ -1,68 +1,11 @@
-import { useContext } from 'react';
-import { PageHead, L, PopoutMenuButton, AuthCtaButtons } from 'components';
-import {
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-  Box,
-} from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { navigationContext } from 'lib/contexts/NavigationContext';
-import { ImageSection } from './components';
+import { PageHead, L, AuthCtaButtons } from 'components';
+import { Stack, Typography, Box, Link } from '@mui/material';
 
 
 const Home = () => {
-  const { navigationDispatch } = useContext(navigationContext);
-
   return (
     <>
       <PageHead title="Home" />
-      <PopoutMenuButton
-        buttonProps={{
-          startIcon: (<MoreVertIcon />),
-          variant: 'outlined',
-        }}
-        buttonChild="Popout Menu Example"
-        menuProps={{
-          onClose: () => console.debug('Menu got closed'),
-        }}
-        menuItems={ [{
-          key: 'hello',
-          iconEl: (<MoreVertIcon fontSize="small" />),
-          text: 'hello world!',
-          secondaryText: 'ctrl+v',
-          onClick: () => console.debug('clicked "hello world"'),
-          props: { dense: true },
-        }, {
-          key: 'add-context-link',
-          iconEl: (<MoreVertIcon fontSize="small" />),
-          text: 'Add context link',
-          secondaryText: 'Test link',
-          onClick: () => navigationDispatch({
-            type: 'MODIFY_CONTEXT_LINKS',
-            payload: (existingLinks, helpers) => helpers.addLink(existingLinks, {
-              text: 'Test link',
-              link: '/test',
-              icon: 'Home',
-            }),
-          }),
-        },
-        {
-          isDivider: true,
-        }, {
-          key: 'more',
-          child: (
-            <>
-              <ListItemIcon>
-                <MoreVertIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Custom rendered item</ListItemText>
-            </>
-          ),
-          onClick: () => console.debug('clicked "Custom rendered item"'),
-        }] }
-      />
 
       <Stack
         spacing={{ xxs: 10, md: 12 }}
@@ -77,19 +20,44 @@ const Home = () => {
           width="100%"
           maxWidth="60em"
           direction={{ xxs: 'column-reverse', md: 'row-reverse' }}
-          alignItems="center"
+          alignItems="start"
           textAlign={{ xxs: 'center', md: 'left' }}
         >
           <Box flex={ 1 }>
-            <Typography mb={ 1 } variant="h1" color="primary">
-              Welcome to The App
+            <Typography mb={ 0 } variant="h1" color="primary">
+              Welcome to HabiTools
             </Typography>
-            <Typography mb={ 2 } variant="h3" color="text.secondary">
-              Simple, Powerful Tools
+            <Typography mb={ 2 } variant="h3" color="secondary.dark">
+              The <b>unofficial</b> suite of tools for Habitica
             </Typography>
             <Typography mb={ 2 }>
-              Discover a platform designed to help you organize, track, and manage your information with ease.
-              Enjoy a clean interface and flexible features for any use case—personal, professional, or collaborative.
+              HabiTools is a set of tools and automations for Habitica.
+              The goal is to create a clean interface without requiring you to install or manage scripts yourself.
+            </Typography>
+            <Typography mb={ 2 }>
+              <b>HabiTools is currently in beta.</b> Thanks for taking a look and for
+              helping test it while the service is still being worked on. It's also open-source,
+              so feel free to inspect the code and report any bugs/issues you find if you're technically inclined.
+              <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend" target="_blank" rel="noopener noreferrer">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend" target="_blank" rel="noopener noreferrer">Backend</Link>
+            </Typography>
+            <Typography mb={ 2 }>
+              Security of your data is a core principle for HabiTools. We use your Habitica
+              user data and API key to provide tools and automations,
+              so the way we manage your data is extremely important. Your Habitica data is stored securely and carefully with
+              modern encryption best practices in place.
+            </Typography>
+            <Typography mb={ 2 }>
+              Another principle is thoughtful use of the Habitica API. We take steps to reduce excessive and undue stress to their API.
+              We want to avoid creating unnecessary load on Habitica's servers.
+            </Typography>
+            <Typography mb={ 2 }>
+              Feedback during beta is useful. It helps identify what is worth
+              keeping, what is confusing, and what still needs work.
+            </Typography>
+            <Typography mb={ 2 }>
+              If you have questions, suggestions, or run into anything odd,
+              use the feedback page or reach out to masterlink950 in
+              either of the major Habitica Discord servers.
             </Typography>
             <AuthCtaButtons />
           </Box>
@@ -103,7 +71,7 @@ const Home = () => {
             }}
           >
             <L.img
-              src="https://fastly.picsum.photos/id/851/340/340.jpg?hmac=Qv7PKOQJFwzEo7VQbEMUZEpRLjN-rOopzDlzuLbN-aA"
+              src="/images/marketing/habitools-logo-hero.jpg"
               alt="Bank accounts overview"
               sx={{
                 width: { xxs: '80%', xs: '60%', sm: '45%', md: '90%' },
@@ -114,52 +82,6 @@ const Home = () => {
               }}
             />
           </Box>
-        </Stack>
-
-        <ImageSection
-          imageSrc="https://fastly.picsum.photos/id/851/340/340.jpg?hmac=Qv7PKOQJFwzEo7VQbEMUZEpRLjN-rOopzDlzuLbN-aA"
-          imageAlt="Organize your information"
-          heading="Organize Your Way"
-          paragraphs={ [
-            'Create custom categories to organize your data, tasks, or projects. Adapt the platform to fit your workflow and stay on top of what matters most.',
-            'Flexible organization tools help you keep everything clear and accessible, whether you\'re managing a team or your own daily routine.',
-            'Advanced features like bulk actions, tagging, and search make management simple and effective.',
-          ] }
-        />
-
-        <ImageSection
-          reverseOrder={ true }
-          imageSrc="https://fastly.picsum.photos/id/851/340/340.jpg?hmac=Qv7PKOQJFwzEo7VQbEMUZEpRLjN-rOopzDlzuLbN-aA"
-          imageAlt="Tracking and collaboration"
-          heading="Track and Collaborate"
-          paragraphs={ [
-            'Keep detailed records of your activities, tasks, or projects. Add, edit, and categorize items effortlessly. View your history at a glance and understand your progress.',
-            'Collaborate with others by sharing access. Invite teammates, friends, or family to work together and stay in sync.',
-            'Our intuitive interface makes it easy to manage everything on the go, whether you\'re on your computer or mobile device.',
-          ] }
-        />
-
-        <ImageSection
-          imageSrc="https://fastly.picsum.photos/id/851/340/340.jpg?hmac=Qv7PKOQJFwzEo7VQbEMUZEpRLjN-rOopzDlzuLbN-aA"
-          imageAlt="Community-focused app"
-          heading="Built for You"
-          paragraphs={ [
-            'This platform is created to empower users and communities. There are no fees, subscriptions, or hidden costs.',
-            'Your information stays private and secure. We don\'t share or sell your data. We hope you find this tool to be a useful addition to your journey.',
-          ] }
-        />
-
-        <Stack
-          spacing={ 3 }
-          direction="column"
-          alignItems="center"
-          textAlign="center"
-          sx={{ paddingY: 4 }}
-        >
-          <Typography variant="h3" color="primary" sx={{ fontWeight: 500 }}>
-            Ready to get started?
-          </Typography>
-          <AuthCtaButtons />
         </Stack>
       </Stack>
     </>
