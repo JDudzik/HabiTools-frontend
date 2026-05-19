@@ -22,7 +22,7 @@ export const useMutateUnlinkHabitica = (mutateOptions) => {
   };
 
   const onSuccess = () => {
-    queryClient.invalidateQueries({ queryKey: HABITICA_QUERY_KEY });
+    queryClient.removeQueries({ queryKey: HABITICA_QUERY_KEY });
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });
