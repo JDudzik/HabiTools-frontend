@@ -2,7 +2,7 @@ import { Stack, Button, Typography, Link } from '@mui/material';
 import { L } from 'components';
 
 
-export const LinkedIntroPage = ({ habiticaUser, onUnlinkClick }) => {
+export const LinkedIntroPage = ({ habiticaUser, onNavigate, onUnlinkClick }) => {
   const username = habiticaUser?.habitica_user_data?.username || 'Habitica User';
   const toolCount = habiticaUser?.habitica_tools?.length || 0;
 
@@ -39,7 +39,13 @@ export const LinkedIntroPage = ({ habiticaUser, onUnlinkClick }) => {
         </Link>
       </Stack>
 
-      <Stack spacing={ 2 } direction="row" justifyContent="flex-end">
+      <Stack spacing={ 2 } direction="row" justifyContent="space-between" flexWrap="wrap">
+        <Button
+          variant="text"
+          onClick={ () => onNavigate('securityInfo') }
+        >
+          Learn how we keep your data secure
+        </Button>
         <Button
           variant="outlined"
           color="error"

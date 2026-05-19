@@ -23,7 +23,7 @@ const ERROR_MESSAGE_MAP = {
   MISSING_FIELDS: 'Both Habitica User ID and API Key are required.',
 };
 
-export const LinkFormPage = ({ onNavigate, onLinkSuccess }) => {
+export const LinkFormPage = ({ onNavigate }) => {
   const { mutate: mutateLinkHabitica } = useMutateLinkHabitica();
 
   const formik = useFormik({
@@ -42,7 +42,7 @@ export const LinkFormPage = ({ onNavigate, onLinkSuccess }) => {
         apiKey: values.apiKey,
       }, {
         onSuccess: () => {
-          onLinkSuccess();
+          onNavigate('linkSuccess');
         },
         onError: (error) => {
           const status = error?.response?.data?.status;

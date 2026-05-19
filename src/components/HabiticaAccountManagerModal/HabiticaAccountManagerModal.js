@@ -16,16 +16,6 @@ import { UnlinkConfirmationPage } from './pages/UnlinkConfirmationPage';
 import { UnlinkSuccessPage } from './pages/UnlinkSuccessPage';
 
 
-const PAGE_TITLES = {
-  unlinkedIntro: 'Link Your Habitica Account',
-  securityInfo: 'Security Information',
-  linkForm: 'Link Your Habitica Account',
-  linkSuccess: 'Success',
-  linkedIntro: 'Your Habitica Account',
-  unlinkConfirmation: 'Unlink Account',
-  unlinkSuccess: 'Account Unlinked',
-};
-
 export const HabiticaAccountManagerModal = ({ open, onClose }) => {
   const [ currentPage, setCurrentPage ] = useState(null);
 
@@ -47,16 +37,12 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
   }, [ open, currentPage, initialPage ]);
 
   const handleNavigate = (page) => {
-    setCurrentPage(page);
+    setCurrentPage(page || initialPage);
   };
 
   const handleClose = () => {
     setCurrentPage(null);
     onClose();
-  };
-
-  const handleLinkSuccess = () => {
-    setCurrentPage('linkSuccess');
   };
 
   const renderPage = () => {
@@ -74,13 +60,14 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
       case 'securityInfo':
         return <SecurityInfoPage onNavigate={ handleNavigate } />;
       case 'linkForm':
-        return <LinkFormPage onNavigate={ handleNavigate } onLinkSuccess={ handleLinkSuccess } />;
+        return <LinkFormPage onNavigate={ handleNavigate } />;
       case 'linkSuccess':
         return <LinkSuccessPage onClose={ handleClose } />;
       case 'linkedIntro':
         return (
           <LinkedIntroPage
             habiticaUser={ habiticaData?.habiticaUser }
+            onNavigate={ handleNavigate }
             onUnlinkClick={ () => handleNavigate('unlinkConfirmation') }
           />
         );
@@ -110,7 +97,8 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
       }}
       onClose={ handleClose }
     >
-      {(isLoading || currentPage) && <DialogTitle>{isLoading ? 'Loading Habitica Account' : PAGE_TITLES[currentPage]}</DialogTitle>}
+
+      {isLoading && <DialogTitle>Loading Habitica Account</DialogTitle>}
       <DialogContent>
         {renderPage()}
       </DialogContent>

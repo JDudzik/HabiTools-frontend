@@ -8,7 +8,7 @@ export const LinkSuccessPage = ({ onClose }) => {
       <L.div>
         <L.h3>All Set!</L.h3>
         <L.p>
-          Your Habitica account has been successfully linked. You can now start using HabiTools to automate your Habitica experience.
+          Your Habitica account has been successfully linked. You can now start using the HabiTools automations and tools.
         </L.p>
       </L.div>
 
