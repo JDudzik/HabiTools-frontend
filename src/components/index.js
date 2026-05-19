@@ -1,6 +1,7 @@
 export * from './AuthCtaButtons';
 export * from './BadgeIconButton';
 export * from './ConfirmationModal';
+export * from './HabiticaAccountManagerModal';
 export * from './HiddenAccordion';
 export * from './L';
 export * from './Link';

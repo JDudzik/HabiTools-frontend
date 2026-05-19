@@ -4,7 +4,7 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { LoadingElement, PageHead, Link, L } from 'components';
+import { LoadingElement, PageHead, Link, L, HabiticaAccountManagerModal } from 'components';
 import { usePageManager } from 'lib/hooks';
 import { userContext } from 'lib/contexts/UserContext';
 // import { useMutateCreatePortalSession } from 'lib/api/methods/commerceApi';
@@ -25,6 +25,7 @@ const VIEW_ADMIN_CONTROLS = [
 const MyAccountPage = () => {
   // const [ isLoadingPortal, setIsLoadingPortal ] = useState(false);
   const [ internalPageSlug, setInternalPageSlug ] = useState('main');
+  const [ habiticaAccountManagerModalOpen, setHabiticaAccountManagerModalOpen ] = useState(false);
   const { userState, userDispatch } = useContext(userContext);
 
   // On page load, refresh the user's information.
@@ -84,6 +85,14 @@ const MyAccountPage = () => {
         },
       },
     },*/ {
+      slug: 'habitica_account_manager',
+      title: 'Habitica Account',
+      description: 'Link, unlink, and manage your connected Habitica account.',
+      buttonProps: {
+        label: 'Manage Habitica',
+        onClick: () => setHabiticaAccountManagerModalOpen(true),
+      },
+    }, {
       slug: 'change_password',
       title: 'Change Password',
       description: 'Update the password you use to sign in and keep your account secure.',
@@ -114,11 +123,16 @@ const MyAccountPage = () => {
       },
       isDangerous: true,
     },
-  ]), [ setInternalPageSlug ]);
+  ]), [ setInternalPageSlug, setHabiticaAccountManagerModalOpen ]);
 
   return (
     <>
       <PageHead title="My Account" />
+
+      <HabiticaAccountManagerModal
+        open={ habiticaAccountManagerModalOpen }
+        onClose={ () => setHabiticaAccountManagerModalOpen(false) }
+      />
 
       { pageStage === 'loading' && (
         <LoadingElement article width="100%" />
