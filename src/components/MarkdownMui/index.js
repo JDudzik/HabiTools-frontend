@@ -1,6 +1,7 @@
 import * as MarkdownToJsx from 'markdown-to-jsx';
 import React from 'react';
 import { Typography, Box } from '@mui/material';
+import { Link } from 'components/Link/Link';
 // Docs for markdown-to-jsx: https://www.npmjs.com/package/markdown-to-jsx#optionswrapper
 
 
@@ -30,7 +31,7 @@ const defaultOptions = {
       component: props => <Typography component="p" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
     },
     a: {
-      component: props => <Typography component="a" color="primary" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
+      component: props => <Link { ...props } sx={{ whiteSpace: 'pre-wrap' }} color="primary" { ...props } />,
     },
     b: {
       component: props => <Typography component="b" variant="body1" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,

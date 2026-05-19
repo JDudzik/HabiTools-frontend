@@ -10,6 +10,11 @@ const UnstyledNextLink = styled(NextLink)`
   text-decoration: none;
 `;
 
+const isExternalUrl = href => (
+  typeof href === 'string'
+  && /^(https?:)?\/\//i.test(href)
+);
+
 export const Link = (props) => {
   const {
     children,
@@ -17,8 +22,17 @@ export const Link = (props) => {
     unstyled,
     href,
     anchorProps = {},
+    target,
+    rel,
     ...remainingProps
   } = props;
+
+  const shouldOpenInNewTab = isExternalUrl(href);
+  const linkProps = {
+    ...anchorProps,
+    target: target ?? anchorProps.target ?? (shouldOpenInNewTab ? '_blank' : undefined),
+    rel: rel ?? anchorProps.rel ?? (shouldOpenInNewTab ? 'noopener noreferrer' : undefined),
+  };
 
   const isChildComponent =
     typeof children === 'object'
@@ -27,12 +41,12 @@ export const Link = (props) => {
 
   return (
     isChildComponent ? (
-      <UnstyledNextLink href={ href } { ...anchorProps }>
+      <UnstyledNextLink href={ href } { ...linkProps }>
         {children}
       </UnstyledNextLink>
     ) : (
       <MuiLink color="secondary.light" component="span" { ...remainingProps } >
-        <UnstyledNextLink href={ href } { ...anchorProps }>
+        <UnstyledNextLink href={ href } { ...linkProps }>
           {children || text}
         </UnstyledNextLink>
       </MuiLink>
