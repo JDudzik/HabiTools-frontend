@@ -14,5 +14,6 @@ export const logoutQueriesToInvalidate = [
   [ 'useApiSingleFeedbackLog', 'remove' ],
   [ 'useApiEmailAvailable', 'remove' ],
   [ 'useApiListEventMessages', 'remove' ],
+  [ 'useApiGetHabitica', 'remove' ],
   [ 'EXAMPLE', 'remove' ],
 ];
