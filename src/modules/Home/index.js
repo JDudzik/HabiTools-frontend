@@ -1,8 +1,22 @@
-import { PageHead, L, AuthCtaButtons } from 'components';
-import { Stack, Typography, Box, Link } from '@mui/material';
+import { PageHead, L, AuthCtaButtons, MarkdownMui } from 'components';
+import { Stack, Typography, Box, Link, Button } from '@mui/material';
+import { usePageManager } from 'lib/hooks';
+import howWeSecureData from 'lib/data/howWeSecure.md';
 
 
 const Home = () => {
+  const {
+    openConfirmation,
+  } = usePageManager({});
+
+  const openHowWeSecureModal = () => {
+    openConfirmation({
+      content: (MarkdownMui.compiler(howWeSecureData)),
+      primaryButtonText: 'Close',
+      removeSecondaryAction: true,
+    });
+  };
+  
   return (
     <>
       <PageHead title="Home" />
@@ -45,6 +59,12 @@ const Home = () => {
               user data and API key to provide tools and automations,
               so the way we manage your data is extremely important. Your Habitica data is stored securely and carefully with
               modern encryption best practices in place.
+              <Button
+                variant="text"
+                onClick={ openHowWeSecureModal }
+              >
+                Learn how we keep your data secure
+              </Button>
             </Typography>
             <Typography mb={ 2 }>
               Another principle is thoughtful use of the Habitica API. We take steps to reduce excessive and undue stress to their API.
