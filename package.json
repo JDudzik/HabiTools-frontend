@@ -58,7 +58,8 @@
     "serve": "^14.2.4",
     "store": "^2.0.12",
     "use-immer": "^0.11.0",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "raw-loader": "^4.0.2"
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "^11.7.0",

@@ -9,6 +9,12 @@ const nextConfig = {
   // next.js config
   output: 'export',
   trailingSlash: true,
+  turbopack: {
+    rules: {
+      '*.txt': { loaders: [ require.resolve('raw-loader') ], as: '*.js' },
+      '*.md': { loaders: [ require.resolve('raw-loader') ], as: '*.js' },
+    },
+  },
 };
 
 
