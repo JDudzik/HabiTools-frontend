@@ -1,7 +1,7 @@
 ## How We Protect Your Habitica Credentials
 
 When you connect your Habitica account, we store your User ID and API key so HabiTools can sync your data and run automations.
-Because an API key works like a password, we do not store it as plain text.
+Because an API key works like a password, we store it with just as much care.
 
 Your Habitica API key is treated as sensitive at every step with modern encryption, security best-practices, and strict access-control.
 
@@ -33,8 +33,7 @@ Here is how we protect this vital data:
 
 ### *Application-Level Safeguards*
 
-- **No secret logging**: API keys are never written to application logs, error traces, analytics events, or monitoring payloads.
-- **Scoped secret lifetime**: Decrypted keys are only held in local scope for the brief operation that needs them, then discarded.
 - **Isolated credential storage**: Encrypted API keys are stored in a separate credentials table, not with general user profile data. This creates a clear access boundary and keeps keys out of routine user-data queries.
-- **No client exposure**: Secrets are never sent to frontend state, browser storage, or client-visible payloads.
-- **Ephemeral Secret Handling**: Decrypted secrets are kept in memory only for the brief operation that requires them. We clear temporary in-memory references as soon as the operation completes.
+- **No client exposure**: After API keys are encrypted on the server, they're never sent back to frontend state, browser storage, or client-visible payloads.
+- **Ephemeral Secret Handling**: Decrypted keys or secrets are only held in local memory scope for the brief operation that needs them, then discarded.
+- **No logging secrets**: API keys are never written to application logs, error traces, analytics events, or monitoring payloads.
