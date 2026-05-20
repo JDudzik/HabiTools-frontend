@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAxios } from 'lib/hooks/useAxios';
 
 
-const HABITICA_QUERY_KEY = [ 'useApiGetHabitica' ];
+const HABITICA_QUERY_KEY = 'useApiGetHabitica';
 
 export const useMutateUnlinkHabitica = (mutateOptions) => {
   const queryClient = useQueryClient();
@@ -22,7 +22,7 @@ export const useMutateUnlinkHabitica = (mutateOptions) => {
   };
 
   const onSuccess = () => {
-    queryClient.removeQueries({ queryKey: HABITICA_QUERY_KEY });
+    queryClient.removeQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });

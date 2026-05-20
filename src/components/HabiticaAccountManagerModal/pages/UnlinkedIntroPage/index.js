@@ -14,10 +14,7 @@ export const UnlinkedIntroPage = ({ openHowWeSecureModal, onNavigate }) => {
       </L.p>
 
       <Stack spacing={ 2 } direction="row" justifyContent="flex-end">
-        <Button
-          variant="text"
-          onClick={ openHowWeSecureModal }
-        >
+        <Button onClick={ openHowWeSecureModal }>
           Learn how we keep your data secure
         </Button>
       </Stack>

@@ -59,10 +59,7 @@ const Home = () => {
               user data and API key to provide tools and automations,
               so the way we manage your data is extremely important. Your Habitica data is stored securely and carefully with
               modern encryption best practices in place.
-              <Button
-                variant="text"
-                onClick={ openHowWeSecureModal }
-              >
+              <Button onClick={ openHowWeSecureModal } >
                 Learn how we keep your data secure
               </Button>
             </Typography>

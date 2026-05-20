@@ -41,10 +41,7 @@ export const LinkedIntroPage = ({ habiticaUser, onNavigate, openHowWeSecureModal
       </Stack>
 
       <Stack spacing={ 2 } direction="row" justifyContent="space-between" flexWrap="wrap">
-        <Button
-          variant="text"
-          onClick={ openHowWeSecureModal }
-        >
+        <Button onClick={ openHowWeSecureModal }>
           Learn how we keep your data secure
         </Button>
         <Button

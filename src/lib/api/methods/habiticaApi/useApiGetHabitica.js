@@ -10,16 +10,10 @@ export const useApiGetHabitica = (config) => {
 
   const queryFn = () => axios
     .get('/v1/auth/habitica')
-    .then(res => ({
-      isLinked: true,
-      habiticaUser: res.data?.habiticaUser || null,
-    }))
+    .then(res => (res.data?.habiticaUser || null))
     .catch((err) => {
       if (err?.response?.status === 404 && err?.response?.data?.status === 'NOT_LINKED') {
-        return {
-          isLinked: false,
-          habiticaUser: null,
-        };
+        return undefined;
       }
 
       throw { ...err, errorPayload: {

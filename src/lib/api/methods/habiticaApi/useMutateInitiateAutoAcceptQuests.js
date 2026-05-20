@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAxios } from 'lib/hooks/useAxios';
 
 
-const HABITICA_QUERY_KEY = [ 'useApiGetHabitica' ];
+const HABITICA_QUERY_KEY = 'useApiGetHabitica';
 
 export const useMutateInitiateAutoAcceptQuests = (mutateOptions) => {
   const queryClient = useQueryClient();
@@ -22,7 +22,7 @@ export const useMutateInitiateAutoAcceptQuests = (mutateOptions) => {
   };
 
   const onSuccess = () => {
-    queryClient.invalidateQueries({ queryKey: HABITICA_QUERY_KEY });
+    queryClient.invalidateQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });

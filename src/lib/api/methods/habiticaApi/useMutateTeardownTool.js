@@ -3,7 +3,7 @@ import { useAxios } from 'lib/hooks/useAxios';
 import { sanitizeProperties } from 'lib/utils/validations';
 
 
-const HABITICA_QUERY_KEY = [ 'useApiGetHabitica' ];
+const HABITICA_QUERY_KEY = 'useApiGetHabitica';
 
 export const useMutateTeardownTool = (mutateOptions) => {
   const queryClient = useQueryClient();
@@ -41,7 +41,7 @@ export const useMutateTeardownTool = (mutateOptions) => {
   };
 
   const onSuccess = () => {
-    queryClient.invalidateQueries({ queryKey: HABITICA_QUERY_KEY });
+    queryClient.invalidateQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });

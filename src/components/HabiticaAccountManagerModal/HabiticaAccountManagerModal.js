@@ -25,11 +25,11 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
 
   // Determine the initial page based on link status
   const initialPage = useMemo(() => {
-    if (habiticaData?.isLinked) {
+    if (habiticaData?.id) {
       return 'linkedIntro';
     }
     return 'unlinkedIntro';
-  }, [ habiticaData?.isLinked ]);
+  }, [ habiticaData?.id ]);
 
   // Set initial page when dialog opens
   useEffect(() => {
@@ -76,7 +76,7 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
       case 'linkedIntro':
         return (
           <LinkedIntroPage
-            habiticaUser={ habiticaData?.habiticaUser }
+            habiticaUser={ habiticaData }
             openHowWeSecureModal={ openHowWeSecureModal }
             onNavigate={ handleNavigate }
           />
