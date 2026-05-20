@@ -7,7 +7,7 @@ export const UnlinkedIntroPage = ({ openHowWeSecureModal, onNavigate }) => {
     <Stack spacing={ 3 }>
       <L.p>
         To use HabiTools, you need to link your Habitica account. This allows us to safely connect
-        your account so you can use the tools and automations.
+        your account so you can use tools and automations.
       </L.p>
       <L.p sx={{ fontSize: '0.9rem', color: 'text.secondary' }}>
         We keep your information secure and encrypted. Learn more about our security practices below.

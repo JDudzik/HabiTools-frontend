@@ -5,12 +5,10 @@ import { L } from 'components';
 export const LinkSuccessPage = ({ onClose }) => {
   return (
     <Stack spacing={ 3 }>
-      <L.div>
-        <L.h3>All Set!</L.h3>
-        <L.p>
-          Your Habitica account has been successfully linked. You can now start using the HabiTools automations and tools.
-        </L.p>
-      </L.div>
+      <L.h3>All Set!</L.h3>
+      <L.p>
+        Your Habitica account has been successfully linked. You can now start using the HabiTools automations and tools.
+      </L.p>
 
       <Stack spacing={ 2 } direction="row" justifyContent="flex-end">
         <Button

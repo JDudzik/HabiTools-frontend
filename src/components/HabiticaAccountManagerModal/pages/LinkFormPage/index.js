@@ -1,7 +1,7 @@
 import React from 'react';
-import { Stack, Button, Link, Alert } from '@mui/material';
+import { Stack, Button, Alert } from '@mui/material';
 import * as Yup from 'yup';
-import { L } from 'components';
+import { L, MarkdownMui } from 'components';
 import {
   useFormik,
   Form,
@@ -9,6 +9,7 @@ import {
   TextField,
 } from 'components/formik-mui';
 import { useMutateLinkHabitica } from 'lib/api/methods/habiticaApi';
+import credentialInstructions from './credentialInstructions.md';
 
 
 const initialValues = {
@@ -34,7 +35,7 @@ export const LinkFormPage = ({ onNavigate }) => {
         .uuid('Must be a valid Habitica User ID'),
       apiKey: Yup.string()
         .required('Required')
-        .min(20, 'API Key should be at least 20 characters'),
+        .uuid('Must be a valid API Token'),
     }),
     onSubmit: (values, { setSubmitting }) => {
       mutateLinkHabitica({
@@ -58,29 +59,9 @@ export const LinkFormPage = ({ onNavigate }) => {
     <Stack spacing={ 3 }>
       <L.h3>Link Your Habitica Account</L.h3>
 
-      <L.div>
-        <L.p>
-          To link your Habitica account, you'll need your Habitica User ID and API Key.
-        </L.p>
-        <L.p sx={{ fontSize: '0.9rem' }}>
-          <strong>Where to find them:</strong>
-        </L.p>
-        <ol>
-          <li>
-            Go to{' '}
-            <Link
-              href="https://habitica.com/user/settings/api"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              your Habitica API settings
-            </Link>
-          </li>
-          <li>Copy your User ID (shown in the API settings page)</li>
-          <li>Generate or copy your API Token</li>
-          <li>Paste them below</li>
-        </ol>
-      </L.div>
+      <MarkdownMui.Markdown>
+        { credentialInstructions }
+      </MarkdownMui.Markdown>
 
       {formik.status && (
         <Alert severity="error">
@@ -94,14 +75,14 @@ export const LinkFormPage = ({ onNavigate }) => {
           type="text"
           name="habiticaUserId"
           label="Habitica User ID"
-          placeholder="e.g., 12345678-1234-1234-1234-123456789012"
+          placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
         />
         <TextField
           formik={ formik }
           type="text"
           name="apiKey"
-          label="API Key"
-          placeholder="e.g., 1234567890123456789012345678901234567890"
+          label="API Token"
+          placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
         />
 
         <FormButton

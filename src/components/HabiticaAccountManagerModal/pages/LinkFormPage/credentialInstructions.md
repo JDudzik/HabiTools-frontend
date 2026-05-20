@@ -1,0 +1,7 @@
+To link your Habitica account, you'll need your Habitica User ID and API Token.
+
+**Where to find them:**
+- Open [your Habitica "Site Data" settings](https://habitica.com/user/settings/api)
+- Click "Copy" next to `User ID` and paste it here.
+- View your API Token by clicking `Learn More` next to `API Token`.
+- Click "Copy" next to `API Token` and paste it here.
