@@ -1,5 +1,5 @@
-import { PageHead, L, AuthCtaButtons, MarkdownMui } from 'components';
-import { Stack, Typography, Box, Link, Button } from '@mui/material';
+import { PageHead, L, AuthCtaButtons, MarkdownMui, Link } from 'components';
+import { Stack, Typography, Box, Button } from '@mui/material';
 import { usePageManager } from 'lib/hooks';
 import howWeSecureData from 'lib/data/howWeSecure.md';
 
@@ -52,7 +52,7 @@ const Home = () => {
               <b>HabiTools is currently in beta.</b> Thanks for taking a look and for
               helping test it while the service is still being worked on. It's also open-source,
               so feel free to inspect the code and report any bugs/issues you find if you're technically inclined.
-              <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend" target="_blank" rel="noopener noreferrer">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend" target="_blank" rel="noopener noreferrer">Backend</Link>
+              <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend">Backend</Link>
             </Typography>
             <Typography mb={ 2 }>
               Security of your data is a core principle for HabiTools. We use your Habitica
@@ -71,13 +71,13 @@ const Home = () => {
               We want to avoid creating unnecessary load on Habitica's servers.
             </Typography>
             <Typography mb={ 2 }>
-              Feedback during beta is useful. It helps identify what is worth
-              keeping, what is confusing, and what still needs work.
+              Feedback during beta is incredibly helpful. While using HabiTools, please consider giving us your feedback on anything that's confusing,
+              any bugs you encounter, or any features you'd like to see in the future. <Link href="/feedback">Give Feedback</Link>
             </Typography>
             <Typography mb={ 2 }>
               If you have questions, suggestions, or run into anything odd,
               use the feedback page or reach out to masterlink950 in
-              either of the major Habitica Discord servers.
+              either of the major Habitica Discord servers: <Link href="https://discord.com/invite/C36kxnAKSm">Habitica (unofficial)</Link> and <Link href="https://discord.com/invite/habitica-central-1136011016682098778">Habitica Central</Link>.
             </Typography>
             <AuthCtaButtons />
           </Box>
