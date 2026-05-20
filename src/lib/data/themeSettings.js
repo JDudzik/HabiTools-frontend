@@ -54,6 +54,7 @@ export const themeSettings = {
     },
     text: {
       black: '#212121',
+      softBlack: '#333333',
       darkGrey: '#595959',
       lightGrey: '#a8a8a8',
       offWhite: '#e1e1e1',

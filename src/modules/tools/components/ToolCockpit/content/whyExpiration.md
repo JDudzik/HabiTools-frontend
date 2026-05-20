@@ -1,23 +1,14 @@
 ## Why Do Tools Expire?
 
-HabiTools tools use a **30-day lease** system to keep your account secure and data fresh.
+All of the tools on HabiTools have an expiration timer associated with it. When the timer runs out, it will deactivate the tool and remove it's related data. This is important for long-term support and use of the Habitica API.
 
-### The reasoning
+So why do tools expire?
 
-**Security & validation**: Requiring periodic renewal ensures your Habitica credentials are still valid and your account hasn't been compromised. If your account is hacked, a lost tool will stop working within 30 days instead of continuing indefinitely.
+### 1: Habitica API Requirement
+The biggest reason tools expire is compliance with the Habitica API rules. Automations are expected to stop eventually unless a user is actively using them. Expiration helps ensure every tool stays tied to real, ongoing user activity.
 
-**Data freshness**: Reconnecting periodically helps us validate that your linked account is still active and your preferences haven't changed on the Habitica side.
+### 2: Protecting Habitica and Its Users
+This is one way we support thoughtful, responsible use of the Habitica API. We do not want inactive accounts leaving behind ghost scripts that run forever in the background. Those unnecessary calls can add avoidable load and contribute to downtime risk for everyone.
 
-**Service reliability**: Leases help us manage active tool instances efficiently and provide better support for monitoring tool health.
-
-### What happens at expiration
-
-When a tool expires:
-- Automation stops immediately (webhooks and crons are disabled)
-- Your event history is preserved for reference
-- You can reactivate with one click—all your settings remain the same
-- No data is deleted; everything stays on file
-
-### Refreshing before expiration
-
-You can refresh a tool anytime while it's active to extend its lease another 30 days. Refresh as often as you want—there's no penalty for early renewal.
+### 3: You Can Refresh Indefinitely
+As long as you're still active and can click "Refresh Now" on each of the tools and automations you're using before they expire, then they won't ever deactivate! If you are actively using a tool, a quick refresh is all you need.

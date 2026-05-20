@@ -1,22 +1,5 @@
-## Advanced Technical Details
+This tool creates a webhook on your Habitica account. That webhook tells Habitica to send HabiTools a message whenever your party opens a quest.
 
-### How it works
+When that event is received, HabiTools immediately requests the quest information from the Habitica API and accepts the quest invitation on your behalf.
 
-This tool uses a two-layer approach to maximize reliability:
-
-**1. Webhook (Instant)**
-When your party sends a quest invitation, HabiTools receives an instant notification from Habitica and accepts the quest immediately. This provides near-real-time acceptance.
-
-**2. Backup Cron (Hourly Redundancy)**
-Every 3 hours, a background job runs to check for any pending quest invitations and accepts them. This acts as a safety net in case the webhook delivery fails or is delayed.
-
-### Data and security
-
-- Your Habitica API key is encrypted and stored securely
-- Only quest invitation data is processed; no other account data is touched
-- The tool respects Habitica's rate limits and API best practices
-- Event history is kept for troubleshooting and transparency
-
-### Expiration and renewal
-
-Each tool instance has a 30-day lease. Before expiration, you can refresh the tool to extend it another 30 days. If it expires without renewal, you'll need to reactivate it. This design ensures stale credentials are periodically validated and the system stays secure.
+As a fallback, HabiTools also sets up an interval routine (through a cron job) every 3 hours. This backup check looks for an active party quest and accepts it if webhook delivery was delayed or missed by the Habitica API.

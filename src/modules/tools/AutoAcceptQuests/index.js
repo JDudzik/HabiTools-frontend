@@ -5,7 +5,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Grid,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { PageHead, L, VirtualizedTableSimple, MarkdownMui, SquareIconButton } from 'components';
@@ -73,7 +72,7 @@ const AutoAcceptQuestsPage = () => {
     },
     defaultRoutingPath: '/tools/auto-accept-quests',
     defaultPageStage: 'loading',
-    apiIsLoading: !userState?.isLoggedIn || isLoadingHabitica || isLoadingMessages,
+    apiIsLoading: !userState?.isLoggedIn || isLoadingHabitica,
     apiErrors: habiticaError || messagesError,
   });
 
@@ -160,21 +159,37 @@ const AutoAcceptQuestsPage = () => {
       {pageStage === 'loading' && null}
 
       {pageStage === 'main' && (
-        <Grid container spacing={ 4 }>
-          <Grid item xs={ 12 } md={ 8 }>
+        <Stack
+          spacing={{ xxs: 10, md: 12 }}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ paddingY: 4 }}
+        >
+          <Stack
+            data-section="section1"
+            spacing={{ xxs: 4, md: 6 }}
+            width="100%"
+            maxWidth="60em"
+            direction={{ xxs: 'column-reverse', md: 'row-reverse' }}
+            alignItems="start"
+            textAlign={{ xxs: 'center', md: 'left' }}
+          >
             <Stack spacing={ 4 }>
-              <Stack>
-                <ToolCockpit
-                  habiticaData={ habiticaData }
-                  toolInstance={ activeToolInstance }
-                  toolSlug={ TOOL_SLUG }
-                  openConfirmation={ openConfirmation }
-                  isLoading={ isLoading }
-                  onActivate={ handleActivate }
-                  onRefresh={ handleRefresh }
-                  onDeactivate={ handleDeactivate }
-                />
-              </Stack>
+              <L.h1 align="center" color="text.softBlack">
+                Auto Accept Quests
+              </L.h1>
+
+              <ToolCockpit
+                habiticaData={ habiticaData }
+                toolInstance={ activeToolInstance }
+                toolSlug={ TOOL_SLUG }
+                openConfirmation={ openConfirmation }
+                isLoading={ isLoading }
+                onActivate={ handleActivate }
+                onRefresh={ handleRefresh }
+                onDeactivate={ handleDeactivate }
+              />
 
               <L.section>
                 <MarkdownMui.Markdown>
@@ -192,7 +207,7 @@ const AutoAcceptQuestsPage = () => {
                     aria-controls="advanced-details"
                     id="advanced-details-header"
                   >
-                    <L.h3 sx={{ m: 0 }}>Advanced Technical Details</L.h3>
+                    <L.h3 sx={{ m: 0 }}>The Technical Details</L.h3>
                   </AccordionSummary>
                   <AccordionDetails sx={{ pt: 2 }}>
                     <MarkdownMui.Markdown>
@@ -237,17 +252,17 @@ const AutoAcceptQuestsPage = () => {
                     ) }
                     noDataMessage={ activeToolInstance ? 'No events recorded yet' : 'Activate the tool to see event history.' }
                     headers={ [
-                      { label: 'Time', key: 'timestamp', width: '12rem' },
-                      { label: 'Event', key: 'event', width: '15rem' },
-                      { label: 'Message', key: 'message', width: '100%' },
+                      { label: 'Time', key: 'timestamp', width: '7rem' },
+                      { label: 'Event', key: 'event', width: '17%' },
+                      { label: 'Message', key: 'message' },
                     ] }
                     rows={ memoizedMessageRows }
                   />
                 </L.section>
               )}
             </Stack>
-          </Grid>
-        </Grid>
+          </Stack>
+        </Stack>
       )}
     </>
   );
