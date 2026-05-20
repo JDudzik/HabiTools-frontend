@@ -13,6 +13,7 @@ export const themeSettings = {
       veryDark: '#025e60',
       300: '#4ccedc',
       100: '#b1eaf0',
+      75: '#cceff4',
       50: '#e0f7f9',
     },
     secondary: {
@@ -22,6 +23,7 @@ export const themeSettings = {
       dark: '#3a47b3',
       veryDark: '#313ca7',
       100: '#c6caec',
+      75: '#d8dbf2',
       50: '#e8eaf7',
       900: '#1a1f87',
     },

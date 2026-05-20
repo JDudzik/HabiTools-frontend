@@ -31,7 +31,7 @@ const defaultOptions = {
       component: props => <Typography component="p" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
     },
     a: {
-      component: props => <Link { ...props } sx={{ whiteSpace: 'pre-wrap' }} color="primary" { ...props } />,
+      component: props => <Link { ...props } sx={{ whiteSpace: 'pre-wrap' }} color="secondary.light" { ...props } />,
     },
     b: {
       component: props => <Typography component="b" variant="body1" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
@@ -80,7 +80,7 @@ const defaultOptions = {
           color="text.primary"
           { ...props }
           sx={{
-            backgroundColor: props?.backgroundColor || 'secondary.100', // Slightly darker for the block
+            backgroundColor: props?.backgroundColor || 'primary.75', // Slightly darker for the block
             display: 'inline-block',
             fontFamily: 'monospace',
             fontSize: '0.9rem', // Slightly smaller for inline code
@@ -99,11 +99,11 @@ const defaultOptions = {
           { ...props }
           sx={{
             '& code': {
-              backgroundColor: props?.backgroundColor || 'secondary.100', // Slightly darker for the block
+              backgroundColor: props?.backgroundColor || 'primary.75', // Slightly darker for the block
               padding: 0,
               margin: 0,
             },
-            backgroundColor: props?.backgroundColor || 'secondary.100', // Slightly darker for the block
+            backgroundColor: props?.backgroundColor || 'primary.75', // Slightly darker for the block
             fontSize: '0.9rem', // Slightly smaller for inline code
             overflowX: 'auto',
             fontFamily: 'monospace',
