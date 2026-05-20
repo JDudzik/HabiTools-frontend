@@ -72,17 +72,15 @@ const AutoAcceptQuestsPage = () => {
       handledErrors: [],
     },
     defaultRoutingPath: '/tools/auto-accept-quests',
-    defaultPageStage: 'main',
-    apiIsLoading: isLoadingHabitica || isLoadingMessages,
+    defaultPageStage: 'loading',
+    apiIsLoading: !userState?.isLoggedIn || isLoadingHabitica || isLoadingMessages,
     apiErrors: habiticaError || messagesError,
   });
 
 
   // Mutations
   const { mutate: mutateActivate, isPending: isActivating } = useMutateInitiateAutoAcceptQuests();
-
   const { mutate: mutateRefresh, isPending: isRefreshing } = useMutateRefreshTool();
-
   const { mutate: mutateTeardown, isPending: isDeactivating } = useMutateTeardownTool();
 
 
@@ -121,10 +119,6 @@ const AutoAcceptQuestsPage = () => {
     if (activeToolInstance?.id) {
       mutateTeardown({
         resourceId: activeToolInstance.id,
-        notification: {
-          slugPrefix: TOOL_SLUG,
-          name: 'Auto Accept Quests',
-        },
       }, {
         onSuccess: () => {
           openConfirmation?.({
@@ -162,6 +156,8 @@ const AutoAcceptQuestsPage = () => {
   return (
     <>
       <PageHead title="Auto Accept Quests" />
+
+      {pageStage === 'loading' && null}
 
       {pageStage === 'main' && (
         <Grid container spacing={ 4 }>
