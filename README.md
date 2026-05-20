@@ -1,5 +1,9 @@
-## TODO:
-- After the app is online and has a public URL, use https://www.pwabuilder.com/ to analyze additional details for PWA configuration
+# HabiTools Frontend
+
+This is the frontend codebase for HabiTools, a set of tools and automations for Habitica. The goal is to create a clean interface without requiring users to install or manage scripts yourself.
+
+The live site can be visited at [habitools.online](https://habitools.online/).
+
 
 ## Getting Started with the `development` environment
 - Install `yarn` globally with `npm install --global yarn`.
