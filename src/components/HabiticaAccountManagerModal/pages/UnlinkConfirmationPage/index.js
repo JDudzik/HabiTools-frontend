@@ -4,14 +4,14 @@ import { useMutateUnlinkHabitica } from 'lib/api/methods/habiticaApi';
 import { useConfirmationModal } from 'lib/hooks/useConfirmationModal';
 
 
-export const UnlinkConfirmationPage = ({ onNavigate, onUnlinkSuccess }) => {
+export const UnlinkConfirmationPage = ({ onNavigate }) => {
   const { openConfirmation } = useConfirmationModal();
   const { mutate: mutateUnlinkHabitica, isPending: isUnlinking } = useMutateUnlinkHabitica();
 
   const handleConfirmUnlink = () => {
     mutateUnlinkHabitica(undefined, {
       onSuccess: () => {
-        onUnlinkSuccess();
+        onNavigate('unlinkSuccess');
       },
       onError: () => {
         openConfirmation({

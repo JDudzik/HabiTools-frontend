@@ -5,18 +5,20 @@ import {
   DialogContent,
   Stack,
 } from '@mui/material';
-import { LoadingElement } from 'components';
+import { LoadingElement, MarkdownMui } from 'components';
+import { useConfirmationModal } from 'lib/hooks';
 import { useApiGetHabitica } from 'lib/api/methods/habiticaApi';
 import { UnlinkedIntroPage } from './pages/UnlinkedIntroPage';
-import { SecurityInfoPage } from './pages/SecurityInfoPage';
 import { LinkFormPage } from './pages/LinkFormPage';
 import { LinkSuccessPage } from './pages/LinkSuccessPage';
 import { LinkedIntroPage } from './pages/LinkedIntroPage';
 import { UnlinkConfirmationPage } from './pages/UnlinkConfirmationPage';
 import { UnlinkSuccessPage } from './pages/UnlinkSuccessPage';
+import howWeSecure from 'lib/data/howWeSecure.md';
 
 
 export const HabiticaAccountManagerModal = ({ open, onClose }) => {
+  const { openConfirmation } = useConfirmationModal();
   const [ currentPage, setCurrentPage ] = useState(null);
 
   const { data: habiticaData, isLoading } = useApiGetHabitica();
@@ -41,24 +43,32 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
   };
 
   const handleClose = () => {
-    setCurrentPage(null);
     onClose();
+    setTimeout(() => {
+      setCurrentPage(null);
+    }, 500); // Delay to allow dialog close animation to finish
+  };
+
+  const openHowWeSecureModal = () => {
+    openConfirmation({
+      content: (MarkdownMui.compiler(howWeSecure)),
+      primaryButtonText: 'Close',
+      removeSecondaryAction: true,
+    });
   };
 
   const renderPage = () => {
     if (isLoading) {
       return (
         <Stack minHeight={ 200 } alignItems="center" justifyContent="center">
-          <LoadingElement circular />
+          <LoadingElement circular visibilityDelay={ 0 } />
         </Stack>
       );
     }
 
     switch (currentPage) {
       case 'unlinkedIntro':
-        return <UnlinkedIntroPage onNavigate={ handleNavigate } />;
-      case 'securityInfo':
-        return <SecurityInfoPage onNavigate={ handleNavigate } />;
+        return <UnlinkedIntroPage openHowWeSecureModal={ openHowWeSecureModal } onNavigate={ handleNavigate } />;
       case 'linkForm':
         return <LinkFormPage onNavigate={ handleNavigate } />;
       case 'linkSuccess':
@@ -67,16 +77,13 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
         return (
           <LinkedIntroPage
             habiticaUser={ habiticaData?.habiticaUser }
+            openHowWeSecureModal={ openHowWeSecureModal }
             onNavigate={ handleNavigate }
-            onUnlinkClick={ () => handleNavigate('unlinkConfirmation') }
           />
         );
       case 'unlinkConfirmation':
         return (
-          <UnlinkConfirmationPage
-            onNavigate={ handleNavigate }
-            onUnlinkSuccess={ () => handleNavigate('unlinkSuccess') }
-          />
+          <UnlinkConfirmationPage onNavigate={ handleNavigate } />
         );
       case 'unlinkSuccess':
         return <UnlinkSuccessPage onClose={ handleClose } />;
