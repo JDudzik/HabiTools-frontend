@@ -8,13 +8,13 @@ import {
 
 
 export const LoadingElement = (props) => {
-  const { circle, circular, article, line, listItem, onServer, ...remainingProps } = props;
+  const { circle, circular, article, line, listItem, onServer, visibilityDelay, ...remainingProps } = props;
   const [ visible, setVisible ] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 250);
+    const timer = setTimeout(() => setVisible(true), visibilityDelay ?? 250);
     return () => clearTimeout(timer);
-  }, []);
+  }, [ visibilityDelay ]);
 
   const WrappingElement = onServer ? React.Fragment : NoSsr;
 
