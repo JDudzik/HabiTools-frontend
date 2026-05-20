@@ -128,7 +128,7 @@ const Notifications = () => {
 
   return (
     <>
-      <PageHead title="Analytic Logs" />
+      <PageHead title="Notifications" />
       <Stack flexDirection="column" sx={{ width: '100%' }}>
         <L.section>
           <VirtualizedTableSimple
