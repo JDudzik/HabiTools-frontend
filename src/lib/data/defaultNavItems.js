@@ -24,6 +24,16 @@ export const defaultNavItems = {
       link: '/home',
     },
     {
+      text: 'Tools',
+      children: [
+        {
+          text: 'Auto-Accept Quests',
+          link: '/tools/auto-accept-quests',
+          ariaLabel: 'Navigate to Auto-Accept Quests page',
+        },
+      ],
+    },
+    {
       text: 'Feedback',
       link: '/feedback',
     },
@@ -40,7 +50,6 @@ export const defaultNavItems = {
               link: '/logs/analytics',
               ariaLabel: 'Navigate to Analytic Logs page',
               requiredPermission: 'access_analytic_logs',
-
             },
             {
               text: 'Error Logs',
