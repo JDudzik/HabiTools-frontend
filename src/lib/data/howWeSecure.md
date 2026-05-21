@@ -1,4 +1,4 @@
-## How We Protect Your Habitica Credentials
+## How We Protect Your Habitica Data
 
 When you connect your Habitica account, we store your User ID and API key so HabiTools can sync your data and run automations.
 Because an API key works like a password, we store it with just as much care.
