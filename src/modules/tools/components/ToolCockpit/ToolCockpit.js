@@ -30,11 +30,11 @@ const FIVE_MINUTES_MS = 1000;
 export const ToolCockpit = ({
   habiticaData,
   toolInstance,
+  isLoading,
+  openConfirmation,
   onActivate,
   onRefresh,
   onDeactivate,
-  openConfirmation,
-  isLoading,
 }) => {
   const { userState } = useContext(userContext);
   const [ habiticaAccountManagerModalOpen, setHabiticaAccountManagerModalOpen ] = useState(false);
@@ -112,8 +112,8 @@ export const ToolCockpit = ({
   if (!isAuthenticated) {
     return (
       <L.section>
-        <Stack spacing={ 2 }>
-          <L.p>You must be sign-up or login to use this tool.</L.p>
+        <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
+          <L.p>You must sign-up or login to use this tool.</L.p>
           <AuthCtaButtons returnPath="/tools/auto-accept-quests" />
         </Stack>
       </L.section>
@@ -124,7 +124,7 @@ export const ToolCockpit = ({
   if (!isLinked || !!habiticaAccountManagerModalOpen) {
     return (
       <L.section>
-        <Stack spacing={ 2 }>
+        <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
           <L.h3>Link Your Account</L.h3>
           <L.p color="textSecondary">
             You must link a Habitica account to use this tool.
@@ -149,7 +149,7 @@ export const ToolCockpit = ({
   // Render: Authenticated and linked
   return (
     <L.section>
-      <Stack spacing={ 3 }>
+      <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
         {!isToolActive && (
           <Stack spacing={ 2 }>
             <L.p color="textSecondary">
@@ -182,7 +182,6 @@ export const ToolCockpit = ({
               </Stack>
             )}
 
-            {/* Action buttons */}
             <Stack direction="row" spacing={ 1 }>
               <Button
                 variant="contained"
