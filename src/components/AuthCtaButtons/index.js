@@ -30,7 +30,7 @@ export const AuthCtaButtons = (props) => {
           }}
           onClick={ () => handleClick?.({ button: 'sign-up' }) }
         >
-          Get Started
+          Sign-up
         </Button>
       </Link>
       <Link href={ `/login${ returnPath ? `?return_path=${ encodeURIComponent(returnPath) }` : '' }` } >

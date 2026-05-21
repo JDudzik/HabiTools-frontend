@@ -13,7 +13,7 @@ export const appConfig = {
         'Basic insights',
         'Ad-free experience',
       ],
-      cta: 'Get Started',
+      cta: 'Sign-up',
       price_id: undefined,
     },
     {

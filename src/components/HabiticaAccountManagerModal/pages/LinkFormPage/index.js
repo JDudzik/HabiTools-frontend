@@ -8,7 +8,7 @@ import {
   AccordionDetails,
 } from '@mui/material';
 import * as Yup from 'yup';
-import { L, MarkdownMui, HiddenAccordion } from 'components';
+import { L, MarkdownMui } from 'components';
 import {
   useFormik,
   Form,
