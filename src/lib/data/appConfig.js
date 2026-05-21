@@ -1,5 +1,5 @@
 export const appConfig = {
-  authorizedUserHome: '/my-account',
+  authorizedUserHome: '/home',
   subscriptionPlans: [
     {
       id: 'free',
