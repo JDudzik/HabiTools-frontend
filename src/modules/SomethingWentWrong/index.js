@@ -19,6 +19,7 @@ const SomethingWentWrong = (props) => {
       'TOO_MANY_ATTEMPTS', 'INADEQUATE_PERMISSION', 'INVALID_CREDENTIALS',
       'API_ERROR',         'INVALID_URL',           'LOAD_FAILED',
       'ERR_NETWORK',       'UNAUTHORIZED_ACCESS',   'HCAPTCHA_VERIFICATION_FAILED',
+      'DECRYPTION_FAILED',
     ];
 
     if (handledErrors.includes(normalizedStatus)) {
@@ -163,6 +164,18 @@ const SomethingWentWrong = (props) => {
             { message }<br />
             It could be that your access has been revoked.<br />
             If this seems incorrect, please contact support through the <Link href="/feedback?source=ErrorPage.unauthorized_access">Feedback Page</Link>.
+          </p>
+        </>
+      )}
+
+      {derivedStatus === 'DECRYPTION_FAILED' && (
+        <>
+          <h2>Something went wrong with your Habitica Account</h2>
+          <p>
+            It looks like we can't properly decrypt your Habitica account details.<br />
+            This will likely require you to unlink and then re-link your Habitica account to fix it. You can access your account settings from the <Link href="/my-account">My Account page</Link>.<br /><br />
+            
+            If this seems incorrect or the problem persists after relinking your account, please contact support through the <Link href="/feedback?source=ErrorPage.decryption_failed">Feedback Page</Link>.
           </p>
         </>
       )}

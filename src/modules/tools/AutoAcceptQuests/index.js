@@ -58,6 +58,11 @@ const AutoAcceptQuestsPage = () => {
     },
   );
 
+  // Mutations
+  const { mutate: mutateActivate, isPending: isActivating, error: activationError } = useMutateInitiateAutoAcceptQuests();
+  const { mutate: mutateRefresh, isPending: isRefreshing, error: refreshError } = useMutateRefreshTool();
+  const { mutate: mutateTeardown, isPending: isDeactivating, error: deactivationError } = useMutateTeardownTool();
+
   const {
     openConfirmation,
   } = usePageManager({
@@ -68,15 +73,8 @@ const AutoAcceptQuestsPage = () => {
     defaultRoutingPath: '/tools/auto-accept-quests',
     defaultPageStage: 'loading',
     apiIsLoading: isLoadingHabitica,
-    apiErrors: habiticaError || messagesError,
+    apiErrors: habiticaError || messagesError || activationError || refreshError || deactivationError,
   });
-
-
-  // Mutations
-  const { mutate: mutateActivate, isPending: isActivating } = useMutateInitiateAutoAcceptQuests();
-  const { mutate: mutateRefresh, isPending: isRefreshing } = useMutateRefreshTool();
-  const { mutate: mutateTeardown, isPending: isDeactivating } = useMutateTeardownTool();
-
 
   // Handlers for ToolCockpit
   const handleActivate = useCallback(() => {

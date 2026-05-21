@@ -14,7 +14,7 @@ const FIVE_MINUTES_MS = 5 * 60 * 1000;
 
 
 /**
- * ToolCockpit: A reusable right-side panel for tool pages showing state-dependent actions.
+ * ToolCockpit: A reusable panel for tool pages showing state-dependent actions.
  * Handles authentication, Habitica linking, tool activation, refresh cooldown, and deactivation.
  * 
  * @param {Object} props
