@@ -1,11 +1,15 @@
+import { useContext } from 'react';
 import { PageHead, L, AuthCtaButtons, MarkdownMui, Link } from 'components';
-import { Stack, Typography, Box, Button } from '@mui/material';
+import { Stack, Typography, Box, Button, Alert } from '@mui/material';
 import { usePageManager } from 'lib/hooks';
 import howWeSecureData from 'lib/data/howWeSecure.md';
 import { useApiGetHabitica } from 'lib/api/methods/habiticaApi';
+import { userContext } from 'lib/contexts/UserContext';
+
 
 
 const Home = () => {
+  const { userState } = useContext(userContext);
   const {
     openConfirmation,
   } = usePageManager({});
@@ -26,12 +30,25 @@ const Home = () => {
       <PageHead title="Home" />
 
       <Stack
-        spacing={{ xxs: 10, md: 12 }}
+        spacing={{ xxs: 6, md: 8 }}
         direction="column"
         alignItems="center"
         justifyContent="center"
         sx={{ paddingY: 4 }}
       > 
+        {userState?.isLoggedIn && (
+          <Alert
+            severity="info"
+            sx={{
+              width: '100%',
+              maxWidth: '60em',
+              alignItems: 'center',
+            }}
+          >
+            <L.h4>You can find the tools by using the menu button in the top-left corner.</L.h4>
+          </Alert>
+        )}
+
         <Stack
           data-section="section1"
           spacing={{ xxs: 4, md: 6 }}
