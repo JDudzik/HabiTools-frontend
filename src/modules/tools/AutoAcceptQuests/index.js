@@ -31,10 +31,7 @@ const AutoAcceptQuestsPage = () => {
   const [ expandedAccordion, setExpandedAccordion ] = useState(false);
   const [ currentMessagesPage, setCurrentMessagesPage ] = useState(1);
 
-  // Fetch Habitica data (authenticated users only)
-  const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError } = useApiGetHabitica({
-    enabled: userState?.isLoggedIn,
-  });
+  const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError } = useApiGetHabitica();
 
   // Find the active auto-accept-quests tool instance
   const activeToolInstance = useMemo(() => {
@@ -45,7 +42,6 @@ const AutoAcceptQuestsPage = () => {
     return tools.length > 0 ? tools[0] : null;
   }, [ habiticaData?.habitica_tools ]);
 
-  // Fetch event messages for the active tool
   const { data: eventMessagesData, isLoading: isLoadingMessages, error: messagesError } = useApiListEventMessages(
     {
       filters: {
@@ -64,15 +60,14 @@ const AutoAcceptQuestsPage = () => {
 
   const {
     openConfirmation,
-    pageStage,
   } = usePageManager({
     defaultHandleApiError: {
       returnPath: '/tools/auto-accept-quests',
-      handledErrors: [],
+      handledErrors: [ 'HABITICA_USER_NOT_FOUND' ],
     },
     defaultRoutingPath: '/tools/auto-accept-quests',
     defaultPageStage: 'loading',
-    apiIsLoading: !userState?.isLoggedIn || isLoadingHabitica,
+    apiIsLoading: isLoadingHabitica,
     apiErrors: habiticaError || messagesError,
   });
 
@@ -105,7 +100,7 @@ const AutoAcceptQuestsPage = () => {
         onSuccess: () => {
           openConfirmation?.({
             title: 'Tool Refreshed',
-            content: 'Your tool lease has been extended for another 30 days.',
+            content: 'Auto Accept Quests expiration has been refreshed.',
             primaryButtonText: 'Got it',
             removeSecondaryAction: true,
           });
@@ -151,119 +146,113 @@ const AutoAcceptQuestsPage = () => {
   }, [ eventMessagesData?.messages ]);
 
   const isLoading = isLoadingHabitica || isActivating || isRefreshing || isDeactivating;
+  const totalMessagesPages = eventMessagesData?.pagination?.totalPages || 1;
 
   return (
     <>
       <PageHead title="Auto Accept Quests" />
-
-      {pageStage === 'loading' && null}
-
-      {pageStage === 'main' && (
+      
+      <Stack
+        spacing={{ xxs: 10, md: 12 }}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ paddingY: 4 }}
+      >
         <Stack
-          spacing={{ xxs: 10, md: 12 }}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ paddingY: 4 }}
+          data-section="section1"
+          spacing={{ xxs: 4, md: 6 }}
+          width="100%"
+          maxWidth="60em"
+          direction={{ xxs: 'column-reverse', md: 'row-reverse' }}
+          alignItems="start"
+          textAlign={{ xxs: 'center', md: 'left' }}
         >
-          <Stack
-            data-section="section1"
-            spacing={{ xxs: 4, md: 6 }}
-            width="100%"
-            maxWidth="60em"
-            direction={{ xxs: 'column-reverse', md: 'row-reverse' }}
-            alignItems="start"
-            textAlign={{ xxs: 'center', md: 'left' }}
-          >
-            <Stack spacing={ 4 }>
-              <L.h1 align="center" color="text.softBlack">
-                Auto Accept Quests
-              </L.h1>
+          <Stack spacing={ 4 }>
+            <L.h1 align="center" color="text.softBlack">
+              Auto Accept Quests
+            </L.h1>
 
-              <ToolCockpit
-                habiticaData={ habiticaData }
-                toolInstance={ activeToolInstance }
-                toolSlug={ TOOL_SLUG }
-                openConfirmation={ openConfirmation }
-                isLoading={ isLoading }
-                onActivate={ handleActivate }
-                onRefresh={ handleRefresh }
-                onDeactivate={ handleDeactivate }
-              />
+            <ToolCockpit
+              habiticaData={ habiticaData }
+              toolInstance={ activeToolInstance }
+              isLoading={ isLoading }
+              openConfirmation={ openConfirmation }
+              onActivate={ handleActivate }
+              onRefresh={ handleRefresh }
+              onDeactivate={ handleDeactivate }
+            />
 
-              <L.section>
-                <MarkdownMui.Markdown>
-                  { toolDescriptionContent }
-                </MarkdownMui.Markdown>
-              </L.section>
+            <L.section>
+              <MarkdownMui.Markdown>
+                { toolDescriptionContent }
+              </MarkdownMui.Markdown>
+            </L.section>
 
-              <L.section>
-                <Accordion
-                  expanded={ expandedAccordion === 'advanced' }
-                  onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'advanced' : false) }
+            <L.section>
+              <Accordion
+                expanded={ expandedAccordion === 'advanced' }
+                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'advanced' : false) }
+              >
+                <AccordionSummary
+                  expandIcon={ <ExpandMoreIcon /> }
+                  aria-controls="advanced-details"
+                  id="advanced-details-header"
                 >
-                  <AccordionSummary
-                    expandIcon={ <ExpandMoreIcon /> }
-                    aria-controls="advanced-details"
-                    id="advanced-details-header"
-                  >
-                    <L.h3 sx={{ m: 0 }}>The Technical Details</L.h3>
-                  </AccordionSummary>
-                  <AccordionDetails sx={{ pt: 2 }}>
-                    <MarkdownMui.Markdown>
-                      { advancedDetailsContent }
-                    </MarkdownMui.Markdown>
-                  </AccordionDetails>
-                </Accordion>
-              </L.section>
+                  <L.h3 sx={{ m: 0 }}>The Technical Details</L.h3>
+                </AccordionSummary>
+                <AccordionDetails sx={{ pt: 2 }}>
+                  <MarkdownMui.Markdown>
+                    { advancedDetailsContent }
+                  </MarkdownMui.Markdown>
+                </AccordionDetails>
+              </Accordion>
+            </L.section>
 
-              {userState?.isLoggedIn && (
-                <L.section>
-                  <VirtualizedTableSimple
-                    size="small"
-                    height={{ xxs: '40vh', sm: '50vh', md: '55vh' }}
-                    isLoading={ isLoadingMessages }
-                    title="Event History"
-                    subtitle={ (
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between" 
-                        spacing={ 1 }
-                      >
-                        <SquareIconButton
-                          aria-label="Previous list of notifications"
-                          color="secondary"
-                          variant="contained"
-                          icon={ <ArrowBackIosNewIcon /> }
-                          disabled={ eventMessagesData?.pagination?.totalPages <= 1 || currentMessagesPage === 1 }
-                          onClick={ () => setCurrentMessagesPage(currentMessagesPage - 1) }
-                        />
-                        <L.p sx={{ color: 'text.white', userSelect: 'none' }}>{ currentMessagesPage }</L.p>
-                        <SquareIconButton
-                          aria-label="Next list of notifications"
-                          color="secondary"
-                          variant="contained"
-                          icon={ <ArrowForwardIosIcon /> }
-                          disabled={ eventMessagesData?.pagination?.totalPages <= 1 || currentMessagesPage >= eventMessagesData?.pagination?.totalPages }
-                          onClick={ () => setCurrentMessagesPage(currentMessagesPage + 1) }
-                        />
-                      </Stack>
-                    ) }
-                    noDataMessage={ activeToolInstance ? 'No events recorded yet' : 'Activate the tool to see event history.' }
-                    headers={ [
-                      { label: 'Time', key: 'timestamp', width: '7rem' },
-                      { label: 'Event', key: 'event', width: '17%' },
-                      { label: 'Message', key: 'message' },
-                    ] }
-                    rows={ memoizedMessageRows }
-                  />
-                </L.section>
-              )}
-            </Stack>
+            <L.section>
+              <VirtualizedTableSimple
+                size="small"
+                height={{ xxs: '40vh', sm: '50vh', md: '55vh' }}
+                isLoading={ isLoadingMessages }
+                title="Event History"
+                subtitle={ (
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between" 
+                    spacing={ 1 }
+                  >
+                    <SquareIconButton
+                      aria-label="Previous list of notifications"
+                      color="secondary"
+                      variant="contained"
+                      icon={ <ArrowBackIosNewIcon /> }
+                      disabled={ totalMessagesPages <= 1 || currentMessagesPage === 1 }
+                      onClick={ () => setCurrentMessagesPage(currentMessagesPage - 1) }
+                    />
+                    <L.p sx={{ color: 'text.white', userSelect: 'none' }}>{ currentMessagesPage }</L.p>
+                    <SquareIconButton
+                      aria-label="Next list of notifications"
+                      color="secondary"
+                      variant="contained"
+                      icon={ <ArrowForwardIosIcon /> }
+                      disabled={ totalMessagesPages <= 1 || currentMessagesPage >= totalMessagesPages }
+                      onClick={ () => setCurrentMessagesPage(currentMessagesPage + 1) }
+                    />
+                  </Stack>
+                ) }
+                noDataMessage={ activeToolInstance ? 'No events recorded yet' : 'Activate the tool to see event history.' }
+                headers={ [
+                  { label: 'Time', key: 'timestamp', width: '7rem' },
+                  { label: 'Event', key: 'event', width: '17%' },
+                  { label: 'Message', key: 'message' },
+                ] }
+                rows={ memoizedMessageRows }
+              />
+            </L.section>
           </Stack>
         </Stack>
-      )}
+      </Stack>
     </>
   );
 };
