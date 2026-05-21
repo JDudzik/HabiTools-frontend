@@ -59,10 +59,10 @@ const Notifications = () => {
       openConfirmation({
         content: (
           <Stack spacing={ 2 }>
-            <L.h1 color={ selectedMessage.priority === 3 ? 'warning' : 'primary.veryDark' }>
+            <L.h2 color={ selectedMessage.priority === 3 ? 'warning' : 'primary.veryDark' }>
               {selectedMessage.event_name}
               {selectedMessage.priority === 3 && <span> - High Priority</span>}
-            </L.h1>
+            </L.h2>
             
             <Box>
               { MarkdownMui.compiler(selectedMessage.message_text) }
