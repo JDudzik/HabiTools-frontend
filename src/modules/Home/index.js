@@ -2,12 +2,16 @@ import { PageHead, L, AuthCtaButtons, MarkdownMui, Link } from 'components';
 import { Stack, Typography, Box, Button } from '@mui/material';
 import { usePageManager } from 'lib/hooks';
 import howWeSecureData from 'lib/data/howWeSecure.md';
+import { useApiGetHabitica } from 'lib/api/methods/habiticaApi';
 
 
 const Home = () => {
   const {
     openConfirmation,
   } = usePageManager({});
+
+  // We prefetch Habitica data on the home page since this is the page most users will land on for now.
+  useApiGetHabitica();
 
   const openHowWeSecureModal = () => {
     openConfirmation({
