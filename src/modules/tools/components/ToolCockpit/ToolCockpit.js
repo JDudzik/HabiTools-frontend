@@ -10,8 +10,7 @@ import { L, HabiticaAccountManagerModal, MarkdownMui, AuthCtaButtons } from 'com
 import { userContext } from 'lib/contexts/UserContext';
 import whyExpirationContent from './content/whyExpiration.md';
 
-// const FIVE_MINUTES_MS = 5 * 60 * 1000;
-const FIVE_MINUTES_MS = 1000;
+const FIVE_MINUTES_MS = 5 * 60 * 1000;
 
 
 /**
