@@ -45,7 +45,7 @@ const Home = () => {
               alignItems: 'center',
             }}
           >
-            <L.h4>You can find the tools by using the menu button in the top-left corner.</L.h4>
+            <L.h4>Tools can be found in the "Menu" at the top-left corner.</L.h4>
           </Alert>
         )}
 
