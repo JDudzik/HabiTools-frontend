@@ -243,9 +243,9 @@ const AutoAcceptQuestsPage = () => {
                 ) }
                 noDataMessage={ activeToolInstance ? 'No events recorded yet' : 'Activate the tool to see event history.' }
                 headers={ [
-                  { label: 'Time', key: 'timestamp', width: '7rem' },
-                  { label: 'Event', key: 'event', width: '17%' },
-                  { label: 'Message', key: 'message' },
+                  { label: 'Time', key: 'timestamp', width: '5rem' },
+                  { label: 'Event', key: 'event', width: '6rem' },
+                  { label: 'Message', key: 'message', width: '15rem' },
                 ] }
                 rows={ memoizedMessageRows }
               />

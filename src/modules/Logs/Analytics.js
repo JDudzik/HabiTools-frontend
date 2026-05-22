@@ -89,7 +89,7 @@ const AnalyticLogs = () => {
 
         <>
           <Stack flexDirection="column" sx={{ width: '100%', maxWidth: '100%', mt: 1 }}>
-            <L.section >
+            <L.section>
               <VirtualizedTableSimple
                 size="small"
                 height={{ xxs: '50vh', sm: '60vh', md: '65vh' }}
