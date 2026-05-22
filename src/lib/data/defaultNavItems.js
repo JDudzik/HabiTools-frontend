@@ -70,38 +70,6 @@ export const defaultNavItems = {
           link: '/article-update',
           requiredPermission: 'article_control',
         },
-        {
-          text: 'Debug Links',
-          children: [
-            {
-              text: 'Email Confirmations',
-              children: [
-                {
-                  text: 'Verify Email',
-                  link: '/email-confirmations?type=verify-email&token=1',
-                },
-                {
-                  text: 'Reset Password',
-                  link: '/email-confirmations?type=reset-password&token=1',
-                },
-            
-              ],
-            },
-            {
-              text: 'Forgot Password',
-              link: '/forgot-password',
-            },
-            {
-              text: 'Resend Verify Email',
-              link: '/resend-email-verification',
-            },
-            {
-              text: 'Log Something',
-              icon: 'Home',
-              onClick: props => console.log('some props:', props), // eslint-disable-line no-console
-            },
-          ],
-        },
       ],
     },
   ],
