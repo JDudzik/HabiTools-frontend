@@ -62,7 +62,7 @@ export const AdminControls = (props) => {
         }}
         buttonChild="More Actions"
         menuItems={ [{
-          key: 'hello',
+          key: 'view-my-account-details',
           text: 'View My Account Details',
           onClick: () => openMyDetailsModal(),
           props: { dense: true },

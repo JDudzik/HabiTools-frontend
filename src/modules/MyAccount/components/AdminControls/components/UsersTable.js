@@ -4,7 +4,11 @@ import {
   Box,
   TextField,
   Alert,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { L, VirtualizedTableSimple, SimpleDisplay } from 'components';
 import { useApiSearchUsers } from 'lib/api/methods/adminControlsApi';
@@ -19,6 +23,30 @@ const formatDateTime = (timestamp) => {
   if (Number.isNaN(parsed)) { return '-'; }
 
   return new Date(parsed).toLocaleString();
+};
+
+const AccordionDataView = ({ title, data }) => {
+  return (
+    <Accordion disableGutters>
+      <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
+        <L.p mb={ 0 }><strong>{title}</strong></L.p>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Box
+          component="pre"
+          sx={{
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+            overflowX: 'auto',
+            fontSize: '0.8rem',
+            m: 0,
+          }}
+        >
+          { JSON.stringify(data ?? null, null, 2) }
+        </Box>
+      </AccordionDetails>
+    </Accordion>
+  );
 };
 
 export const UsersTable = (props) => {
@@ -66,6 +94,13 @@ export const UsersTable = (props) => {
   }, [ usersData ]);
 
   const openUserDetailsModal = useCallback((user) => {
+    const {
+      groups,
+      permissions,
+      user_subscriptions,
+      ...remainingUserData
+    } = user || {};
+
     openConfirmation?.({
       title: user?.email || 'User Details',
       content: (
@@ -85,20 +120,11 @@ export const UsersTable = (props) => {
           <SimpleDisplay sensitive title="Last Name" sx={{ flexGrow: 1, m: 1 }} color="secondary.main">
             { user?.last_name || '-' }
           </SimpleDisplay>
-          <SimpleDisplay sensitive title="All User Data" sx={{ flexGrow: 1, m: 1 }} color="secondary.main">
-            <Box
-              component="pre"
-              sx={{
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-                overflowX: 'auto',
-                fontSize: '0.8rem',
-                m: 0,
-              }}
-            >
-              { JSON.stringify(user, null, 2) }
-            </Box>
-          </SimpleDisplay>
+
+          <AccordionDataView title="Primary User Data" data={ remainingUserData } />
+          <AccordionDataView title="Groups" data={ groups } />
+          <AccordionDataView title="Permissions" data={ permissions } />
+          <AccordionDataView title="Subscriptions" data={ user_subscriptions } />
         </Stack>
       ),
       primaryButtonText: 'Close',
