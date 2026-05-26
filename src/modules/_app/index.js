@@ -80,7 +80,7 @@ const InnerApp = (props) => {
               <meta name="theme-color" content="#0094A2" />
               <meta property="og:title" content="HabiTools" />
               <meta property="og:type" content="website" />
-              <meta property="og:description" content="A suite of tools to automate and expand Habitica" />
+              <meta property="og:description" content="A suite of tools and automations for Habitica" />
               <meta property="og:image" content="BASE_URL/images/icons/icon-512x512.png" />
               <meta property="og:url" content="BASE_URL/" />
               <meta name="twitter:card" content="summary_large_image" />
