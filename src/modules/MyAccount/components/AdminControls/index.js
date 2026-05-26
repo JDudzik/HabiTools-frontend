@@ -6,11 +6,18 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { L, SimpleDisplay, PopoutMenuButton } from 'components';
 import { PermissionControlsTable, UsersTable } from './components';
+import { useGlobalHabiticaNotificationMenuAction } from './hooks/useGlobalHabiticaNotificationMenuAction';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 export const AdminControls = (props) => {
-  const { setInternalPageSlug, userState, openConfirmation } = props;
+  const { setInternalPageSlug, userState, openConfirmation, updateConfirmation, handleApiError } = props;
+  const globalHabiticaNotificationMenuItem = useGlobalHabiticaNotificationMenuAction({
+    userState,
+    openConfirmation,
+    updateConfirmation,
+    handleApiError,
+  });
 
   const openMyDetailsModal = () => {
     openConfirmation({
@@ -61,12 +68,15 @@ export const AdminControls = (props) => {
           variant: 'outlined',
         }}
         buttonChild="More Actions"
-        menuItems={ [{
-          key: 'view-my-account-details',
-          text: 'View My Account Details',
-          onClick: () => openMyDetailsModal(),
-          props: { dense: true },
-        }] }
+        menuItems={ [
+          {
+            key: 'view-my-account-details',
+            text: 'View My Account Details',
+            onClick: () => openMyDetailsModal(),
+            props: { dense: true },
+          },
+          globalHabiticaNotificationMenuItem ?? undefined,
+        ] }
       />
 
       <Stack width="100%" spacing={ 4 }>
