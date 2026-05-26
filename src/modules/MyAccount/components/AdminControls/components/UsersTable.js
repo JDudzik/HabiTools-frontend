@@ -98,8 +98,18 @@ export const UsersTable = (props) => {
       groups,
       permissions,
       user_subscriptions,
+      habitica_user,
       ...remainingUserData
     } = user || {};
+
+    const { habitica_tools, habitica_user_data, ...remainingHabiticaUser } = habitica_user || {};
+    const {
+      achievements: _habiticaAchievements,
+      items: _habiticaItems,
+      webhooks: _habiticaWebhooks,
+      party: habiticaParty,
+      ...remainingHabiticaUserData
+    } = habitica_user_data || {};
 
     openConfirmation?.({
       title: user?.email || 'User Details',
@@ -125,6 +135,8 @@ export const UsersTable = (props) => {
           <AccordionDataView title="Groups" data={ groups } />
           <AccordionDataView title="Permissions" data={ permissions } />
           <AccordionDataView title="Subscriptions" data={ user_subscriptions } />
+          <AccordionDataView title="Habitica User" data={{ user: remainingHabiticaUser, userData: remainingHabiticaUserData, party: habiticaParty }} />
+          <AccordionDataView title="Habitica Tools" data={ habitica_tools } />
         </Stack>
       ),
       primaryButtonText: 'Close',
