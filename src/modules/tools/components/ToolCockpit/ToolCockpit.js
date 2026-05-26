@@ -3,9 +3,7 @@ import {
   Stack,
   Button,
   CircularProgress,
-  IconButton,
 } from '@mui/material';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { L, HabiticaAccountManagerModal, MarkdownMui, AuthCtaButtons } from 'components';
 import { userContext } from 'lib/contexts/UserContext';
 import whyExpirationContent from './content/whyExpiration.md';
@@ -167,17 +165,17 @@ export const ToolCockpit = ({
         {isToolActive && (
           <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
             {daysUntilExpiration !== null && (
-              <Stack direction="row" alignItems="center" justifyContent="center">
+              <Stack direction="column" alignItems="center" justifyContent="center">
                 <L.p fontSize="small" color="textSecondary" sx={{ mb: 0 }}>
                   <strong>Tool expires in:</strong> { daysUntilExpiration } days
                 </L.p>
-                <IconButton
-                  size="small"
-                  aria-label="Why an expiration?"
+                <Button
+                  sx={{ pt: 0, pb: 1 }}
+                  size="medium"
                   onClick={ openWhyExpirationModal }
                 >
-                  <HelpOutlineIcon fontSize="inherit" />
-                </IconButton>
+                  Why an expiration?
+                </Button>
               </Stack>
             )}
 
