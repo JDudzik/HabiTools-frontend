@@ -94,18 +94,9 @@ const AutoAcceptQuestsPage = () => {
     if (activeToolInstance?.id) {
       mutateRefresh({
         resourceId: activeToolInstance.id,
-      }, {
-        onSuccess: () => {
-          openConfirmation?.({
-            title: 'Tool Refreshed',
-            content: 'Auto Accept Quests expiration has been refreshed.',
-            primaryButtonText: 'Got it',
-            removeSecondaryAction: true,
-          });
-        },
       });
     }
-  }, [ activeToolInstance?.id, mutateRefresh, openConfirmation ]);
+  }, [ activeToolInstance?.id, mutateRefresh ]);
 
   const handleDeactivate = useCallback(() => {
     if (activeToolInstance?.id) {
