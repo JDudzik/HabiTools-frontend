@@ -69,7 +69,7 @@ export const LinkFormPage = ({ onNavigate }) => {
     <Stack spacing={ 3 }>
       <L.h3>Link Your Habitica Account</L.h3>
 
-      <L.p>To link your Habitica account, you'll need your Habitica User ID and API Token.</L.p>
+      <L.p>To link your Habitica account, you'll need your <b>Habitica User ID</b> and <b>API Token</b>.</L.p>
       <L.p>Select the instructions based on how you use Habitica:</L.p>
 
       <Stack direction="column" spacing={ 3 } pb={ 2 }>
