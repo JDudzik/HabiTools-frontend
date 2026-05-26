@@ -53,6 +53,10 @@ export const PopoutMenuButton = (props) => {
         onClose={ () => handleMenuClose(props?.menuProps?.onClose) }
       >
         {props.menuItems?.map((menuItem, index) => {
+          if (!menuItem) {
+            return null;
+          }
+
           if (menuItem.isDivider) {
             return (
               <Divider key={ `divider-${ index }` } />
