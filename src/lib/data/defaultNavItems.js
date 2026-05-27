@@ -29,7 +29,12 @@ export const defaultNavItems = {
         {
           text: 'Auto-Accept Quests',
           link: '/tools/auto-accept-quests',
-          ariaLabel: 'Navigate to Auto-Accept Quests page',
+          ariaLabel: 'Navigate to Auto-Accept Quests tool page',
+        },
+        {
+          text: 'Auto-Start Quests',
+          link: '/tools/auto-start-quests',
+          ariaLabel: 'Navigate to Auto-Start Quests tool page',
         },
       ],
     },
