@@ -32,6 +32,8 @@ export const ToolCockpit = ({
   onActivate,
   onRefresh,
   onDeactivate,
+  activationControls,
+  returnPath = '/tools/auto-accept-quests',
 }) => {
   const { userState } = useContext(userContext);
   const [ habiticaAccountManagerModalOpen, setHabiticaAccountManagerModalOpen ] = useState(false);
@@ -111,7 +113,7 @@ export const ToolCockpit = ({
       <L.section>
         <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
           <L.p>You must sign-up or login to use this tool.</L.p>
-          <AuthCtaButtons returnPath="/tools/auto-accept-quests" />
+          <AuthCtaButtons returnPath={ returnPath } />
         </Stack>
       </L.section>
     );
@@ -149,6 +151,7 @@ export const ToolCockpit = ({
       <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
         {!isToolActive && (
           <Stack spacing={ 2 }>
+            { activationControls }
             <L.p color="textSecondary">
               This tool is not active yet.
             </L.p>
