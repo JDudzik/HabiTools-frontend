@@ -1,6 +1,7 @@
 export * from './useApiGetHabitica';
 export * from './useMutateInitiateAutoAcceptQuests';
 export * from './useMutateInitiateAutoStartQuests';
+export * from './useMutateEditAutoStartQuests';
 export * from './useMutateLinkHabitica';
 export * from './useMutateRefreshTool';
 export * from './useMutateTeardownTool';
