@@ -34,7 +34,7 @@ const AutoStartQuestsPage = () => {
   const { userState } = useContext(userContext);
   const [ expandedAccordion, setExpandedAccordion ] = useState(false);
   const [ currentMessagesPage, setCurrentMessagesPage ] = useState(1);
-  const [ waitMode, setWaitMode ] = useState('24');
+  const [ waitHours, setWaitHours ] = useState(24);
 
   const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError } = useApiGetHabitica();
 
@@ -81,18 +81,18 @@ const AutoStartQuestsPage = () => {
 
   const handleActivate = useCallback(() => {
     mutateActivate({
-      waitMode: String(waitMode),
+      waitHours,
     }, {
       onSuccess: () => {
         openConfirmation?.({
           title: 'Tool Activated',
-          content: `Auto Start Quests is now active. Quests will start automatically after ${ waitMode } hour${ waitMode === '1' ? '' : 's' }.`,
+          content: `Auto Start Quests is now active. Quests will start automatically after ${ waitHours } hour${ waitHours === 1 ? '' : 's' }.`,
           primaryButtonText: 'Got it',
           removeSecondaryAction: true,
         });
       },
     });
-  }, [ mutateActivate, openConfirmation, waitMode ]);
+  }, [ mutateActivate, openConfirmation, waitHours ]);
 
   const handleRefresh = useCallback(() => {
     if (activeToolInstance?.id) {
@@ -147,16 +147,16 @@ const AutoStartQuestsPage = () => {
         <Select
           labelId="auto-start-quests-wait-mode-label"
           id="auto-start-quests-wait-mode"
-          value={ waitMode }
+          value={ waitHours }
           label="Wait Hours"
-          onChange={ ({ target }) => setWaitMode(String(target.value)) }
+          onChange={ ({ target }) => setWaitHours(Number(target.value)) }
         >
-          <MenuItem value="3">3</MenuItem>
-          <MenuItem value="24">24</MenuItem>
+          <MenuItem value={ 3 }>3</MenuItem>
+          <MenuItem value={ 24 }>24</MenuItem>
         </Select>
       </FormControl>
     </Stack>
-  ), [ waitMode ]);
+  ), [ waitHours ]);
 
   const isLoading = isLoadingHabitica || isActivating || isRefreshing || isDeactivating;
   const totalMessagesPages = eventMessagesData?.pagination?.totalPages || 1;

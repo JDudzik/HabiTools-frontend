@@ -11,7 +11,7 @@ export const useMutateInitiateAutoStartQuests = (mutateOptions) => {
 
   const mutationFn = (payload) => {
     const sanitizedPayload = sanitizeProperties(payload, {
-      requiredKeys: [ 'waitMode' ],
+      requiredKeys: [ 'waitHours' ],
       trimPayload: true,
       removeDisallowedKeys: true,
     });
@@ -19,7 +19,7 @@ export const useMutateInitiateAutoStartQuests = (mutateOptions) => {
 
     return axios
       .post('/v1/auth/habitica/tools/auto-start-quests', {
-        wait_mode: String(sanitizedProperties.waitMode),
+        wait_hours: Number(sanitizedProperties.waitHours),
       })
       .then(res => res.data)
       .catch((err) => {
