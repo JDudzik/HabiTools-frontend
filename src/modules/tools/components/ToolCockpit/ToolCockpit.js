@@ -32,7 +32,8 @@ export const ToolCockpit = ({
   onActivate,
   onRefresh,
   onDeactivate,
-  activationControls,
+  preActivationControls,
+  postActivationControls,
   returnPath = '/tools/auto-accept-quests',
 }) => {
   const { userState } = useContext(userContext);
@@ -151,7 +152,7 @@ export const ToolCockpit = ({
       <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
         {!isToolActive && (
           <Stack spacing={ 2 }>
-            { activationControls }
+            { preActivationControls }
             <L.p color="textSecondary">
               This tool is not active yet.
             </L.p>
@@ -204,6 +205,9 @@ export const ToolCockpit = ({
                 startIcon={ isPerformingAction && <CircularProgress size={ 20 } /> }
                 onClick={ handleDeactivate }
               >Deactivate</Button>
+            </Stack>
+            <Stack pt={ 2 }>
+              { postActivationControls }
             </Stack>
           </Stack>
         )}
