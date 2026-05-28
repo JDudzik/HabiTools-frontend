@@ -82,7 +82,7 @@ const AutoAcceptQuestsPage = () => {
       onSuccess: () => {
         openConfirmation?.({
           title: 'Tool Activated',
-          content: 'Auto Accept Quests is now active. Quest invitations will be accepted automatically.',
+          content: 'Auto Accept Quests is active. Quest invitations will be accepted automatically.',
           primaryButtonText: 'Got it',
           removeSecondaryAction: true,
         });
@@ -106,7 +106,7 @@ const AutoAcceptQuestsPage = () => {
         onSuccess: () => {
           openConfirmation?.({
             title: 'Tool Deactivated',
-            content: 'Auto Accept Quests is now inactive. You can reactivate anytime.',
+            content: 'Auto Accept Quests is inactive.',
             primaryButtonText: 'Got it',
             removeSecondaryAction: true,
           });

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback, useMemo } from 'react';
+import React, { useContext, useState, useCallback, useMemo, useEffect } from 'react';
 import {
   Stack,
   Box,
@@ -7,6 +7,7 @@ import {
   AccordionDetails,
   FormControl,
   InputLabel,
+  Button,
   Select,
   MenuItem,
 } from '@mui/material';
@@ -17,6 +18,7 @@ import { userContext } from 'lib/contexts/UserContext';
 import {
   useApiGetHabitica,
   useMutateInitiateAutoStartQuests,
+  useMutateEditAutoStartQuests,
   useMutateRefreshTool,
   useMutateTeardownTool,
 } from 'lib/api/methods/habiticaApi';
@@ -27,8 +29,8 @@ import { ToolCockpit } from '../components/ToolCockpit';
 import toolDescriptionContent from './content/toolDescription.md';
 import advancedDetailsContent from './content/advancedTechnicalDetails.md';
 
-const TOOL_SLUG = 'auto_start_quests';
 
+const TOOL_SLUG = 'auto_start_quests';
 
 const AutoStartQuestsPage = () => {
   const { userState } = useContext(userContext);
@@ -40,9 +42,7 @@ const AutoStartQuestsPage = () => {
 
   const activeToolInstance = useMemo(() => {
     if (!habiticaData?.habitica_tools) { return null; }
-    const tools = habiticaData.habitica_tools.filter(
-      t => t.tool_slug === TOOL_SLUG,
-    );
+    const tools = habiticaData.habitica_tools.filter(tool => tool.tool_slug === TOOL_SLUG);
     return tools.length > 0 ? tools[0] : null;
   }, [ habiticaData?.habitica_tools ]);
 
@@ -63,6 +63,7 @@ const AutoStartQuestsPage = () => {
   );
 
   const { mutate: mutateActivate, isPending: isActivating, error: activationError } = useMutateInitiateAutoStartQuests();
+  const { mutate: mutateEdit, isPending: isEditing, error: editError } = useMutateEditAutoStartQuests();
   const { mutate: mutateRefresh, isPending: isRefreshing, error: refreshError } = useMutateRefreshTool();
   const { mutate: mutateTeardown, isPending: isDeactivating, error: deactivationError } = useMutateTeardownTool();
 
@@ -76,8 +77,14 @@ const AutoStartQuestsPage = () => {
     defaultRoutingPath: '/tools/auto-start-quests',
     defaultPageStage: 'loading',
     apiIsLoading: isLoadingHabitica,
-    apiErrors: habiticaError || messagesError || activationError || refreshError || deactivationError,
+    apiErrors: habiticaError || messagesError || activationError || editError || refreshError || deactivationError,
   });
+
+  useEffect(() => {
+    if (activeToolInstance?.data?.waitHours !== undefined) {
+      setWaitHours(activeToolInstance.data.waitHours);
+    }
+  }, [ activeToolInstance?.data?.waitHours ]);
 
   const handleActivate = useCallback(() => {
     mutateActivate({
@@ -86,7 +93,7 @@ const AutoStartQuestsPage = () => {
       onSuccess: () => {
         openConfirmation?.({
           title: 'Tool Activated',
-          content: `Auto Start Quests is now active. Quests will start automatically after ${ waitHours } hour${ waitHours === 1 ? '' : 's' }.`,
+          content: `Auto Start Quests is now active. Quests will start after waiting for ${ waitHours } hour${ waitHours === 1 ? '' : 's' }.`,
           primaryButtonText: 'Got it',
           removeSecondaryAction: true,
         });
@@ -110,7 +117,7 @@ const AutoStartQuestsPage = () => {
         onSuccess: () => {
           openConfirmation?.({
             title: 'Tool Deactivated',
-            content: 'Auto Start Quests is now inactive. You can reactivate anytime.',
+            content: 'Auto Start Quests is inactive.',
             primaryButtonText: 'Got it',
             removeSecondaryAction: true,
           });
@@ -137,28 +144,73 @@ const AutoStartQuestsPage = () => {
     })) || [];
   }, [ eventMessagesData?.messages ]);
 
-  const activationControls = useMemo(() => (
+  const preActivationControls = useMemo(() => (
     <Stack spacing={ 1 }>
       <L.p color="textSecondary" fontSize="small">
-        Select the wait time before auto-starting quests.
+        How long should quests wait before starting?
       </L.p>
       <FormControl size="small" sx={{ minWidth: 180 }}>
-        <InputLabel id="auto-start-quests-wait-mode-label">Wait Hours</InputLabel>
+        <InputLabel id="auto-start-quests-wait-mode-label">Hours</InputLabel>
         <Select
           labelId="auto-start-quests-wait-mode-label"
           id="auto-start-quests-wait-mode"
           value={ waitHours }
-          label="Wait Hours"
+          label="Hours"
           onChange={ ({ target }) => setWaitHours(Number(target.value)) }
         >
-          <MenuItem value={ 24 }>24</MenuItem>
-          <MenuItem value={ 3 }>3</MenuItem>
+          <MenuItem value={ 24 }>24 Hours</MenuItem>
+          <MenuItem value={ 3 }>3 Hours</MenuItem>
         </Select>
       </FormControl>
     </Stack>
   ), [ waitHours ]);
 
-  const isLoading = isLoadingHabitica || isActivating || isRefreshing || isDeactivating;
+  const postActivationControls = useMemo(() => (
+    <Stack spacing={ 1 }>
+      <L.p color="textSecondary" fontSize="small">
+        How long should quests wait before starting?
+      </L.p>
+      <FormControl size="small" sx={{ minWidth: 180 }}>
+        <InputLabel id="auto-start-quests-wait-mode-label">Hours</InputLabel>
+        <Select
+          labelId="auto-start-quests-wait-mode-label"
+          id="auto-start-quests-wait-mode"
+          value={ waitHours }
+          label="Hours"
+          onChange={ ({ target }) => setWaitHours(Number(target.value)) }
+        >
+          <MenuItem value={ 24 }>24 Hours</MenuItem>
+          <MenuItem value={ 3 }>3 Hours</MenuItem>
+        </Select>
+      </FormControl>
+      <Button
+        size="small"
+        variant="contained"
+        color="primary"
+        disabled={
+          isEditing ||
+          Number(activeToolInstance?.data?.waitHours) === Number(waitHours)
+        }
+        onClick={ () => mutateEdit({
+          resourceId: activeToolInstance.id,
+          waitHours,
+        }, {
+          onSuccess: () => {
+            openConfirmation?.({
+              title: 'Settings Saved',
+              content: `Quest auto-start delay updated to ${ waitHours } hour${ waitHours === 1 ? '' : 's' }.`,
+              primaryButtonText: 'Got it',
+              removeSecondaryAction: true,
+            });
+          },
+        }) }
+      >
+        Save
+      </Button>
+    </Stack>
+  ), [ activeToolInstance?.data?.waitHours, activeToolInstance?.id, isEditing, mutateEdit, openConfirmation, waitHours ]);
+
+  const isLoading = isLoadingHabitica || isActivating || isEditing || isRefreshing || isDeactivating;
   const totalMessagesPages = eventMessagesData?.pagination?.totalPages || 1;
 
   return (
@@ -191,7 +243,8 @@ const AutoStartQuestsPage = () => {
               toolInstance={ activeToolInstance }
               isLoading={ isLoading }
               openConfirmation={ openConfirmation }
-              activationControls={ activationControls }
+              preActivationControls={ preActivationControls }
+              postActivationControls={ postActivationControls }
               returnPath="/tools/auto-start-quests"
               onActivate={ handleActivate }
               onRefresh={ handleRefresh }
