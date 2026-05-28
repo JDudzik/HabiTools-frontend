@@ -1,5 +1,5 @@
-This tool creates a webhook on your Habitica account so Habitica can notify HabiTools when party quest events happen.
+This tool works by adding a webhook to your Habitica account that tells Habitica to send a message to HabiTools whenever a quest opens. HabiTools uses this as the signal to start the timer. Technically the timer actually uses a scheduled routine (cron job) to start the quest instead of a classic in-memory wait.
 
-When relevant events are received, HabiTools tracks the quest state and starts the quest automatically after the wait mode you selected at activation time (3 or 24 hours).
+This tool also validates several factors when the quest opens before starting the timer. For example, it makes sure that you're either the quest leader or party leader. If you aren't, then there's no use in starting the timer because you can't start the quest. Lastly, this tool also listens for when the quest starts so that if it starts early, it will remove the timer as well.
 
-As a fallback, HabiTools also runs periodic checks through a cron routine to verify pending quest-start actions in case webhook delivery is delayed or missed by the Habitica API.
+Regarding the 3 hour option, this exists because the Auto-Accept Quests tool has a fall-back routine schedule that every 3 hours will check if a quests is available to join. This fall-back exists because on rare occasions, the Habitica API will fail to send webhooks to their destination. So in theory, the 3 hour option gives time for all of these routines to play-out and finalize to get everyone to join the quest.
