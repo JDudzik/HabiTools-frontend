@@ -19,7 +19,7 @@ const SomethingWentWrong = (props) => {
       'TOO_MANY_ATTEMPTS', 'INADEQUATE_PERMISSION', 'INVALID_CREDENTIALS',
       'API_ERROR',         'INVALID_URL',           'LOAD_FAILED',
       'ERR_NETWORK',       'UNAUTHORIZED_ACCESS',   'HCAPTCHA_VERIFICATION_FAILED',
-      'DECRYPTION_FAILED',
+      'DECRYPTION_FAILED', 'TOOL_ALREADY_ACTIVE',
     ];
 
     if (handledErrors.includes(normalizedStatus)) {
@@ -177,6 +177,22 @@ const SomethingWentWrong = (props) => {
             
             If this seems incorrect or the problem persists after relinking your account, please contact support through the <Link href="/feedback?source=ErrorPage.decryption_failed">Feedback Page</Link>.
           </p>
+        </>
+      )}
+
+      {derivedStatus === 'TOOL_ALREADY_ACTIVE' && (
+        <>
+          <h2>That Tool is Already Active</h2>
+          <p>
+            It looks like you've already activated that tool.<br />
+            You can try going back and <b>refresh the page</b>. If this issue continues, please contact support through the <Link href="/feedback?source=ErrorPage.tool_already_active">Feedback Page</Link>.
+          </p>
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={ router.back }
+          >Back to previous page</Button>
         </>
       )}
 
