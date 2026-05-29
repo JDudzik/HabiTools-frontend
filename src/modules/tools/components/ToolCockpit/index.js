@@ -151,11 +151,11 @@ export const ToolCockpit = ({
     <L.section>
       <Stack spacing={ 0.5 } justifyContent="center" alignItems="center">
         {!isToolActive && (
-          <Stack spacing={ 2 }>
-            { preActivationControls }
-            <L.p color="textSecondary">
+          <Stack spacing={ 2 } textAlign="center">
+            <L.p color="warning.dark">
               This tool is not active yet.
             </L.p>
+            { preActivationControls }
             <Button
               variant="contained"
               color="primary"

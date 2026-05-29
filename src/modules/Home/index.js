@@ -76,7 +76,7 @@ const Home = () => {
               <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend">Backend</Link>
             </Typography>
             <Typography mb={ 2 }>
-              Security of your data is a core principle for HabiTools. We use your Habitica
+              Security of your data is a core principle for HabiTools. We store and use your Habitica
               user data and API key to provide tools and automations,
               so the way we manage your data is extremely important. Your Habitica data is stored securely and carefully with
               modern encryption best practices in place.
