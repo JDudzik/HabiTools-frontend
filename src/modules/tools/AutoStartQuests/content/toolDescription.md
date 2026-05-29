@@ -1,9 +1,10 @@
 The **Auto Start Quests** tool will automatically start quests for you after a certain amount of time. A timer will begin whenever a new quest is opened for the party.
 
-**Why are the only options 24 or 3 hours?**
+#### **Why are the only options 24, 12, or 3 hours?**
 These options cover the most common use-cases while also ensuring some specific edge-cases are handled.
 
 **24 Hours**: Select this option if most of your party is not using scripts to automatically accept quest invitations. This makes it so everyone across any timezones has a fair chance to join the quest before it starts.
-**3 Hours**:  Select this option if your party requires or mostly uses the [Auto-accept quests tool](/tools/auto-accept-quests/) (or alternatives). When everyone accepts it, then the quest starts automatically anyways, but this option covers a very specific problem on the Habitica API where it sometimes doesn't report that a quest has started to a user who would otherwise automatically join.
+**12 Hours**: Use this option if everyone in your party is very active and are in the same timezone. This option tries to balance reducing wait time with the risk that some users may miss the window to accept.
+**3 Hours**:  Select this option if your party mostly uses the [Auto-accept quests tool](/tools/auto-accept-quests/) (or alternatives). When everyone accepts it, then the quest starts automatically anyways, but this option covers a very specific problem with the Habitica API where it sometimes doesn't report that a quest has started to a user who would otherwise automatically join, so the fallback routine needs time to catch it.
 
 One last thing: If you aren't the party leader or the quest opener, then the timer won't begin because you can't start that quest anyways.

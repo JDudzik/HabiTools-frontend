@@ -131,6 +131,7 @@ const AutoStartQuestsPage = () => {
           onChange={ ({ target }) => setWaitHours(Number(target.value)) }
         >
           <MenuItem value={ 24 }>24 Hours</MenuItem>
+          <MenuItem value={ 12 }>12 Hours</MenuItem>
           <MenuItem value={ 3 }>3 Hours</MenuItem>
         </Select>
       </FormControl>
