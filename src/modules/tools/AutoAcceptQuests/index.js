@@ -24,7 +24,7 @@ const TOOL_SLUG = 'auto-accept-quests';
 const AutoAcceptQuestsPage = () => {
   const [ expandedAccordion, setExpandedAccordion ] = useState(false);
 
-  const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError } = useApiGetHabitica();
+  const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError, isEnabled: isEnabledHabitica } = useApiGetHabitica();
 
   // Find the active auto-accept-quests tool instance
   const activeToolInstance = useMemo(() => {
@@ -123,6 +123,7 @@ const AutoAcceptQuestsPage = () => {
               habiticaData={ habiticaData }
               toolInstance={ activeToolInstance }
               isLoading={ isLoading }
+              skipInitialLoading={ isEnabledHabitica }
               openConfirmation={ openConfirmation }
               onActivate={ handleActivate }
               onRefresh={ handleRefresh }

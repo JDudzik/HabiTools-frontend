@@ -4,12 +4,12 @@ import {
   Button,
   CircularProgress,
 } from '@mui/material';
-import { L, HabiticaAccountManagerModal, MarkdownMui, AuthCtaButtons } from 'components';
+import { L, HabiticaAccountManagerModal, MarkdownMui, AuthCtaButtons, LoadingElement } from 'components';
 import { userContext } from 'lib/contexts/UserContext';
 import whyExpirationContent from './content/whyExpiration.md';
 
-const FIVE_MINUTES_MS = 5 * 60 * 1000;
 
+const FIVE_MINUTES_MS = 5 * 60 * 1000;
 
 /**
  * ToolCockpit: A reusable panel for tool pages showing state-dependent actions.
@@ -28,20 +28,33 @@ export const ToolCockpit = ({
   habiticaData,
   toolInstance,
   isLoading,
+  skipInitialLoading = false,
   openConfirmation,
   onActivate,
   onRefresh,
   onDeactivate,
   controlSlots,
-  returnPath = '/tools/auto-accept-quests',
+  returnPath = '/home',
 }) => {
   const { userState } = useContext(userContext);
   const [ habiticaAccountManagerModalOpen, setHabiticaAccountManagerModalOpen ] = useState(false);
   const [ isPerformingAction, setIsPerformingAction ] = useState(false);
   const [ minutesUntilCanRefresh, setMinutesUntilCanRefresh ] = useState(0);
+  const [ isInitialLoading, setIsInitialLoading ] = useState(!skipInitialLoading && true);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 500);
+    if (isLoading) { setIsInitialLoading(false); }
 
+    return () => clearTimeout(timer);
+  }, [ isLoading ]);
+
+  
   const isAuthenticated = userState?.isLoggedIn;
   const isLinked = !!habiticaData?.id;
+  const showLoader = isLoading || isInitialLoading;
 
   // Compute cooldown based on last_refreshed_at from the tool instance
   useEffect(() => {
@@ -105,6 +118,16 @@ export const ToolCockpit = ({
       removeSecondaryAction: true,
     });
   }, [ openConfirmation ]);
+
+  if (showLoader) {
+    return (
+      <L.section>
+        <Stack minHeight={ 100 } alignItems="center" justifyContent="center">
+          <LoadingElement circular visibilityDelay={ 0 } />
+        </Stack>
+      </L.section>
+    );
+  }
 
   
   // Render: Not authenticated

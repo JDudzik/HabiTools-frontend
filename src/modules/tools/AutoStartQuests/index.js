@@ -30,7 +30,7 @@ const AutoStartQuestsPage = () => {
   const [ expandedAccordion, setExpandedAccordion ] = useState(false);
   const [ waitHours, setWaitHours ] = useState(24);
 
-  const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError } = useApiGetHabitica();
+  const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError, isEnabled: isEnabledHabitica } = useApiGetHabitica();
 
   const activeToolInstance = useMemo(() => {
     if (!habiticaData?.habitica_tools) { return null; }
@@ -169,6 +169,7 @@ const AutoStartQuestsPage = () => {
               habiticaData={ habiticaData }
               toolInstance={ activeToolInstance }
               isLoading={ isLoading }
+              skipInitialLoading={ isEnabledHabitica }
               openConfirmation={ openConfirmation }
               controlSlots={{
                 pre: activationControls,
