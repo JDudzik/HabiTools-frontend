@@ -6,7 +6,6 @@ import {
   AccordionDetails,
   FormControl,
   InputLabel,
-  Button,
   Select,
   MenuItem,
 } from '@mui/material';
@@ -103,7 +102,21 @@ const AutoStartQuestsPage = () => {
     }
   }, [ activeToolInstance?.id, mutateTeardown, openConfirmation ]);
 
-  const preActivationControls = useMemo(() => (
+  const handleEditSave = useCallback(() => mutateEdit({
+    resourceId: activeToolInstance.id,
+    waitHours,
+  }, {
+    onSuccess: () => {
+      openConfirmation?.({
+        title: 'Settings Saved',
+        content: `Quest auto-start delay updated to ${ waitHours } hour${ waitHours === 1 ? '' : 's' }.`,
+        primaryButtonText: 'Got it',
+        removeSecondaryAction: true,
+      });
+    },
+  }), [ activeToolInstance?.id, mutateEdit, openConfirmation, waitHours ]);
+
+  const activationControls = useMemo(() => (
     <Stack spacing={ 1 }>
       <L.p color="textSecondary" fontSize="small">
         How long should quests wait before starting?
@@ -123,51 +136,6 @@ const AutoStartQuestsPage = () => {
       </FormControl>
     </Stack>
   ), [ waitHours ]);
-
-  const postActivationControls = useMemo(() => (
-    <Stack spacing={ 1 }>
-      <L.p color="textSecondary" fontSize="small">
-        How long should quests wait before starting?
-      </L.p>
-      <FormControl size="small" sx={{ minWidth: 180 }}>
-        <InputLabel id="auto-start-quests-wait-mode-label">Hours</InputLabel>
-        <Select
-          labelId="auto-start-quests-wait-mode-label"
-          id="auto-start-quests-wait-mode"
-          value={ waitHours }
-          label="Hours"
-          onChange={ ({ target }) => setWaitHours(Number(target.value)) }
-        >
-          <MenuItem value={ 24 }>24 Hours</MenuItem>
-          <MenuItem value={ 3 }>3 Hours</MenuItem>
-        </Select>
-      </FormControl>
-      <Button
-        size="small"
-        variant="contained"
-        color="primary"
-        disabled={
-          isEditing ||
-          Number(activeToolInstance?.data?.waitHours) === Number(waitHours)
-        }
-        onClick={ () => mutateEdit({
-          resourceId: activeToolInstance.id,
-          waitHours,
-        }, {
-          onSuccess: () => {
-            openConfirmation?.({
-              title: 'Settings Saved',
-              content: `Quest auto-start delay updated to ${ waitHours } hour${ waitHours === 1 ? '' : 's' }.`,
-              primaryButtonText: 'Got it',
-              removeSecondaryAction: true,
-            });
-          },
-        }) }
-      >
-        Save
-      </Button>
-    </Stack>
-  ), [ activeToolInstance?.data?.waitHours, activeToolInstance?.id, isEditing, mutateEdit, openConfirmation, waitHours ]);
 
   const isLoading = isLoadingHabitica || isActivating || isEditing || isRefreshing || isDeactivating;
 
@@ -201,8 +169,12 @@ const AutoStartQuestsPage = () => {
               toolInstance={ activeToolInstance }
               isLoading={ isLoading }
               openConfirmation={ openConfirmation }
-              preActivationControls={ preActivationControls }
-              postActivationControls={ postActivationControls }
+              controlSlots={{
+                pre: activationControls,
+                post: activationControls,
+                postSave: handleEditSave,
+                postIsSaveDisable: isEditing || activeToolInstance?.data?.waitHours === waitHours,
+              }}
               returnPath="/tools/auto-start-quests"
               onActivate={ handleActivate }
               onRefresh={ handleRefresh }

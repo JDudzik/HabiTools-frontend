@@ -32,8 +32,7 @@ export const ToolCockpit = ({
   onActivate,
   onRefresh,
   onDeactivate,
-  preActivationControls,
-  postActivationControls,
+  controlSlots,
   returnPath = '/tools/auto-accept-quests',
 }) => {
   const { userState } = useContext(userContext);
@@ -155,7 +154,7 @@ export const ToolCockpit = ({
             <L.p color="warning.dark">
               This tool is not active yet.
             </L.p>
-            { preActivationControls }
+            { controlSlots?.pre }
             <Button
               variant="contained"
               color="primary"
@@ -206,8 +205,21 @@ export const ToolCockpit = ({
                 onClick={ handleDeactivate }
               >Deactivate</Button>
             </Stack>
-            <Stack pt={ 2 }>
-              { postActivationControls }
+            <Stack pt={ 2 } spacing={ 2 }>
+              { controlSlots?.post && (
+                <>
+                  { controlSlots?.post }
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    disabled={ controlSlots?.postIsSaveDisable }
+                    onClick={ controlSlots?.postSave }
+                  >
+                    Save
+                  </Button>
+                </>
+              ) }
             </Stack>
           </Stack>
         )}
