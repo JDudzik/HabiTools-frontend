@@ -30,17 +30,15 @@
     "@stripe/stripe-js": "^8.7.0",
     "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-query-devtools": "^5.94.4",
-    "abort-controller": "^3.0.0",
-    "add": "^2.0.6",
-    "axios": "^1.15.0",
+    "axios": "^1.16.1",
     "dayjs": "^1.11.13",
     "deep-trim": "^1.0.0",
     "dexie": "^4.0.11",
     "formik": "^2.4.6",
     "formik-mui": "^5.0.0-alpha.1",
     "formik-mui-lab": "^1.0.0",
-    "immer": "^10.1.1",
-    "lodash": "^4.17.21",
+    "immer": "^11.1.8",
+    "lodash": "^4.18.1",
     "luxon": "^3.6.1",
     "markdown-to-jsx": "^7.7.13",
     "moment": "^2.30.1",
@@ -75,6 +73,6 @@
     "typescript": "^5.8.3"
   },
   "resolutions": {
-    "axios": "^1.15.0"
+    "axios": "^1.16.1"
   }
 }
