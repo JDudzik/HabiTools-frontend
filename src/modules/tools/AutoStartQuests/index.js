@@ -1,7 +1,6 @@
-import React, { useContext, useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   Stack,
-  Box,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -12,9 +11,8 @@ import {
   MenuItem,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { PageHead, L, VirtualizedTableSimple, MarkdownMui, SquareIconButton } from 'components';
+import { PageHead, L, MarkdownMui } from 'components';
 import { usePageManager } from 'lib/hooks';
-import { userContext } from 'lib/contexts/UserContext';
 import {
   useApiGetHabitica,
   useMutateInitiateAutoStartQuests,
@@ -22,10 +20,7 @@ import {
   useMutateRefreshTool,
   useMutateTeardownTool,
 } from 'lib/api/methods/habiticaApi';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useApiListEventMessages } from 'lib/api/methods/eventMessageApi';
-import { ToolCockpit } from '../components/ToolCockpit';
+import { ToolCockpit, ToolEventMessagesTable } from '../components';
 import toolDescriptionContent from './content/toolDescription.md';
 import advancedDetailsContent from './content/advancedTechnicalDetails.md';
 
@@ -33,9 +28,7 @@ import advancedDetailsContent from './content/advancedTechnicalDetails.md';
 const TOOL_SLUG = 'auto_start_quests';
 
 const AutoStartQuestsPage = () => {
-  const { userState } = useContext(userContext);
   const [ expandedAccordion, setExpandedAccordion ] = useState(false);
-  const [ currentMessagesPage, setCurrentMessagesPage ] = useState(1);
   const [ waitHours, setWaitHours ] = useState(24);
 
   const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError } = useApiGetHabitica();
@@ -45,22 +38,6 @@ const AutoStartQuestsPage = () => {
     const tools = habiticaData.habitica_tools.filter(tool => tool.tool_slug === TOOL_SLUG);
     return tools.length > 0 ? tools[0] : null;
   }, [ habiticaData?.habitica_tools ]);
-
-  const { data: eventMessagesData, isLoading: isLoadingMessages, error: messagesError } = useApiListEventMessages(
-    {
-      filters: {
-        resource_id: activeToolInstance?.id,
-      },
-      pagination: {
-        page: currentMessagesPage,
-        page_size: 50,
-      },
-    },
-    {
-      enabled: userState?.isLoggedIn && !!activeToolInstance?.id,
-      instance: 'auto-start-quests-messages',
-    },
-  );
 
   const { mutate: mutateActivate, isPending: isActivating, error: activationError } = useMutateInitiateAutoStartQuests();
   const { mutate: mutateEdit, isPending: isEditing, error: editError } = useMutateEditAutoStartQuests();
@@ -77,7 +54,7 @@ const AutoStartQuestsPage = () => {
     defaultRoutingPath: '/tools/auto-start-quests',
     defaultPageStage: 'loading',
     apiIsLoading: isLoadingHabitica,
-    apiErrors: habiticaError || messagesError || activationError || editError || refreshError || deactivationError,
+    apiErrors: habiticaError || activationError || editError || refreshError || deactivationError,
   });
 
   useEffect(() => {
@@ -125,24 +102,6 @@ const AutoStartQuestsPage = () => {
       });
     }
   }, [ activeToolInstance?.id, mutateTeardown, openConfirmation ]);
-
-  const memoizedMessageRows = useMemo(() => {
-    return eventMessagesData?.messages?.map?.(message => ({
-      columns: [
-        { key: 'timestamp', element: new Date(parseInt(message.created_at, 10)).toLocaleString() },
-        { key: 'event', element: (
-          <L.p fontSize="small">
-            <strong>{ message.event_name || message.event_slug || 'Unknown Event' }</strong>
-          </L.p>
-        ) },
-        { key: 'message', element: (
-          <Box fontSize="small">
-            { MarkdownMui.compiler(message.message_text || message.short_message || '') }
-          </Box>
-        ) },
-      ],
-    })) || [];
-  }, [ eventMessagesData?.messages ]);
 
   const preActivationControls = useMemo(() => (
     <Stack spacing={ 1 }>
@@ -211,7 +170,6 @@ const AutoStartQuestsPage = () => {
   ), [ activeToolInstance?.data?.waitHours, activeToolInstance?.id, isEditing, mutateEdit, openConfirmation, waitHours ]);
 
   const isLoading = isLoadingHabitica || isActivating || isEditing || isRefreshing || isDeactivating;
-  const totalMessagesPages = eventMessagesData?.pagination?.totalPages || 1;
 
   return (
     <>
@@ -278,44 +236,9 @@ const AutoStartQuestsPage = () => {
             </L.section>
 
             <L.section>
-              <VirtualizedTableSimple
-                size="small"
-                height={{ xxs: '40vh', sm: '50vh', md: '55vh' }}
-                isLoading={ isLoadingMessages }
-                title="Event History"
-                subtitle={ (
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    spacing={ 1 }
-                  >
-                    <SquareIconButton
-                      aria-label="Previous list of notifications"
-                      color="secondary"
-                      variant="contained"
-                      icon={ <ArrowBackIosNewIcon /> }
-                      disabled={ totalMessagesPages <= 1 || currentMessagesPage === 1 }
-                      onClick={ () => setCurrentMessagesPage(currentMessagesPage - 1) }
-                    />
-                    <L.p sx={{ color: 'text.white', userSelect: 'none' }}>{ currentMessagesPage }</L.p>
-                    <SquareIconButton
-                      aria-label="Next list of notifications"
-                      color="secondary"
-                      variant="contained"
-                      icon={ <ArrowForwardIosIcon /> }
-                      disabled={ totalMessagesPages <= 1 || currentMessagesPage >= totalMessagesPages }
-                      onClick={ () => setCurrentMessagesPage(currentMessagesPage + 1) }
-                    />
-                  </Stack>
-                ) }
-                noDataMessage={ activeToolInstance ? 'No events recorded yet' : 'Activate the tool to see event history.' }
-                headers={ [
-                  { label: 'Time', key: 'timestamp', width: '5rem' },
-                  { label: 'Event', key: 'event', width: '6rem' },
-                  { label: 'Message', key: 'message', width: '15rem' },
-                ] }
-                rows={ memoizedMessageRows }
+              <ToolEventMessagesTable
+                activeToolInstance={ activeToolInstance }
+                toolSlug={ TOOL_SLUG }
               />
             </L.section>
           </Stack>
