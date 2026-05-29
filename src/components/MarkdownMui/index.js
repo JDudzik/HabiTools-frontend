@@ -1,4 +1,4 @@
-import * as MarkdownToJsx from 'markdown-to-jsx';
+import * as MarkdownToJsx from 'markdown-to-jsx/react';
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { Link } from 'components/Link/Link';
