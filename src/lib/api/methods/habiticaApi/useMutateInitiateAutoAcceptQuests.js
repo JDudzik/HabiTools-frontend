@@ -23,6 +23,7 @@ export const useMutateInitiateAutoAcceptQuests = (mutateOptions) => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
+    queryClient.invalidateQueries({ queryKey: [ 'useApiListEventMessages', 'auto-accept-quests' ]});
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });

@@ -39,7 +39,7 @@ export const useMutateEditAutoStartQuests = (mutateOptions) => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
-    queryClient.invalidateQueries({ queryKey: [ 'useApiListEventMessages', 'auto-start-quests-messages' ]});
+    queryClient.invalidateQueries({ queryKey: [ 'useApiListEventMessages', 'auto-start-quests' ]});
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });

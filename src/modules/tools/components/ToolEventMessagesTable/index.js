@@ -31,7 +31,7 @@ export const ToolEventMessagesTable = (props) => {
     },
     {
       enabled: userState?.isLoggedIn && !!activeToolInstance?.id,
-      instance: `${ toolSlug }_messages`,
+      instance: `${ toolSlug }`,
     },
   );
   const totalMessagesPages = eventMessagesData?.pagination?.totalPages || 1;

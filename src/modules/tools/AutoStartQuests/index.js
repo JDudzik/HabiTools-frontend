@@ -24,7 +24,7 @@ import toolDescriptionContent from './content/toolDescription.md';
 import advancedDetailsContent from './content/advancedTechnicalDetails.md';
 
 
-const TOOL_SLUG = 'auto_start_quests';
+const TOOL_SLUG = 'auto-start-quests';
 
 const AutoStartQuestsPage = () => {
   const [ expandedAccordion, setExpandedAccordion ] = useState(false);
