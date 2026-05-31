@@ -63,10 +63,9 @@ const SomethingWentWrong = (props) => {
       {/* ///////////// */}
       {[ 'FAILED_TO_FETCH', 'LOAD_FAILED', 'ERR_NETWORK' ].includes(derivedStatus) && (
         <>
-          <h2>You're offline</h2>
+          <h2>You may be offline</h2>
           <p>
-            It looks like your device has lost connection.<br />
-            Please try reconnecting or trying again when the connection is more stable.
+            Please make sure you're connected to the internet and try again.
           </p>
           <p>If this problem is incorrect, please contact support through the <Link href="/feedback?source=ErrorPage.failed_to_fetch">Feedback Page</Link></p>
           <br />
