@@ -65,6 +65,15 @@ export const themeSettings = {
       skeletonBackground: '#f3f3f3',
       skeletonForeground: '#ecebeb',
     },
+    habitica: {
+      blue50: '#50b5e9',
+      teal100: '#3bcad7',
+      green100: '#24cc8f',
+      yellow100: '#ffbe5d',
+      orange100: '#ff944c',
+      red100: '#ff6165',
+      maroon100: '#de3f3f',
+    },
   },
   spacing: size => `${ size * 0.5 }em`,
   breakpoints: {

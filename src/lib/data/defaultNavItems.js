@@ -36,6 +36,11 @@ export const defaultNavItems = {
           link: '/tools/auto-start-quests',
           ariaLabel: 'Navigate to Auto-Start Quests tool page',
         },
+        {
+          text: 'Party Pulse',
+          link: '/tools/party-pulse',
+          ariaLabel: 'Navigate to Party Pulse tool page',
+        },
       ],
     },
     {

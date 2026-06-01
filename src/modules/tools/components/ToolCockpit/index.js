@@ -232,15 +232,17 @@ export const ToolCockpit = ({
               { controlSlots?.post && (
                 <>
                   { controlSlots?.post }
-                  <Button
-                    size="small"
-                    variant="contained"
-                    color="primary"
-                    disabled={ controlSlots?.postIsSaveDisable }
-                    onClick={ controlSlots?.postSave }
-                  >
-                    Save
-                  </Button>
+                  {!controlSlots?.postHideSaveButton && (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      disabled={ controlSlots?.postIsSaveDisable }
+                      onClick={ controlSlots?.postSave }
+                    >
+                      Save
+                    </Button>
+                  )}
                 </>
               ) }
             </Stack>
