@@ -6,7 +6,7 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import { PageHead, L, MarkdownMui, LoadingElement } from 'components';
+import { PageHead, L, MarkdownMui, LoadingElement, Link } from 'components';
 import { usePageManager } from 'lib/hooks';
 import {
   useApiGetHabitica,
@@ -69,11 +69,19 @@ const PartyShoutPage = () => {
       content: (
         <Stack spacing={ 2 } mt={ 1 }>
           <L.p color="textSecondary">
-            Confirm this message before sending it to your entire party.
+            Confirm this message before sending it to your entire party.<br />
+            Note: Not all special formatting translates perfectly to Habitica.
           </L.p>
+          
           <L.section sx={{ border: 1, borderColor: 'divider', borderRadius: 2, px: 2, py: 1 }}>
             <MarkdownMui.Markdown options={{ skipNewlines: true }} >
-              { trimmedMessage }
+              {`
+${ trimmedMessage }
+
+---
+*[Party shout via HabiTools](https://habitools.online/)*
+*[@member]() [@member]() [@member]() [@member]() [@member]()*`}
+              
             </MarkdownMui.Markdown>
           </L.section>
         </Stack>
@@ -140,7 +148,7 @@ const PartyShoutPage = () => {
             </L.h1>
 
             <L.section>
-              <MarkdownMui.Markdown>
+              <MarkdownMui.Markdown options={{ skipNewlines: false }} >
                 { toolDescriptionContent }
               </MarkdownMui.Markdown>
             </L.section>
@@ -174,15 +182,18 @@ const PartyShoutPage = () => {
 
             {hasLinkedHabiticaAccount && !isLoadingPartyInfo && isPartyLeader && (
               <L.section>
-                <Stack spacing={ 2 }>
-                  <L.h3 sx={{ m: 0 }}>Compose Message</L.h3>
+                <Stack spacing={ 2 } sx={{ mt: 2 }}>
+                  <Stack>
+                    <L.h3 sx={{ m: 0 }}>Compose Message</L.h3>
+                    <Link href="https://github.com/HabitRPG/habitica/wiki/Markdown-in-Habitica">Markdown formatting help</Link>
+                  </Stack>
 
                   <TextField
                     multiline
                     minRows={ 8 }
                     size="small"
-                    label="Party Shout Markdown"
-                    placeholder="Write your markdown message to your party"
+                    label="Party Shout Message"
+                    placeholder="Write your message to your party"
                     value={ messageText }
                     disabled={ isSendInProgress }
                     onChange={ event => setMessageText(event.target.value) }
