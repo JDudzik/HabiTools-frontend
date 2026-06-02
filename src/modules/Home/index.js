@@ -19,7 +19,7 @@ const Home = () => {
 
   const openHowWeSecureModal = () => {
     openConfirmation({
-      content: (MarkdownMui.compiler(howWeSecureData)),
+      content: (<MarkdownMui.Markdown text={ howWeSecureData } />),
       primaryButtonText: 'Close',
       removeSecondaryAction: true,
     });

@@ -51,7 +51,7 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
 
   const openHowWeSecureModal = () => {
     openConfirmation({
-      content: (MarkdownMui.compiler(howWeSecure)),
+      content: (<MarkdownMui.Markdown text={ howWeSecure } />),
       primaryButtonText: 'Close',
       removeSecondaryAction: true,
     });
