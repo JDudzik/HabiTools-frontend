@@ -5,7 +5,7 @@ import { Link } from 'components/Link/Link';
 // Docs for markdown-to-jsx: https://www.npmjs.com/package/markdown-to-jsx#optionswrapper
 
 
-const defaultOptions = {
+const defaultOptionGenerator = options => ({
   wrapper: props => <Box component="div" sx={{ maxWidth: '100%' }} { ...props } />,
   forceWrapper: true,
   overrides: {
@@ -49,10 +49,10 @@ const defaultOptions = {
           { ...props }
           sx={{
             border: 'none',
-            borderTop: `${ props?.thickness || '2' }px solid`, // Light gray color for a clean look
+            borderTop: `${ props?.thickness || '2' }px solid`,
             borderColor: props?.color || 'text.lightGrey',
-            marginY: props?.marginY || '-1rem', // Adds spacing above and below
-            width: '100%', // Ensures it spans the container
+            marginY: props?.marginY,
+            width: '100%',
           }}
         />
       ),
@@ -110,6 +110,7 @@ const defaultOptions = {
             borderRadius: '2px',
             paddingX: '4px',
             marginY: '6px',
+            textAlign: 'left',
           }}
         />
       ),
@@ -130,6 +131,7 @@ const defaultOptions = {
             paddingY: '0.25rem',
             color: 'text.secondary',
             backgroundColor: props?.backgroundColor || 'secondary.50',
+            textAlign: 'left',
           }}
         />
       ),
@@ -144,6 +146,7 @@ const defaultOptions = {
             paddingY: 0,
             paddingLeft: '2.75rem',
             color: props?.color || 'text.black',
+            textAlign: 'left',
             '& ol': {
               paddingLeft: '1.75rem',
             },
@@ -161,6 +164,7 @@ const defaultOptions = {
             paddingY: 0,
             paddingLeft: '2.75rem',
             color: props?.color || 'text.black',
+            textAlign: 'left',
             '& ul': {
               paddingLeft: '1.75rem',
             },
@@ -240,13 +244,12 @@ const defaultOptions = {
       ),
     },
   },
-
-};
+});
 
 
 const extendOptions = (options) => {
   const { overrides, ...remOptions } = options || {};
-  const generatedOptions = { ...defaultOptions };
+  const generatedOptions = { ...defaultOptionGenerator(remOptions) };
   
   if (options?.overrides) {
     generatedOptions.overrides = {
@@ -266,6 +269,7 @@ const blockQuoteRegex = '^>.*(?:\r?\n(?!\n|[^>]))*';
 
 const allMatchers = `(?:${ codeBlockRegex }|${ inlineCodeRegex }|${ preTagRegex }|${ codeTagRegex }|${ blockQuoteRegex })`;
 const newlineRegex = '((?:\r?\n){2,})'; // Matches two or more consecutive newlines
+ 
 const compiler = (text, options) => {
   if (!text) { return null; }
 
@@ -281,6 +285,7 @@ const compiler = (text, options) => {
       return match;
     });
   }
+
   const extendedOptions = extendOptions(options);
   return MarkdownToJsx.compiler(formattedText, extendedOptions);
 };
@@ -288,8 +293,7 @@ const compiler = (text, options) => {
 
 const Markdown = ({ children, text, options }) => {
   if (!children && !text) { return null; }
-  const extendedOptions = extendOptions(options);
-  const renderedMarkdown = compiler(children || text, extendedOptions);
+  const renderedMarkdown = compiler(children || text, options);
   return renderedMarkdown;
 };
 
