@@ -72,7 +72,7 @@ const PartyShoutPage = () => {
       primaryButtonText: 'Send',
       content: (
         <Stack spacing={ 2 } mt={ 1 }>
-          <L.p color="textSecondary">
+          <L.p color="text.darkGrey">
             Confirm this message before sending it to your entire party.<br />
             Note: Not all special formatting translates perfectly to Habitica.
           </L.p>
