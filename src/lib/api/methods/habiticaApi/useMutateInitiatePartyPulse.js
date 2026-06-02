@@ -22,10 +22,12 @@ export const useMutateInitiatePartyPulse = (mutateOptions) => {
   };
 
   const onSuccess = async () => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
+      queryClient.invalidateQueries({ queryKey: [ 'useApiListEventMessages', 'party-pulse' ]});
+      resolve();
+    }, 2000));
 
-    queryClient.invalidateQueries({ queryKey: [ HABITICA_QUERY_KEY ]});
-    queryClient.invalidateQueries({ queryKey: [ 'useApiListEventMessages', 'party-pulse' ]});
   };
 
   return useMutation({ mutationFn, onSuccess, ...mutateOptions });

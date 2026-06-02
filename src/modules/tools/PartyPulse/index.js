@@ -41,7 +41,7 @@ const TIER_DISPLAY = {
     textColor: 'text.black',
   },
   '3': {
-    label: 'Surging',
+    label: 'Highly Active',
     backgroundColor: 'habitica.blue50',
     textColor: 'text.black',
   },

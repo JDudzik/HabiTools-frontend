@@ -27,7 +27,7 @@ export const PartyPulseMemberCard = (props) => {
         alignItems="center"
         sx={{
           minWidth: 52,
-          backgroundColor: 'rgba(0, 0, 0, 0.10)',
+          backgroundColor: 'rgba(0, 0, 0, 0.20)',
         }}
       >
         <IconButton
@@ -40,7 +40,7 @@ export const PartyPulseMemberCard = (props) => {
           sx={{
             color: '#ffffff',
             '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.2)',
+              backgroundColor: 'rgba(0, 0, 0, 0.10)',
             },
           }}
         >
@@ -56,20 +56,20 @@ export const PartyPulseMemberCard = (props) => {
           flexGrow: 1,
         }}
       >
-        <Stack direction="row" justifyContent="space-between" alignItems="start" gap={ 2 }>
-          <L.h4 sx={{ m: 0, color: 'inherit' }}>
+        <Stack direction={{ xxs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="start" gap={ 2 }>
+          <L.h4 sx={{ m: 0, wordBreak: 'break-all' }}>
             { displayName }
           </L.h4>
-          <L.p sx={{ m: 0, color: 'inherit', whiteSpace: 'nowrap' }}>
+          <L.p sx={{ m: 0, whiteSpace: 'nowrap' }}>
             Tier: <b>{ tier.label }</b>
           </L.p>
         </Stack>
 
         <Stack direction="row" spacing={ 2 }>
-          <L.p2 sx={{ m: 0, color: 'inherit' }}>
-            Score: { Number(member?.currentScore || 0) }
+          <L.p2 sx={{ m: 0 }}>
+            Score: { member?.currentScore || 0 }
           </L.p2>
-          <L.p2 sx={{ m: 0, color: 'inherit' }}>
+          <L.p2 sx={{ m: 0 }}>
             Total checks: { totalChecks }
           </L.p2>
         </Stack>
