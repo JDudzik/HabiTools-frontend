@@ -17,6 +17,9 @@ import { ToolCockpit } from '../components';
 import toolDescriptionContent from './content/toolDescription.md';
 
 
+const PARTY_SHOUT_MESSAGE_MAX_LENGTH = 2200;
+
+
 const PartyShoutPage = () => {
   const [ messageText, setMessageText ] = useState('');
   const [ isSubmittingShout, setIsSubmittingShout ] = useState(false);
@@ -58,6 +61,7 @@ const PartyShoutPage = () => {
   const isPartyLeader = !!partyInfo?.isLeader;
   const isSendInProgress = isSubmittingShout || isSendingPartyShout;
   const trimmedMessage = useMemo(() => messageText?.trim?.() || '', [ messageText ]);
+  const messageCharacterCount = messageText.length;
 
   const handlePreviewMessage = useCallback(() => {
     if (!trimmedMessage) { return; }
@@ -188,16 +192,28 @@ ${ trimmedMessage }
                     <Link href="https://github.com/HabitRPG/habitica/wiki/Markdown-in-Habitica">Markdown formatting help</Link>
                   </Stack>
 
-                  <TextField
-                    multiline
-                    minRows={ 8 }
-                    size="small"
-                    label="Party Shout Message"
-                    placeholder="Write your message to your party"
-                    value={ messageText }
-                    disabled={ isSendInProgress }
-                    onChange={ event => setMessageText(event.target.value) }
-                  />
+                  <Stack>
+                    <TextField
+                      multiline
+                      minRows={ 8 }
+                      size="small"
+                      label="Party Shout Message"
+                      placeholder="Write your message to your party"
+                      value={ messageText }
+                      disabled={ isSendInProgress }
+                      inputProps={{ maxLength: PARTY_SHOUT_MESSAGE_MAX_LENGTH }}
+                      onChange={ (event) => {
+                        setMessageText(event.target.value.slice(0, PARTY_SHOUT_MESSAGE_MAX_LENGTH));
+                      } }
+                    />
+                    <L.p
+                      sx={{ m: 0 }}
+                      color="textSecondary"
+                      align="right"
+                    >
+                      {`${ messageCharacterCount } / ${ PARTY_SHOUT_MESSAGE_MAX_LENGTH }`}
+                    </L.p>
+                  </Stack>
 
                   {isSendInProgress && (
                     <Alert severity="info">
