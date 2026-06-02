@@ -178,7 +178,7 @@ ${ trimmedMessage }
 
             {hasLinkedHabiticaAccount && !isLoadingPartyInfo && !isPartyLeader && (
               <L.section>
-                <Alert severity="info">
+                <Alert severity="info" sx={{ fontSize: '1rem' }}>
                   Only the current party leader can send party shouts.
                 </Alert>
               </L.section>
