@@ -157,7 +157,7 @@ ${ trimmedMessage }
               </MarkdownMui.Markdown>
             </L.section>
 
-            {!hasLinkedHabiticaAccount && (
+            {/* {!hasLinkedHabiticaAccount && (
               <ToolCockpit
                 habiticaData={ habiticaData }
                 toolInstance={ null }
@@ -236,7 +236,7 @@ ${ trimmedMessage }
                   
                 </Stack>
               </L.section>
-            )}
+            )} */}
           </Stack>
         </Stack>
       </Stack>

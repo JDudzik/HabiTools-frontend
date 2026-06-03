@@ -41,11 +41,11 @@ export const defaultNavItems = {
           link: '/tools/party-pulse',
           ariaLabel: 'Navigate to Party Pulse tool page',
         },
-        {
-          text: 'Party Shout',
-          link: '/tools/party-shout',
-          ariaLabel: 'Navigate to Party Shout tool page',
-        },
+        // {
+        //   text: 'Party Shout',
+        //   link: '/tools/party-shout',
+        //   ariaLabel: 'Navigate to Party Shout tool page',
+        // },
       ],
     },
     {
