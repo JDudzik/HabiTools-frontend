@@ -5,7 +5,7 @@ import { Link } from 'components/Link/Link';
 // Docs for markdown-to-jsx: https://www.npmjs.com/package/markdown-to-jsx#optionswrapper
 
 
-const defaultOptionGenerator = options => ({
+const defaultOptionGenerator = _options => ({
   wrapper: props => <Box component="div" sx={{ maxWidth: '100%' }} { ...props } />,
   forceWrapper: true,
   overrides: {
