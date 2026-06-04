@@ -22,7 +22,6 @@ const PARTY_BROADCAST_MESSAGE_MAX_LENGTH = 2200;
 
 const PartyBroadcastPage = () => {
   const [ messageText, setMessageText ] = useState('');
-  const [ isSubmittingBroadcast, setIsSubmittingBroadcast ] = useState(false);
 
   const {
     data: habiticaData,
@@ -59,7 +58,6 @@ const PartyBroadcastPage = () => {
 
 
   const isPartyLeader = !!partyInfo?.isLeader;
-  const isSendInProgress = isSubmittingBroadcast || isSendingPartyBroadcast;
   const trimmedMessage = useMemo(() => messageText?.trim?.() || '', [ messageText ]);
   const messageCharacterCount = messageText.length;
 
@@ -79,47 +77,31 @@ const PartyBroadcastPage = () => {
           
           <L.section sx={{ border: 1, borderColor: 'divider', borderRadius: 2, px: 2, py: 1 }}>
             <MarkdownMui.Markdown options={{ skipNewlines: true }} >
-              {`
-${ trimmedMessage }
-
----
-*[Party Broadcast via HabiTools](https://habitools.online/)*
-*[@member]() [@member]() [@member]() [@member]() [@member]()*`}
-              
+              { trimmedMessage }
             </MarkdownMui.Markdown>
           </L.section>
         </Stack>
       ),
       onRequestSubmit: () => {
-        setIsSubmittingBroadcast(true);
         mutateSendPartyBroadcast({
           messageText: trimmedMessage,
         }, {
           onSuccess: () => {
+            console.log('onSuccess');
             setMessageText('');
             openConfirmation?.({
               title: 'Party Broadcast Sent',
-              content: 'Your party broadcast was sent successfully.',
+              content: 'Your party broadcast is being sent. It could take a couple of minutes to reach all party members, depending on how many members are in your party.',
               primaryButtonText: 'Close',
               removeSecondaryAction: true,
             });
           },
           onError: (error) => {
-            handleApiError({
-              error,
-              handledErrors: [
-                'MISSING_FIELDS',
-                'INVALID_PROPERTY_VALUE',
-                'NOT_PARTY_LEADER',
-                'HABITICA_PARTY_BROADCAST_FAILED',
-                'HABITICA_PARTY_INFO_FAILED',
-                'HABITICA_PARTY_MEMBERS_FAILED',
-                'HABITICA_API_FAILED',
-              ],
-            });
+            console.log('onError');
+            handleApiError({ error });
           },
           onSettled: () => {
-            setIsSubmittingBroadcast(false);
+            console.log('onSettled');
           },
         });
       },
@@ -201,7 +183,7 @@ ${ trimmedMessage }
                       label="Party Broadcast Message"
                       placeholder="Write your message to your party"
                       value={ messageText }
-                      disabled={ isSendInProgress }
+                      disabled={ isSendingPartyBroadcast }
                       inputProps={{ maxLength: PARTY_BROADCAST_MESSAGE_MAX_LENGTH }}
                       onChange={ (event) => {
                         setMessageText(event.target.value.slice(0, PARTY_BROADCAST_MESSAGE_MAX_LENGTH));
@@ -216,18 +198,12 @@ ${ trimmedMessage }
                     </L.p>
                   </Stack>
 
-                  {isSendInProgress && (
-                    <Alert severity="info">
-                      This can take up to 15 seconds, please wait...
-                    </Alert>
-                  )}
-
                   <Stack direction="row" justifyContent="flex-end">
                     <Button
                       variant="contained"
                       color="primary"
-                      disabled={ !trimmedMessage || isSendInProgress }
-                      startIcon={ isSendInProgress ? <CircularProgress size={ 18 } /> : null }
+                      disabled={ !trimmedMessage || isSendingPartyBroadcast }
+                      startIcon={ isSendingPartyBroadcast ? <CircularProgress size={ 18 } /> : null }
                       onClick={ handlePreviewMessage }
                     >
                       Preview Message
