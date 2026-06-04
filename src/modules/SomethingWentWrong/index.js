@@ -19,7 +19,7 @@ const SomethingWentWrong = (props) => {
       'TOO_MANY_ATTEMPTS', 'INADEQUATE_PERMISSION', 'INVALID_CREDENTIALS',
       'API_ERROR',         'INVALID_URL',           'LOAD_FAILED',
       'ERR_NETWORK',       'UNAUTHORIZED_ACCESS',   'HCAPTCHA_VERIFICATION_FAILED',
-      'DECRYPTION_FAILED', 'TOOL_ALREADY_ACTIVE',
+      'DECRYPTION_FAILED', 'TOOL_ALREADY_ACTIVE',   'HABITICA_INVALID_CREDENTIALS',
     ];
 
     if (handledErrors.includes(normalizedStatus)) {
@@ -195,12 +195,25 @@ const SomethingWentWrong = (props) => {
         </>
       )}
 
+      {derivedStatus === 'HABITICA_INVALID_CREDENTIALS' && (
+        <>
+          <h2>We Can't Access Your Habitica Account</h2>
+          <p>
+            It looks like we don't have the correct Habitica credentials to access your account.<br />
+            This typically happens when your Habitica password has changed. The most likely fix for this issue is to unlink and then relink your Habitica account. You can manage your linked Habitica account from the <Link href="/my-account">My Account page</Link>.<br /><br />
+            
+            If this seems incorrect or the problem persists after relinking your account, please contact support through the <Link href="/feedback?source=ErrorPage.habitica_invalid_credentials">Feedback Page</Link>.
+          </p>
+        </>
+      )}
+
       {[ 'OTHER_ERROR', 'API_ERROR', 'INVALID_URL', 'HCAPTCHA_VERIFICATION_FAILED' ].includes(derivedStatus) && (
         <div>
           {process.env.NODE_ENV === 'development' && (
             <div>
               <b>Dev Error Status:</b><br />
-              {`status: ${ derivedStatus }`}<br />
+              {`real status: ${ normalizedStatus }`}<br />
+              {`derived status: ${ derivedStatus }`}<br />
               {`message: ${ message }`}<br />
               {`returnPath: ${ return_path }`}
               <br /><br /><br />

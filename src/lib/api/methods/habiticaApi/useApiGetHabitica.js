@@ -8,11 +8,11 @@ const BASE_QUERY_KEY = 'useApiGetHabitica';
 
 export const useApiGetHabitica = (config) => {
   const { userState } = useContext(userContext);
-  const { enabled = userState?.isLoggedIn } = config || {};
+  const { enabled = userState?.isLoggedIn, skipRefresh = false, forceRefresh = false } = config || {};
   const axios = useAxios();
   
   const queryFn = () => axios
-    .get('/v1/auth/habitica')
+    .get(`/v1/auth/habitica?skipRefresh=${ skipRefresh }&forceRefresh=${ forceRefresh }`)
     .then(res => (res?.data?.habiticaUser || null))
     .catch((err) => {
       if (err?.response?.status === 404 && err?.response?.data?.status === 'HABITICA_USER_NOT_FOUND') {
@@ -27,7 +27,7 @@ export const useApiGetHabitica = (config) => {
     });
 
   return useQuery({
-    queryKey: [ BASE_QUERY_KEY ],
+    queryKey: [ BASE_QUERY_KEY, { skipRefresh, forceRefresh }],
     queryFn,
     enabled,
   });

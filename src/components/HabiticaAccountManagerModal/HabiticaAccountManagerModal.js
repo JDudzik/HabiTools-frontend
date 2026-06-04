@@ -21,7 +21,7 @@ export const HabiticaAccountManagerModal = ({ open, onClose }) => {
   const { openConfirmation } = useConfirmationModal();
   const [ currentPage, setCurrentPage ] = useState(null);
 
-  const { data: habiticaData, isLoading } = useApiGetHabitica();
+  const { data: habiticaData, isLoading } = useApiGetHabitica({ skipRefresh: true });
 
   // Determine the initial page based on link status
   const initialPage = useMemo(() => {

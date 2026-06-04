@@ -49,7 +49,7 @@ export const handleMiscBackendError = (config) => {
     'TOO_MANY_ATTEMPTS', 'INADEQUATE_PERMISSION', 'INVALID_CREDENTIALS',
     'API_ERROR',         'INVALID_URL',           'LOAD_FAILED',
     'ERR_NETWORK',       'UNAUTHORIZED_ACCESS',   'HCAPTCHA_VERIFICATION_FAILED',
-    'DECRYPTION_FAILED', 'TOOL_ALREADY_ACTIVE',
+    'DECRYPTION_FAILED', 'TOOL_ALREADY_ACTIVE',   'HABITICA_INVALID_CREDENTIALS',
   ];
 
   if (errorPageStatuses.includes(status)) {
