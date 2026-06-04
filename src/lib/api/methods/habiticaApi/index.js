@@ -10,4 +10,4 @@ export * from './useMutateRefreshTool';
 export * from './useMutateTeardownTool';
 export * from './useMutateUnlinkHabitica';
 export * from './useMutateSendGlobalHabiticaNotification';
-export * from './useMutateSendHabiticaPartyShout';
+export * from './useMutateSendHabiticaPartyBroadcast';

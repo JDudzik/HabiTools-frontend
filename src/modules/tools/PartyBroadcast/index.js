@@ -11,18 +11,18 @@ import { usePageManager } from 'lib/hooks';
 import {
   useApiGetHabitica,
   useApiGetHabiticaPartyInfo,
-  useMutateSendHabiticaPartyShout,
+  useMutateSendHabiticaPartyBroadcast,
 } from 'lib/api/methods/habiticaApi';
 import { ToolCockpit } from '../components';
 import toolDescriptionContent from './content/toolDescription.md';
 
 
-const PARTY_SHOUT_MESSAGE_MAX_LENGTH = 2200;
+const PARTY_BROADCAST_MESSAGE_MAX_LENGTH = 2200;
 
 
-const PartyShoutPage = () => {
+const PartyBroadcastPage = () => {
   const [ messageText, setMessageText ] = useState('');
-  const [ isSubmittingShout, setIsSubmittingShout ] = useState(false);
+  const [ isSubmittingBroadcast, setIsSubmittingBroadcast ] = useState(false);
 
   const {
     data: habiticaData,
@@ -41,17 +41,17 @@ const PartyShoutPage = () => {
     enabled: !isLoadingHabitica && hasLinkedHabiticaAccount,
   });
 
-  const { mutate: mutateSendPartyShout, isPending: isSendingPartyShout } = useMutateSendHabiticaPartyShout();
+  const { mutate: mutateSendPartyBroadcast, isPending: isSendingPartyBroadcast } = useMutateSendHabiticaPartyBroadcast();
 
   const {
     openConfirmation,
     handleApiError,
   } = usePageManager({
     defaultHandleApiError: {
-      returnPath: '/tools/party-shout',
+      returnPath: '/tools/party-broadcast',
       handledErrors: [ 'HABITICA_USER_NOT_FOUND' ],
     },
-    defaultRoutingPath: '/tools/party-shout',
+    defaultRoutingPath: '/tools/party-broadcast',
     defaultPageStage: 'loading',
     apiIsLoading: isLoadingHabitica || (hasLinkedHabiticaAccount && isLoadingPartyInfo),
     apiErrors: habiticaError || partyInfoError,
@@ -59,7 +59,7 @@ const PartyShoutPage = () => {
 
 
   const isPartyLeader = !!partyInfo?.isLeader;
-  const isSendInProgress = isSubmittingShout || isSendingPartyShout;
+  const isSendInProgress = isSubmittingBroadcast || isSendingPartyBroadcast;
   const trimmedMessage = useMemo(() => messageText?.trim?.() || '', [ messageText ]);
   const messageCharacterCount = messageText.length;
 
@@ -67,7 +67,7 @@ const PartyShoutPage = () => {
     if (!trimmedMessage) { return; }
 
     openConfirmation?.({
-      title: 'Preview Party Shout',
+      title: 'Preview Party Broadcast',
       secondaryButtonText: 'Cancel',
       primaryButtonText: 'Send',
       content: (
@@ -83,7 +83,7 @@ const PartyShoutPage = () => {
 ${ trimmedMessage }
 
 ---
-*[Party shout via HabiTools](https://habitools.online/)*
+*[Party Broadcast via HabiTools](https://habitools.online/)*
 *[@member]() [@member]() [@member]() [@member]() [@member]()*`}
               
             </MarkdownMui.Markdown>
@@ -91,15 +91,15 @@ ${ trimmedMessage }
         </Stack>
       ),
       onRequestSubmit: () => {
-        setIsSubmittingShout(true);
-        mutateSendPartyShout({
+        setIsSubmittingBroadcast(true);
+        mutateSendPartyBroadcast({
           messageText: trimmedMessage,
         }, {
           onSuccess: () => {
             setMessageText('');
             openConfirmation?.({
-              title: 'Party Shout Sent',
-              content: 'Your party shout was sent successfully.',
+              title: 'Party Broadcast Sent',
+              content: 'Your party broadcast was sent successfully.',
               primaryButtonText: 'Close',
               removeSecondaryAction: true,
             });
@@ -111,7 +111,7 @@ ${ trimmedMessage }
                 'MISSING_FIELDS',
                 'INVALID_PROPERTY_VALUE',
                 'NOT_PARTY_LEADER',
-                'HABITICA_PARTY_SHOUT_FAILED',
+                'HABITICA_PARTY_BROADCAST_FAILED',
                 'HABITICA_PARTY_INFO_FAILED',
                 'HABITICA_PARTY_MEMBERS_FAILED',
                 'HABITICA_API_FAILED',
@@ -119,16 +119,16 @@ ${ trimmedMessage }
             });
           },
           onSettled: () => {
-            setIsSubmittingShout(false);
+            setIsSubmittingBroadcast(false);
           },
         });
       },
     });
-  }, [ trimmedMessage, openConfirmation, mutateSendPartyShout, handleApiError ]);
+  }, [ trimmedMessage, openConfirmation, mutateSendPartyBroadcast, handleApiError ]);
 
   return (
     <>
-      <PageHead title="Party Shout" />
+      <PageHead title="Party Broadcast" />
 
       <Stack
         spacing={{ xxs: 10, md: 12 }}
@@ -148,7 +148,8 @@ ${ trimmedMessage }
         >
           <Stack spacing={ 4 } width="100%">
             <L.h1 align="center" color="text.softBlack">
-              Party Shout
+              Party Broadcast
+              {/* TODO: After this is fixed, post here: https://www.reddit.com/r/habitica/comments/1olb8p6/tagging_your_party/ */}
             </L.h1>
 
             <L.section>
@@ -157,14 +158,14 @@ ${ trimmedMessage }
               </MarkdownMui.Markdown>
             </L.section>
 
-            {/* {!hasLinkedHabiticaAccount && (
+            {!hasLinkedHabiticaAccount && (
               <ToolCockpit
                 habiticaData={ habiticaData }
                 toolInstance={ null }
                 isLoading={ isLoadingHabitica }
                 skipInitialLoading={ isEnabledHabitica }
                 openConfirmation={ openConfirmation }
-                returnPath="/tools/party-shout"
+                returnPath="/tools/party-broadcast"
               />
             )}
 
@@ -179,7 +180,7 @@ ${ trimmedMessage }
             {hasLinkedHabiticaAccount && !isLoadingPartyInfo && !isPartyLeader && (
               <L.section>
                 <Alert severity="info" sx={{ fontSize: '1rem' }}>
-                  Only the current party leader can send party shouts.
+                  Only the current party leader can send party broadcasts.
                 </Alert>
               </L.section>
             )}
@@ -197,13 +198,13 @@ ${ trimmedMessage }
                       multiline
                       minRows={ 8 }
                       size="small"
-                      label="Party Shout Message"
+                      label="Party Broadcast Message"
                       placeholder="Write your message to your party"
                       value={ messageText }
                       disabled={ isSendInProgress }
-                      inputProps={{ maxLength: PARTY_SHOUT_MESSAGE_MAX_LENGTH }}
+                      inputProps={{ maxLength: PARTY_BROADCAST_MESSAGE_MAX_LENGTH }}
                       onChange={ (event) => {
-                        setMessageText(event.target.value.slice(0, PARTY_SHOUT_MESSAGE_MAX_LENGTH));
+                        setMessageText(event.target.value.slice(0, PARTY_BROADCAST_MESSAGE_MAX_LENGTH));
                       } }
                     />
                     <L.p
@@ -211,7 +212,7 @@ ${ trimmedMessage }
                       color="textSecondary"
                       align="right"
                     >
-                      {`${ messageCharacterCount } / ${ PARTY_SHOUT_MESSAGE_MAX_LENGTH }`}
+                      {`${ messageCharacterCount } / ${ PARTY_BROADCAST_MESSAGE_MAX_LENGTH }`}
                     </L.p>
                   </Stack>
 
@@ -236,7 +237,7 @@ ${ trimmedMessage }
                   
                 </Stack>
               </L.section>
-            )} */}
+            )}
           </Stack>
         </Stack>
       </Stack>
@@ -244,4 +245,4 @@ ${ trimmedMessage }
   );
 };
 
-export default PartyShoutPage;
+export default PartyBroadcastPage;
