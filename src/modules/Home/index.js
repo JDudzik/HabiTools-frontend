@@ -7,7 +7,6 @@ import { useApiGetHabitica } from 'lib/api/methods/habiticaApi';
 import { userContext } from 'lib/contexts/UserContext';
 
 
-
 const Home = () => {
   const { userState } = useContext(userContext);
   const {
@@ -110,7 +109,7 @@ const Home = () => {
           >
             <L.img
               src="/images/marketing/habitools-logo-hero.jpg"
-              alt="Bank accounts overview"
+              alt="HabiTools Logo"
               sx={{
                 width: { xxs: '80%', xs: '60%', sm: '45%', md: '90%' },
                 maxWidth: '400px',
