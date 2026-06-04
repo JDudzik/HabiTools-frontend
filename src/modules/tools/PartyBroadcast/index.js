@@ -87,7 +87,6 @@ const PartyBroadcastPage = () => {
           messageText: trimmedMessage,
         }, {
           onSuccess: () => {
-            console.log('onSuccess');
             setMessageText('');
             openConfirmation?.({
               title: 'Party Broadcast Sent',
@@ -97,11 +96,7 @@ const PartyBroadcastPage = () => {
             });
           },
           onError: (error) => {
-            console.log('onError');
             handleApiError({ error });
-          },
-          onSettled: () => {
-            console.log('onSettled');
           },
         });
       },
