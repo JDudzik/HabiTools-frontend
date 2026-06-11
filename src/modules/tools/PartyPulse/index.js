@@ -32,10 +32,8 @@ const SCORE_DIRECTIONS = {
   descending: 'Descending (Highest to Lowest)',
 };
 
-const MIN_CHECKS_FOR_TIER = 7;
-
 const TIER_DISPLAY = {
-  insufficientChecks: {
+  calibrating: {
     label: 'Calibrating',
     backgroundColor: 'misc.ignoredBackground',
     textColor: 'text.black',
@@ -266,12 +264,9 @@ const PartyPulsePage = () => {
                   )}
 
                   {sortedMembers.map((member) => {
-                    const totalChecks = Number(member?.totalChecks || 0);
-                    const hasEnoughChecks = totalChecks >= MIN_CHECKS_FOR_TIER;
-                    const scoreTier = Number(member?.scoreTier ?? 0);
-                    const tier = hasEnoughChecks
-                      ? (TIER_DISPLAY[String(scoreTier)] || TIER_DISPLAY['0'])
-                      : TIER_DISPLAY.insufficientChecks;
+                    const totalChecks = member?.totalChecks ?? 0;
+                    const scoreTier = member?.scoreTier ?? 0;
+                    const tier = TIER_DISPLAY[scoreTier];
                     const displayName = member?.displayName || member?.username || '(unknown)';
 
                     return (
