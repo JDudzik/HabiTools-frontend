@@ -39,7 +39,7 @@ const TIER_DISPLAY = {
     textColor: 'text.black',
   },
   '3': {
-    label: 'Highly Active',
+    label: 'Paragon',
     backgroundColor: 'habitica.blue50',
     textColor: 'text.black',
   },
@@ -49,12 +49,12 @@ const TIER_DISPLAY = {
     textColor: 'text.black',
   },
   '1': {
-    label: 'Engaged',
+    label: 'Passive',
     backgroundColor: 'habitica.green100',
     textColor: 'text.black',
   },
   '0': {
-    label: 'Routine',
+    label: 'Coasting',
     backgroundColor: 'habitica.yellow100',
     textColor: 'text.black',
   },
@@ -64,7 +64,7 @@ const TIER_DISPLAY = {
     textColor: 'text.black',
   },
   '-2': {
-    label: 'Idle',
+    label: 'Disengaged',
     backgroundColor: 'habitica.red100',
     textColor: 'text.black',
   },
