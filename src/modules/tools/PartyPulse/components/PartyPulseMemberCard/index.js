@@ -3,13 +3,58 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { L } from 'components';
 
 
+const TIER_DISPLAY = {
+  calibrating: {
+    label: 'Calibrating',
+    backgroundColor: 'misc.ignoredBackground',
+    textColor: 'text.black',
+  },
+  '3': {
+    label: 'Paragon',
+    backgroundColor: 'habitica.blue50',
+    textColor: 'text.black',
+  },
+  '2': {
+    label: 'Active',
+    backgroundColor: 'habitica.teal100',
+    textColor: 'text.black',
+  },
+  '1': {
+    label: 'Passive',
+    backgroundColor: 'habitica.green100',
+    textColor: 'text.black',
+  },
+  '0': {
+    label: 'Coasting',
+    backgroundColor: 'habitica.yellow100',
+    textColor: 'text.black',
+  },
+  '-1': {
+    label: 'Slowing',
+    backgroundColor: 'habitica.orange100',
+    textColor: 'text.black',
+  },
+  '-2': {
+    label: 'Disengaged',
+    backgroundColor: 'habitica.red100',
+    textColor: 'text.black',
+  },
+  '-3': {
+    label: 'Dormant',
+    backgroundColor: 'habitica.maroon100',
+    textColor: 'text.white',
+  },
+};
+
 export const PartyPulseMemberCard = (props) => {
-  const {
-    member,
-    tier,
-    displayName,
-    totalChecks,
-  } = props;
+  const { member } = props;
+
+  const scoreTier = member?.scoreTier ?? 0;
+  const tier = TIER_DISPLAY[scoreTier];
+  const totalChecks = member?.totalChecks ?? 0;
+  const displayName = member?.displayName || member?.username || '(unknown)';
+  const currentScore = member?.currentScore ?? 0;
+  const userUrl = member?.userUrl;
 
   return (
     <Paper
@@ -32,7 +77,7 @@ export const PartyPulseMemberCard = (props) => {
       >
         <IconButton
           component="a"
-          href={ member.userUrl || `https://habitica.com/profile/${ member.id }` }
+          href={ userUrl || `https://habitica.com/profile/${ member.id }` }
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Open profile in new tab"
@@ -67,7 +112,7 @@ export const PartyPulseMemberCard = (props) => {
 
         <Stack direction="row" spacing={ 2 }>
           <L.p2 sx={{ m: 0 }}>
-            Score: { member?.currentScore || 0 }
+            Score: { currentScore }
           </L.p2>
           <L.p2 sx={{ m: 0 }}>
             Total checks: { totalChecks }

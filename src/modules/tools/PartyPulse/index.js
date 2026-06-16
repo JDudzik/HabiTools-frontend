@@ -8,6 +8,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Alert,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { PageHead, L, MarkdownMui } from 'components';
@@ -30,49 +31,6 @@ const TOOL_SLUG = 'party-pulse';
 const SCORE_DIRECTIONS = {
   ascending: 'Ascending (Lowest to Highest)',
   descending: 'Descending (Highest to Lowest)',
-};
-
-const TIER_DISPLAY = {
-  calibrating: {
-    label: 'Calibrating',
-    backgroundColor: 'misc.ignoredBackground',
-    textColor: 'text.black',
-  },
-  '3': {
-    label: 'Paragon',
-    backgroundColor: 'habitica.blue50',
-    textColor: 'text.black',
-  },
-  '2': {
-    label: 'Active',
-    backgroundColor: 'habitica.teal100',
-    textColor: 'text.black',
-  },
-  '1': {
-    label: 'Passive',
-    backgroundColor: 'habitica.green100',
-    textColor: 'text.black',
-  },
-  '0': {
-    label: 'Coasting',
-    backgroundColor: 'habitica.yellow100',
-    textColor: 'text.black',
-  },
-  '-1': {
-    label: 'Slowing',
-    backgroundColor: 'habitica.orange100',
-    textColor: 'text.black',
-  },
-  '-2': {
-    label: 'Disengaged',
-    backgroundColor: 'habitica.red100',
-    textColor: 'text.black',
-  },
-  '-3': {
-    label: 'Dormant',
-    backgroundColor: 'habitica.maroon100',
-    textColor: 'text.white',
-  },
 };
 
 const normalizeScoreDirection = value => (value === 'descending' ? 'descending' : 'ascending');
@@ -253,6 +211,11 @@ const PartyPulsePage = () => {
             {isToolActive && (
               <L.section>
                 <Stack spacing={ 2 }>
+                  <Alert severity="info" variant="filled">
+                    There has been a major update to Party Pulse. It will appear that it "skipped" a day and members
+                    will appear to change tiers, but it's recalculating and setting users to the new tier system.
+                  </Alert>
+
                   <L.h3 sx={{ m: 0 }}>
                     Party Pulse Scores ({ sortedMembers.length } members)
                   </L.h3>
@@ -264,18 +227,10 @@ const PartyPulsePage = () => {
                   )}
 
                   {sortedMembers.map((member) => {
-                    const totalChecks = member?.totalChecks ?? 0;
-                    const scoreTier = member?.scoreTier ?? 0;
-                    const tier = TIER_DISPLAY[scoreTier];
-                    const displayName = member?.displayName || member?.username || '(unknown)';
-
                     return (
                       <PartyPulseMemberCard
                         key={ member.id }
                         member={ member }
-                        tier={ tier }
-                        displayName={ displayName }
-                        totalChecks={ totalChecks }
                       />
                     );
                   })}
