@@ -2,9 +2,9 @@ There are a total of 7 tiers (not including calibration). From highest to lowest
 *Paragon*, *Active*, *Passive*, *Coasting*, *Slowing*, *Disengaged*, *Dormant*.
 
 When a pulse occurs, it increase or decreases points based on these factors:
-- Did the member log-in within the last 24 hours?
-- Did the member have a change in XP or level within the last 24 hours?
+- Did the member log-in at least once since the last pulse (24 hours)?
+- Did the member receive a loot-drop within the last 48 hours?
 
-During calibration, points are doubled to quickly estimate their tier.
-The tier is derived from the current score and used to color each member row.
+During calibration, points are tripled to quickly estimate their tier.
+The tier is derived from the member's current score and used to color the member's card.
 

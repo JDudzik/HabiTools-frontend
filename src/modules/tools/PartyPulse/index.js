@@ -212,8 +212,10 @@ const PartyPulsePage = () => {
               <L.section>
                 <Stack spacing={ 2 }>
                   <Alert severity="info" variant="filled">
-                    There has been a major update to Party Pulse. It will appear that it "skipped" a day and members
-                    will appear to change tiers, but it's recalculating and setting users to the new tier system.
+                    <b>There has been a major update to Party Pulse. This will cause 2 temporary changes if you are already using this tool.</b><br /><br />
+                    <b>1:</b> Party Pulse will need to "skip" a day in which it will re-calculate tiers and
+                    gather updated information. The following day will resume like normal.<br />
+                    <b>2:</b> Tier score ranges were expanded, so your members' tiers will appear to decrease/increase towards the middle "coasting" tier.
                   </Alert>
 
                   <L.h3 sx={{ m: 0 }}>
