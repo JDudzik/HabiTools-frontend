@@ -111,8 +111,8 @@ export const PartyPulseMemberCard = (props) => {
           </L.p>
         </Stack>
 
-        <Stack direction={{ sm: 'column', md: 'row' }} spacing={{ sm: 0.5, md: 2 }} justifyContent="flex-start" alignItems="start">
-          <Stack direction="row" spacing={{ sm: 0.5, md: 2 }} justifyContent="flex-start" alignItems="start">
+        <Stack direction={{ sm: 'column', md: 'row' }} spacing={{ sm: 1, md: 2 }} justifyContent="flex-start" alignItems="start">
+          <Stack direction="row" spacing={{ sm: 1, md: 2 }} justifyContent="flex-start" alignItems="start">
             <Paper sx={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', px: 1, color: 'inherit' }}>
               Score: { currentScore }
             </Paper>
