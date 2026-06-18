@@ -55,6 +55,7 @@ export const PartyPulseMemberCard = (props) => {
   const displayName = member?.displayName || member?.username || '(unknown)';
   const currentScore = member?.currentScore ?? 0;
   const userUrl = member?.userUrl;
+  const sleepScore = member?.sleepScore ?? 0;
 
   return (
     <Paper
@@ -102,21 +103,26 @@ export const PartyPulseMemberCard = (props) => {
         }}
       >
         <Stack direction={{ xxs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="start" gap={ 2 }>
-          <L.h4 sx={{ m: 0, wordBreak: 'break-all' }}>
+          <L.h4 sx={{ mb: { xxs: 0, sm: 1 }, wordBreak: 'break-all' }}>
             { displayName }
           </L.h4>
-          <L.p sx={{ m: 0, whiteSpace: 'nowrap' }}>
+          <L.p sx={{ m: 0, whiteSpace: 'nowrap', color: 'inherit' }}>
             Tier: <b>{ tier.label }</b>
           </L.p>
         </Stack>
 
-        <Stack direction="row" spacing={ 2 }>
-          <L.p2 sx={{ m: 0 }}>
-            Score: { currentScore }
-          </L.p2>
-          <L.p2 sx={{ m: 0 }}>
-            Total checks: { totalChecks }
-          </L.p2>
+        <Stack direction={{ sm: 'column', md: 'row' }} spacing={{ sm: 0.5, md: 2 }} justifyContent="flex-start" alignItems="start">
+          <Stack direction="row" spacing={{ sm: 0.5, md: 2 }} justifyContent="flex-start" alignItems="start">
+            <Paper sx={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', px: 1, color: 'inherit' }}>
+              Score: { currentScore }
+            </Paper>
+            <Paper sx={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', px: 1, color: 'inherit' }}>
+              Total checks: { totalChecks }
+            </Paper>
+          </Stack>
+          <Paper sx={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', px: 1, color: 'inherit' }}>
+            Days asleep (2 weeks): { sleepScore }
+          </Paper>
         </Stack>
       </Stack>
     </Paper>
