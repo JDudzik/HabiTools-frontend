@@ -36,7 +36,7 @@ const SCORE_DIRECTIONS = {
 const normalizeScoreDirection = value => (value === 'descending' ? 'descending' : 'ascending');
 
 const PartyPulsePage = () => {
-  const [ expandedAccordion, setExpandedAccordion ] = useState(false);
+  const [ expandedAccordion, setExpandedAccordion ] = useState('description');
   const [ selectedDisplayDirection, setSelectedDisplayDirection ] = useState('ascending');
 
   const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError, isEnabled: isEnabledHabitica } = useApiGetHabitica();
@@ -46,6 +46,7 @@ const PartyPulsePage = () => {
     const tools = habiticaData.habitica_tools.filter(tool => tool.tool_slug === TOOL_SLUG);
     return tools.length > 0 ? tools[0] : null;
   }, [ habiticaData?.habitica_tools ]);
+  const isToolActive = !!activeToolInstance && (activeToolInstance.expires_at === null || activeToolInstance.expires_at > Date.now());
 
   const { mutate: mutateActivate, isPending: isActivating, error: activationError } = useMutateInitiatePartyPulse();
   const { mutate: mutateEdit, isPending: isEditing, error: editError } = useMutateEditPartyPulse();
@@ -70,6 +71,14 @@ const PartyPulsePage = () => {
     if (!scoreDisplayDirection) { return; }
     setSelectedDisplayDirection(normalizeScoreDirection(scoreDisplayDirection));
   }, [ activeToolInstance?.data?.scoreDisplayDirection ]);
+
+  useEffect(() => {
+    if (isToolActive) {
+      setExpandedAccordion(false);
+    } else {
+      setExpandedAccordion('description');
+    }
+  }, [ isToolActive ]);
 
   const handleActivate = useCallback(() => {
     mutateActivate(undefined, {
@@ -165,7 +174,7 @@ const PartyPulsePage = () => {
   ), [ handleChangeDisplayDirection, isEditing, selectedDisplayDirection ]);
 
   const isLoading = isLoadingHabitica || isActivating || isRefreshing || isDeactivating;
-  const isToolActive = !!activeToolInstance && (activeToolInstance.expires_at === null || activeToolInstance.expires_at > Date.now());
+
 
   return (
     <>
@@ -209,23 +218,90 @@ const PartyPulsePage = () => {
             />
 
             {isToolActive && (
+              <Alert severity="info" variant="filled">
+                <b>There has been a major update to Party Pulse. This will cause 3 changes if you are already using this tool.</b><br /><br />
+                <b>1:</b> Party Pulse will need to "skip" a day
+                (Depending on when your pulse goes out, this will happen sometime between June 19th and June 20th)
+                in which it will re-calculate tiers and gather updated information. The following day will resume like normal.<br /><br />
+                <b>2:</b> Tier score ranges were expanded, so your members' tiers will appear to
+                decrease/increase towards the middle "coasting" tier.<br /><br />
+                <b>3:</b> This will now keep track of how long each member has been asleep in the inn over a rolling 2-week basis.
+              </Alert>
+            )}
+
+            <Stack spacing={ 2 }>
+              <L.section>
+                <Accordion
+                  expanded={ expandedAccordion === 'description' }
+                  onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'description' : false) }
+                >
+                  <AccordionSummary
+                    expandIcon={ <ExpandMoreIcon /> }
+                    aria-controls="description-details"
+                    id="description-details-header"
+                  >
+                    <L.h3 sx={{ m: 0 }}>Tool Description</L.h3>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ pt: 2 }}>
+                    <MarkdownMui.Markdown>
+                      { toolDescriptionContent }
+                    </MarkdownMui.Markdown>
+                  </AccordionDetails>
+                </Accordion>
+              </L.section>
+
+              <L.section>
+                <Accordion
+                  expanded={ expandedAccordion === 'advanced' }
+                  onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'advanced' : false) }
+                >
+                  <AccordionSummary
+                    expandIcon={ <ExpandMoreIcon /> }
+                    aria-controls="advanced-details"
+                    id="advanced-details-header"
+                  >
+                    <L.h3 sx={{ m: 0 }}>The Technical Details</L.h3>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ pt: 2 }}>
+                    <MarkdownMui.Markdown>
+                      { advancedDetailsContent }
+                    </MarkdownMui.Markdown>
+                  </AccordionDetails>
+                </Accordion>
+              </L.section>
+
+              <L.section>
+                <Accordion
+                  expanded={ expandedAccordion === 'events' }
+                  onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'events' : false) }
+                >
+                  <AccordionSummary
+                    expandIcon={ <ExpandMoreIcon /> }
+                    aria-controls="events-details"
+                    id="events-details-header"
+                  >
+                    <L.h3 sx={{ m: 0 }}>Event Messages</L.h3>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ pt: 2 }}>
+                    <ToolEventMessagesTable
+                      activeToolInstance={ activeToolInstance }
+                      toolSlug={ TOOL_SLUG }
+                    />
+                  </AccordionDetails>
+                </Accordion>
+              </L.section>
+            </Stack>
+
+            {isToolActive && (
               <L.section>
                 <Stack spacing={ 2 }>
-                  <Alert severity="info" variant="filled">
-                    <b>There has been a major update to Party Pulse. This will cause 2 temporary changes if you are already using this tool.</b><br /><br />
-                    <b>1:</b> Party Pulse will need to "skip" a day in which it will re-calculate tiers and
-                    gather updated information. The following day will resume like normal.<br />
-                    <b>2:</b> Tier score ranges were expanded, so your members' tiers will appear to decrease/increase towards the middle "coasting" tier.<br />
-                    <b>3:</b> This will now keep track of how long each member has been asleep in the inn over a rolling 2-week basis.
-                  </Alert>
-
                   <L.h3 sx={{ m: 0 }}>
                     Party Pulse Scores ({ sortedMembers.length } members)
                   </L.h3>
 
                   {sortedMembers.length === 0 && (
                     <L.p>
-                      No party member score data is available yet. Trigger a refresh after the next pulse check.
+                      No party member score data is available yet.
                     </L.p>
                   )}
 
@@ -240,53 +316,6 @@ const PartyPulsePage = () => {
                 </Stack>
               </L.section>
             )}
-
-            <L.section>
-              <MarkdownMui.Markdown>
-                { toolDescriptionContent }
-              </MarkdownMui.Markdown>
-            </L.section>
-
-            <L.section>
-              <Accordion
-                expanded={ expandedAccordion === 'advanced' }
-                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'advanced' : false) }
-              >
-                <AccordionSummary
-                  expandIcon={ <ExpandMoreIcon /> }
-                  aria-controls="advanced-details"
-                  id="advanced-details-header"
-                >
-                  <L.h3 sx={{ m: 0 }}>The Technical Details</L.h3>
-                </AccordionSummary>
-                <AccordionDetails sx={{ pt: 2 }}>
-                  <MarkdownMui.Markdown>
-                    { advancedDetailsContent }
-                  </MarkdownMui.Markdown>
-                </AccordionDetails>
-              </Accordion>
-            </L.section>
-
-            <L.section>
-              <Accordion
-                expanded={ expandedAccordion === 'events' }
-                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'events' : false) }
-              >
-                <AccordionSummary
-                  expandIcon={ <ExpandMoreIcon /> }
-                  aria-controls="events-details"
-                  id="events-details-header"
-                >
-                  <L.h3 sx={{ m: 0 }}>Event Messages</L.h3>
-                </AccordionSummary>
-                <AccordionDetails sx={{ pt: 2 }}>
-                  <ToolEventMessagesTable
-                    activeToolInstance={ activeToolInstance }
-                    toolSlug={ TOOL_SLUG }
-                  />
-                </AccordionDetails>
-              </Accordion>
-            </L.section>
           </Stack>
         </Stack>
       </Stack>
