@@ -61,19 +61,23 @@ const Home = () => {
             <Typography mb={ 0 } variant="h1" color="primary">
               Welcome to HabiTools
             </Typography>
+            
             <Typography mb={ 2 } variant="h3" color="secondary.dark">
               The <b>unofficial</b> suite of tools for Habitica
             </Typography>
+            
             <Typography mb={ 2 }>
               HabiTools is a set of tools and automations for Habitica.
               The goal is to create a clean interface without requiring you to install or manage scripts yourself.
             </Typography>
+            
             <Typography mb={ 2 }>
               <b>HabiTools is currently in beta.</b> Thanks for taking a look and for
               helping test it while the service is still being worked on. It's also open-source,
               so feel free to inspect the code and report any bugs/issues you find if you're technically inclined.
               <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend">Backend</Link>
             </Typography>
+            
             <Typography mb={ 2 }>
               Security of your data is a core principle for HabiTools. We store and use your Habitica
               user data and API key to provide tools and automations,
@@ -83,14 +87,17 @@ const Home = () => {
                 Learn how we keep your data secure
               </Button>
             </Typography>
+            
             <Typography mb={ 2 }>
               Another principle is thoughtful use of the Habitica API. We take steps to reduce excessive and undue stress to their API.
               We want to avoid creating unnecessary load on Habitica's servers.
             </Typography>
+            
             <Typography mb={ 2 }>
               Feedback during beta is incredibly helpful. While using HabiTools, please consider giving us your feedback on anything that's confusing,
               any bugs you encounter, or any features you'd like to see in the future. <Link href="/feedback">Give Feedback</Link>
             </Typography>
+            
             <Typography mb={ 2 }>
               If you have questions, suggestions, or run into anything odd,
               use the feedback page or reach out to masterlink950 in

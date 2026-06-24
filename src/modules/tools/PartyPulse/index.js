@@ -219,13 +219,10 @@ const PartyPulsePage = () => {
 
             {isToolActive && (
               <Alert severity="info" variant="filled">
-                <b>There has been a major update to Party Pulse. This will cause 3 changes if you are already using this tool.</b><br /><br />
-                <b>1:</b> Party Pulse will need to "skip" a day
-                (Depending on when your pulse goes out, this will happen sometime between June 19th and June 20th)
-                in which it will re-calculate tiers and gather updated information. The following day will resume like normal.<br /><br />
-                <b>2:</b> Tier score ranges were expanded, so your members' tiers will appear to
+                <b>There has been a major update to Party Pulse. This will cause a few changes if you were already using this tool.</b><br /><br />
+                <b>1:</b> Tier score ranges were expanded, so your members' tiers will appear to
                 decrease/increase towards the middle "coasting" tier.<br /><br />
-                <b>3:</b> This will now keep track of how long each member has been asleep in the inn over a rolling 2-week basis.
+                <b>2:</b> This will now keep track of how long each member has been asleep in the inn over a rolling 2-week basis.
               </Alert>
             )}
 
