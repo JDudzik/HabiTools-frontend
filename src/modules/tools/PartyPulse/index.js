@@ -8,7 +8,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Alert,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { PageHead, L, MarkdownMui } from 'components';
@@ -216,15 +215,6 @@ const PartyPulsePage = () => {
               onRefresh={ handleRefresh }
               onDeactivate={ handleDeactivate }
             />
-
-            {isToolActive && (
-              <Alert severity="info" variant="filled">
-                <b>There has been a major update to Party Pulse. This will cause a few changes if you were already using this tool.</b><br /><br />
-                <b>1:</b> Tier score ranges were expanded, so your members' tiers will appear to
-                decrease/increase towards the middle "coasting" tier.<br /><br />
-                <b>2:</b> This will now keep track of how long each member has been asleep in the inn over a rolling 2-week basis.
-              </Alert>
-            )}
 
             <Stack spacing={ 2 }>
               <L.section>
