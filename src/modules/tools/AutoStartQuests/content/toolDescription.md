@@ -1,4 +1,5 @@
 The **Auto Start Quests** tool will automatically start quests for you after a certain amount of time. A timer will begin whenever a new quest is opened for the party.
+The event message when the quest starts will also provide the list of members that did not respond to the quest invitation.
 
 #### **Why are the only options 24, 12, or 3 hours?**
 These options cover the most common use-cases while also ensuring some specific edge-cases are handled.

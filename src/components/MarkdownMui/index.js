@@ -6,7 +6,7 @@ import { Link } from 'components/Link/Link';
 
 
 const defaultOptionGenerator = _options => ({
-  wrapper: props => <Box component="div" sx={{ maxWidth: '100%' }} { ...props } />,
+  wrapper: props => <Typography component="div" variant="body1" sx={{ maxWidth: '100%' }} { ...props } />,
   forceWrapper: true,
   overrides: {
     h1: {
@@ -28,7 +28,7 @@ const defaultOptionGenerator = _options => ({
       component: props => <Typography variant="h6" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
     },
     p: {
-      component: props => <Typography component="p" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
+      component: props => <Typography variant="body1" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
     },
     a: {
       component: props => <Link { ...props } sx={{ whiteSpace: 'pre-wrap' }} color="secondary.light" { ...props } />,
@@ -40,7 +40,7 @@ const defaultOptionGenerator = _options => ({
       component: props => <Typography component="span" variant="body1" color="text.black" { ...props } sx={{ whiteSpace: 'pre-wrap' }} />,
     },
     div: {
-      component: props => <Box component="div" sx={{ maxWidth: '100%' }} { ...props } />,
+      component: props => <Typography component="div" variant="body1" sx={{ maxWidth: '100%' }} { ...props } />,
     },
     hr: {
       component: props => (
