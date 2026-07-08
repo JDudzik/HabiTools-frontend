@@ -89,7 +89,7 @@ export const ToolCockpit = ({
     return Math.ceil(remaining / (24 * 60 * 60 * 1000));
   }, [ toolInstance?.expires_at ]);
 
-  const isToolActive = !!toolInstance && (toolInstance.expires_at === null || toolInstance.expires_at > Date.now());
+  const isToolActive = !!toolInstance;
 
   const actionHandler = useCallback(async (action) => {
     setIsPerformingAction(true);
