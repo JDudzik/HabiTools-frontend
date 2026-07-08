@@ -21,6 +21,7 @@ import {
 } from 'lib/api/methods/habiticaApi';
 import { ToolCockpit, ToolEventMessagesTable } from '../components';
 import toolDescriptionContent from './content/toolDescription.md';
+import toolHoursDescriptionContent from './content/toolHoursDescription.md';
 import advancedDetailsContent from './content/advancedTechnicalDetails.md';
 
 
@@ -187,6 +188,26 @@ const AutoStartQuestsPage = () => {
               <MarkdownMui.Markdown>
                 { toolDescriptionContent }
               </MarkdownMui.Markdown>
+            </L.section>
+
+            <L.section>
+              <Accordion
+                expanded={ expandedAccordion === 'hours-description' }
+                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'hours-description' : false) }
+              >
+                <AccordionSummary
+                  expandIcon={ <ExpandMoreIcon /> }
+                  aria-controls="advanced-details"
+                  id="advanced-details-header"
+                >
+                  <L.h3 sx={{ m: 0 }}>Why are the only options 24, 12, or 3 hours?</L.h3>
+                </AccordionSummary>
+                <AccordionDetails sx={{ pt: 2 }}>
+                  <MarkdownMui.Markdown>
+                    { toolHoursDescriptionContent }
+                  </MarkdownMui.Markdown>
+                </AccordionDetails>
+              </Accordion>
             </L.section>
 
             <L.section>
