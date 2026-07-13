@@ -23,6 +23,7 @@ export const L = {
   'header': props => <Box component="header" { ...props } />,
   'footer': props => <Box component="footer" { ...props } />,
   'form': props => <Box component="form" { ...props } />,
+  'grid': props => <Box component="div" display="grid" { ...props } />,
   'ul': props => <Box component="ul" { ...props } />,
   'li': props => <Box component="li" { ...props } />,
   'ol': props => <Box component="ol" { ...props } />,

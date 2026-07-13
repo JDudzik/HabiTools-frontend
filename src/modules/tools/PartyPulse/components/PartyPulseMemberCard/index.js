@@ -1,48 +1,96 @@
 import { Stack, IconButton, Paper } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { L } from 'components';
-
+import ScoreHistoryChart from '../ScoreHistoryChart';
 
 const TIER_DISPLAY = {
   calibrating: {
     label: 'Calibrating',
-    backgroundColor: 'misc.ignoredBackground',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'misc.ignoredBackground',
+      graph: {
+        line: '#313ca7',
+        references: 'black',
+      },
+    },
   },
   '3': {
     label: 'Paragon',
-    backgroundColor: 'habitica.blue50',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'habitica.blue50',
+      graph: {
+        line: '#313ca7',
+        references: 'black',
+      },
+    },
   },
   '2': {
     label: 'Active',
-    backgroundColor: 'habitica.teal100',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'habitica.teal100',
+      graph: {
+        line: '#313ca7',
+        references: 'black',
+      },
+    },
   },
   '1': {
     label: 'Passive',
-    backgroundColor: 'habitica.green100',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'habitica.green100',
+      graph: {
+        line: '#313ca7',
+        references: 'black',
+      },
+    },
   },
   '0': {
     label: 'Coasting',
-    backgroundColor: 'habitica.yellow100',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'habitica.yellow100',
+      graph: {
+        line: '#313ca7',
+        references: 'black',
+      },
+    },
   },
   '-1': {
     label: 'Slowing',
-    backgroundColor: 'habitica.orange100',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'habitica.orange100',
+      graph: {
+        line: '#313ca7',
+        references: 'black',
+      },
+    },
   },
   '-2': {
     label: 'Disengaged',
-    backgroundColor: 'habitica.red100',
-    textColor: 'text.black',
+    colors: {
+      text: 'text.black',
+      backgroundColor: 'habitica.red100',
+      graph: {
+        line: '#5d69c8',
+        references: 'black',
+      },
+    },
   },
   '-3': {
     label: 'Dormant',
-    backgroundColor: 'habitica.maroon100',
-    textColor: 'text.white',
+    colors: {
+      text: 'text.white',
+      backgroundColor: 'habitica.maroon100',
+      graph: {
+        line: '#5d69c8',
+        references: 'white',
+      },
+    },
   },
 };
 
@@ -56,6 +104,11 @@ export const PartyPulseMemberCard = (props) => {
   const currentScore = member?.currentScore ?? 0;
   const userUrl = member?.userUrl;
   const sleepScore = member?.sleepScore ?? 0;
+  const scoreHistory = member?.scoreHistory || [];
+  // const fakeScoreHistory = [ 0, 3, 6, 4, 2, 6, 8, 5, 7, 9, 10, 16, 21 ];
+  // const scoreHistory = fakeScoreHistory;
+
+  // console.log('member.scoreHistory:', member.scoreHistory);
 
   return (
     <Paper
@@ -64,8 +117,8 @@ export const PartyPulseMemberCard = (props) => {
         flexDirection: 'row',
         borderRadius: 2,
         overflow: 'hidden',
-        backgroundColor: tier.backgroundColor,
-        color: tier.textColor,
+        backgroundColor: tier.colors.backgroundColor,
+        color: tier.colors.text,
       }}
     >
       <Stack
@@ -124,6 +177,16 @@ export const PartyPulseMemberCard = (props) => {
             Days asleep (2 weeks): { sleepScore }
           </Paper>
         </Stack>
+
+        {scoreHistory?.length >= 3 ? (
+          <ScoreHistoryChart data={ scoreHistory } colors={ tier.colors.graph } />
+        ) : (
+          <L.div sx={{ width: '100%', maxWidth: 455, height: 60, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 1 }}>
+            <L.p sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', m: 0, color: 'inherit', fontSize: 12 }}>
+              Score History is not ready for this user yet. Please wait for at least 3 checks.
+            </L.p>
+          </L.div>
+        )}
       </Stack>
     </Paper>
   );
