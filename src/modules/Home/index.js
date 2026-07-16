@@ -63,44 +63,38 @@ const Home = () => {
             </Typography>
             
             <Typography mb={ 2 } variant="h3" color="secondary.dark">
-              The <b>unofficial</b> suite of tools for Habitica
+              An <b>unofficial</b> suite of tools for Habitica
             </Typography>
             
             <Typography mb={ 2 }>
-              HabiTools is a set of tools and automations for Habitica.
-              The goal is to create a clean interface without requiring you to install or manage scripts yourself.
+              <b>HabiTools is a set of tools and automations for Habitica.</b> The goal is to create a clean and simple interface.
+              You don't need to manage scripts or mess with any code yourself.
+              Setup is easy: Sign-up, link your Habitica account, and enable tools!
             </Typography>
-            
+
             <Typography mb={ 2 }>
-              <b>HabiTools is currently in beta.</b> Thanks for taking a look and for
-              helping test it while the service is still being worked on. It's also open-source,
-              so feel free to inspect the code and report any bugs/issues you find if you're technically inclined.
-              <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend">Backend</Link>
-            </Typography>
-            
-            <Typography mb={ 2 }>
-              Security of your data is a core principle for HabiTools. We store and use your Habitica
+              <b>Security of your data is a core principle for HabiTools.</b> We store and use your Habitica
               user data and API key to provide tools and automations,
               so the way we manage your data is extremely important. Your Habitica data is stored securely and carefully with
               modern encryption best practices in place.
-              <Button onClick={ openHowWeSecureModal } >
+              <Button onClick={ openHowWeSecureModal }>
                 Learn how we keep your data secure
               </Button>
             </Typography>
-            
+
             <Typography mb={ 2 }>
-              Another principle is thoughtful use of the Habitica API. We take steps to reduce excessive and undue stress to their API.
-              We want to avoid creating unnecessary load on Habitica's servers.
+              <b>HabiTools is open-source</b> so feel free to inspect the code and report any bugs/issues you find if you're technically inclined.
+              <br />Github repos: <Link href="https://github.com/JDudzik/HabiTools-frontend">Frontend</Link>, <Link href="https://github.com/JDudzik/HabiTools-backend">Backend</Link>
+            </Typography>
+
+            <Typography mb={ 2 }>
+              <b>How we use AI:</b> HabiTools is built by hand by a professional developer
+              with AI used for practical assistance rather than as a replacement for deep understanding of engineering.
             </Typography>
             
             <Typography mb={ 2 }>
-              Feedback during beta is incredibly helpful. While using HabiTools, please consider giving us your feedback on anything that's confusing,
-              any bugs you encounter, or any features you'd like to see in the future. <Link href="/feedback">Give Feedback</Link>
-            </Typography>
-            
-            <Typography mb={ 2 }>
-              If you have questions, suggestions, or run into anything odd,
-              use the feedback page or reach out to masterlink950 in
+              Feedback is incredibly valuable! If you have questions, suggestions, or run into anything odd,
+              use the <Link href="/feedback">Feedback</Link> page or reach out to masterlink950 in
               either of the major Habitica Discord servers: <Link href="https://discord.com/invite/C36kxnAKSm">Habitica (unofficial)</Link> and <Link href="https://discord.com/invite/habitica-central-1136011016682098778">Habitica Central</Link>.
             </Typography>
             <AuthCtaButtons />
