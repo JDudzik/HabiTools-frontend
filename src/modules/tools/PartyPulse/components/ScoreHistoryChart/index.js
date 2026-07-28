@@ -20,7 +20,7 @@ const ScoreHistoryChart = ({ data, colors }) => {
           <text x="50%" y={ 57 } textAnchor="middle" fontSize={ 11 } fill={ colors?.references || 'black' }>Score History</text>
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backgroundColor: 'white',
               border: 'none',
               borderRadius: '5px',
             }}

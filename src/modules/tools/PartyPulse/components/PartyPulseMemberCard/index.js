@@ -107,7 +107,6 @@ export const PartyPulseMemberCard = (props) => {
   const scoreHistory = member?.scoreHistory || [];
   // const fakeScoreHistory = [ 0, 3, 6, 4, 2, 6, 8, 5, 7, 9, 10, 16, 21 ];
   // const scoreHistory = fakeScoreHistory;
-
   // console.log('member.scoreHistory:', member.scoreHistory);
 
   return (
