@@ -2,4 +2,7 @@
 
 **How this tool works:** This tool works by adding a webhook to your Habitica account that tells Habitica to send a message to HabiTools whenever a quest opens. HabiTools uses this as the signal to start the timer. Technically the timer actually uses a scheduled routine (cron task) to start the quest instead of a classic in-memory wait.
 
-**Extra validations:** This tool also validates several factors when the quest opens before starting the timer. For example, it makes sure that you're either the quest leader or party leader. If you aren't, then it does not start the timer because you don't have permission from Habitica to start the quest. Lastly, if a quest gets started early or canceled, the cron task will catch this and will not try to start a quest.
+**Extra validations:** This tool also validates several factors when the quest opens before starting the timer.
+- It makes sure that you're either the quest leader or party leader. If you aren't, then it does not start the timer because you don't have permission from Habitica to start the quest.
+- If a quest gets started early or canceled, the cron task will catch this and will not try to start a quest.
+- In rare cases, Habitica won't automatically start a quest, so this tool has an initial check at 10 seconds to start the quest if everyone has immediately joined.
