@@ -7,6 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { L, SimpleDisplay, PopoutMenuButton } from 'components';
 import { PermissionControlsTable, UsersTable } from './components';
 import { useGlobalHabiticaNotificationMenuAction } from './hooks/useGlobalHabiticaNotificationMenuAction';
+import { useHabiticaToolIntegrityReportMenuAction } from './hooks/useHabiticaToolIntegrityReportMenuAction';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
@@ -16,6 +17,11 @@ export const AdminControls = (props) => {
     userState,
     openConfirmation,
     updateConfirmation,
+    handleApiError,
+  });
+  const habiticaToolIntegrityReportMenuItem = useHabiticaToolIntegrityReportMenuAction({
+    userState,
+    openConfirmation,
     handleApiError,
   });
 
@@ -75,6 +81,7 @@ export const AdminControls = (props) => {
             onClick: () => openMyDetailsModal(),
             props: { dense: true },
           },
+          habiticaToolIntegrityReportMenuItem ?? undefined,
           globalHabiticaNotificationMenuItem ?? undefined,
         ] }
       />
