@@ -48,7 +48,7 @@ const PartyBroadcastPage = () => {
   } = usePageManager({
     defaultHandleApiError: {
       returnPath: '/tools/party-broadcast',
-      handledErrors: [ 'HABITICA_USER_NOT_FOUND' ],
+      handledErrors: [ 'HABITICA_USER_NOT_FOUND', 'HABITICA_PARTY_NOT_FOUND' ],
     },
     defaultRoutingPath: '/tools/party-broadcast',
     defaultPageStage: 'loading',
@@ -154,10 +154,18 @@ const PartyBroadcastPage = () => {
               </L.section>
             )}
 
-            {hasLinkedHabiticaAccount && !isLoadingPartyInfo && !isPartyLeader && (
+            {hasLinkedHabiticaAccount && !isLoadingPartyInfo && partyInfo && !isPartyLeader && (
               <L.section>
                 <Alert severity="info" sx={{ fontSize: '1rem' }}>
                   Only the current party leader can send party broadcasts.
+                </Alert>
+              </L.section>
+            )}
+
+            {hasLinkedHabiticaAccount && partyInfoError?.response?.data?.status === 'HABITICA_PARTY_NOT_FOUND' && (
+              <L.section>
+                <Alert severity="info" sx={{ fontSize: '1rem' }}>
+                  You need to be in a party where you're the leader to use Party Broadcast.
                 </Alert>
               </L.section>
             )}
