@@ -42,6 +42,11 @@ export const defaultNavItems = {
           ariaLabel: 'Navigate to Party Pulse tool page',
         },
         {
+          text: 'Quest Voting',
+          link: '/tools/quest-voting',
+          ariaLabel: 'Navigate to Quest Voting tool page',
+        },
+        {
           text: 'Party Broadcast',
           link: '/tools/party-broadcast',
           ariaLabel: 'Navigate to Party Broadcast tool page',
