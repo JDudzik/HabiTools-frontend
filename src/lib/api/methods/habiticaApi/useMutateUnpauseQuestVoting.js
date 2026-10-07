@@ -9,9 +9,7 @@ export const useMutateUnpauseQuestVoting = (mutateOptions) => {
   const axios = useAxios();
 
   const mutationFn = payload => axios
-    .put('/v1/auth/habitica/tools/quest-voting/unpause', {
-      mode: payload?.mode || 'resume-last',
-    })
+    .put('/v1/auth/habitica/tools/quest-voting/unpause', payload || {})
     .then(res => res.data)
     .catch((err) => {
       throw { ...err, errorPayload: {

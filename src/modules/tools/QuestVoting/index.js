@@ -74,6 +74,23 @@ const QuestVotingPage = () => {
   const { mutate: mutateUnpause, isPending: isUnpausing, error: unpauseError } = useMutateUnpauseQuestVoting();
   const { mutate: mutateRefresh, isPending: isRefreshing, error: refreshError } = useMutateRefreshTool();
 
+  const isFormDirty = useMemo(() => {
+    return (
+      JSON.stringify(filterCategories) !== JSON.stringify(normalizeFilters(activeToolInstance?.data?.filterCategories)) ||
+      leaveOnePerQuest !== !!activeToolInstance?.data?.leaveOnePerQuest ||
+      partyWideFilter !== (questVoting?.party_filters?.partyWideFilter || 'all') ||
+      secureVoting !== (questVoting?.secure_voting !== false)
+    );
+  }, [
+    filterCategories,
+    leaveOnePerQuest,
+    partyWideFilter,
+    secureVoting,
+    activeToolInstance?.data,
+    questVoting?.party_filters?.partyWideFilter,
+    questVoting?.secure_voting,
+  ]);
+
   const {
     openConfirmation,
   } = usePageManager({
@@ -162,18 +179,13 @@ const QuestVotingPage = () => {
   const handlePauseToggle = useCallback(() => {
     if (!isPartyLeaderForTool || !questVoting) { return; }
 
+    mutateUnpause();
     if (questVoting.paused) {
       openConfirmation?.({
-        title: 'Unpause Quest Voting',
-        content: 'Choose how to resume Quest Voting.',
-        primaryButtonText: 'Start New Vote',
-        secondaryButtonText: 'Resume Last Vote',
-        onRequestSubmit: async () => {
-          mutateUnpause({ mode: 'new-vote' });
-        },
-        onSecondaryAction: () => {
-          mutateUnpause({ mode: 'resume-last' });
-        },
+        title: 'Quest Voting Unpaused',
+        content: 'Quest Voting is active again, and a new ballot has been created.',
+        primaryButtonText: 'Done',
+        removeSecondaryAction: true,
       });
       return;
     }
@@ -249,10 +261,16 @@ const QuestVotingPage = () => {
             <Button
               variant="outlined"
               color={ questVoting?.paused ? 'success' : 'warning' }
+              disabled={ isFormDirty }
               onClick={ handlePauseToggle }
             >
               {questVoting?.paused ? 'Unpause' : 'Pause'}
             </Button>
+            {isFormDirty && (
+              <L.p color="info">
+                You have unsaved changes. You cannot {questVoting?.paused ? 'unpause' : 'pause'} until you save your changes.
+              </L.p>
+            )}
           </Stack>
         </>
       )}
@@ -294,7 +312,7 @@ const QuestVotingPage = () => {
                 pre: controls,
                 post: controls,
                 postSave: handleSaveSettings,
-                postIsSaveDisable: isEditing,
+                postIsSaveDisable: isEditing || !isFormDirty,
               }}
               returnPath="/tools/quest-voting"
               onActivate={ handleActivate }
