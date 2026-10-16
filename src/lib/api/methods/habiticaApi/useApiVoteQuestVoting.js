@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAxios } from 'lib/hooks/useAxios';
 
 
@@ -6,6 +6,7 @@ const BASE_QUERY_KEY = 'useApiVoteQuestVoting';
 
 export const useApiVoteQuestVoting = (config) => {
   const axios = useAxios();
+  const queryClient = useQueryClient();
   const {
     enabled = false,
     partyId,
@@ -23,10 +24,17 @@ export const useApiVoteQuestVoting = (config) => {
       }};
     });
 
-  return useQuery({
+  const invalidateQuery = () => queryClient.invalidateQueries([ BASE_QUERY_KEY, { partyId, selectionId }]);
+
+  const queryResult = useQuery({
     queryKey: [ BASE_QUERY_KEY, { partyId, selectionId }],
     queryFn,
     enabled: enabled && !!partyId && !!selectionId,
     retry: false,
   });
+
+  return {
+    ...queryResult,
+    invalidateQuery,
+  };
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Stack, CircularProgress, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { PageHead, L } from 'components';
+import { PageHead, L, AuthCtaButtons, HabiticaAccountManagerModal } from 'components';
 import { useApiVoteQuestVoting } from 'lib/api/methods/habiticaApi';
 
 
@@ -11,6 +11,7 @@ const QuestVotingVotePage = () => {
   const selectionId = router?.query?.selection_id;
   const [ attemptedClose, setAttemptedClose ] = useState(false);
   const [ failedClose, setFailedClose ] = useState(false);
+  const [ habiticaAccountManagerModalOpen, setHabiticaAccountManagerModalOpen ] = useState(false);
 
   useEffect(() => {
     if (attemptedClose && !failedClose) {
@@ -22,13 +23,17 @@ const QuestVotingVotePage = () => {
     }
   }, [ attemptedClose, failedClose ]);
 
-  const { data, isLoading, error } = useApiVoteQuestVoting({
+  const { data, isLoading, error, invalidateQuery } = useApiVoteQuestVoting({
     enabled: router?.isReady,
     partyId,
     selectionId,
   });
 
   const errorMessage = error?.response?.data?.message || error?.errorPayload?.message || 'Unable to submit vote.';
+  const errorStatus = error?.response?.data?.status;
+
+  const showAuthForErrors = [ 'QUEST_VOTE_LOGIN_REQUIRED' ];
+  const showHabiticaLinking = [ 'QUEST_VOTE_LINK_REQUIRED' ];
 
   return (
     <>
@@ -53,8 +58,32 @@ const QuestVotingVotePage = () => {
 
         {!isLoading && error && (
           <L.section>
-            <L.h3>Vote Not Counted</L.h3>
-            <L.p>{ errorMessage }</L.p>
+            <Stack spacing={ 1 } justifyContent="center" alignItems="center">
+              <L.h3 color="error">Vote Not Counted</L.h3>
+              <L.p>{ errorMessage }</L.p>
+              {showAuthForErrors.includes(errorStatus) && (
+                <AuthCtaButtons returnPath={ `/tools/quest-voting/vote/?party_id=${ partyId }&selection_id=${ selectionId }` } />
+              )}
+              {(showHabiticaLinking.includes(errorStatus) || !!habiticaAccountManagerModalOpen) && (
+                <L.section>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={ () => setHabiticaAccountManagerModalOpen(true) }
+                  >
+                    Manage Habitica Account
+                  </Button>
+                
+                  <HabiticaAccountManagerModal
+                    open={ habiticaAccountManagerModalOpen }
+                    onClose={ () => {
+                      invalidateQuery();
+                      setHabiticaAccountManagerModalOpen(false);
+                    } }
+                  />
+                </L.section>
+              )}
+            </Stack>
           </L.section>
         )}
 
@@ -64,7 +93,7 @@ const QuestVotingVotePage = () => {
             <L.p>{ data?.message || 'Your vote was counted successfully.' }</L.p>
           </L.section>
         )}
-        {!isLoading && (
+        {!isLoading && ![ ...showAuthForErrors, ...showHabiticaLinking ].includes(errorStatus) && (
           <L.section>
             <br />
             <L.p>You may now close this screen.</L.p>

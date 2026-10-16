@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Stack, Button } from '@mui/material';
 import { FormFields } from './FormFields';
 import { LoadingElement, PageHead, Link, L } from 'components';
@@ -15,6 +16,7 @@ const formFieldDefaults = {
 };
 
 const SignUp = () => {
+  const { query: { return_path: returnPath }} = useRouter();
   const [ formFieldValues, setFormFields ] = useState({ ...formFieldDefaults });
   const { mutate: mutateSignUp } = useMutateSignUp();
 
@@ -67,6 +69,8 @@ const SignUp = () => {
     });
   };
 
+  const calculatedReturnPath = returnPath ? `?return_path=${ encodeURIComponent(returnPath) }` : '';
+
   return (
     <L.div paddingX={ 2 }>
       <PageHead title="Sign Up" />
@@ -76,7 +80,7 @@ const SignUp = () => {
           <Stack direction={{ xxs: 'column', xs: 'row' }} spacing={ 1 } justifyContent="center">
             <L.p mt={ 2 } mb={ 0.5 } fontSize="1.25em">
               Already have an account?{' '}
-              <Link href="/login">Login</Link>
+              <Link href={ `/login${ calculatedReturnPath }` }>Login</Link>
             </L.p>
           </Stack>
           <L.h1 marginTop={ 1 } color="primary">
@@ -128,7 +132,7 @@ const SignUp = () => {
             Please allow for up to 10 minutes for this email to arrive. You may also need to check your spam/junk folder.
           </L.p>
           <Stack sx={{ paddingTop: 2 }}>
-            <Link href="/login">
+            <Link href={ `/login${ calculatedReturnPath }` }>
               <Button
                 variant="contained" 
                 size="large"

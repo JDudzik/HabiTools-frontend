@@ -17,7 +17,7 @@ export const AuthCtaButtons = (props) => {
         alignItems: { xxs: 'center', sm: 'flex-start' }, // Center buttons vertically on mobile
       }}
     >
-      <Link href="/sign-up" >
+      <Link href={ `/sign-up${ returnPath ? `?return_path=${ encodeURIComponent(returnPath) }` : '' }` } >
         <Button
           variant="contained"
           size="large" 
