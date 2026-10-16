@@ -96,7 +96,7 @@ const QuestVotingPage = () => {
   } = usePageManager({
     defaultHandleApiError: {
       returnPath: '/tools/quest-voting',
-      handledErrors: [ 'HABITICA_USER_NOT_FOUND' ],
+      handledErrors: [ 'HABITICA_USER_NOT_FOUND', 'HABITICA_PARTY_NOT_FOUND' ],
     },
     defaultRoutingPath: '/tools/quest-voting',
     defaultPageStage: 'loading',
