@@ -184,7 +184,7 @@ const QuestVotingPage = () => {
         onSuccess: () => {
           openConfirmation?.({
             title: 'Quest Voting Unpaused',
-            content: 'Quest Voting is active again and the ballot has resumed.',
+            content: 'Quest Voting is active again and a new ballot has been created.',
             primaryButtonText: 'Done',
             removeSecondaryAction: true,
           });
