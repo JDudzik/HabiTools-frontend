@@ -152,26 +152,26 @@ const AnalyticLogs = () => {
                 headers={ [{
                   label: 'Timestamp',
                   key: 'timestamp',
-                  width: '120px',
+                  width: '100px',
                 }, {
                   label: 'Source',
                   key: 'source',
-                  width: '100px',
+                  width: '70px',
                 }, {
                   label: 'Action Name',
                   key: 'action-name',
-                  width: '170px',
+                  width: '210px',
                 }, {
                   label: 'Value Preview',
                   key: 'value-preview',
-                  width: '200px',
+                  width: '180px',
                 }] }
                 rows={ analyticLogs?.map?.(analyticLog => ({
                   onClick: () => setSelectedLogId(analyticLog.id),
                   columns: [
                     { key: analyticLog.id, element: new Date(parseInt(analyticLog.created_at, 10)).toLocaleString() },
                     { key: 1, element: analyticLog.source },
-                    { key: 2, element: analyticLog.action_name.length > 30 ? `${ analyticLog.action_name.substring(0, 30) }...` : analyticLog.action_name },
+                    { key: 2, element: analyticLog.action_name.length > 50 ? `${ analyticLog.action_name.substring(0, 50) }...` : analyticLog.action_name },
                     { key: 3, element: analyticLog.action_value.length > 30 ? `${ analyticLog.action_value.substring(0, 30) }...` : analyticLog.action_value },
                   ],
                 })) }
