@@ -297,13 +297,6 @@ const QuestVotingPage = () => {
           </Stack>
         </>
       )}
-      {hasPartyError && (
-        <L.section>
-          <L.p color="error">
-            <b>You must be in a party to use this tool.</b>
-          </L.p>
-        </L.section>
-      )}
     </Stack>
   );
 
@@ -331,7 +324,6 @@ const QuestVotingPage = () => {
             <L.h1 align="center" color="text.softBlack">
               Quest Voting
             </L.h1>
-
             <ToolCockpit
               habiticaData={ habiticaData }
               toolInstance={ activeToolInstance }
@@ -339,7 +331,6 @@ const QuestVotingPage = () => {
               skipInitialLoading={ isEnabledHabitica }
               openConfirmation={ openConfirmation }
               controlSlots={{
-                pre: controls,
                 post: controls,
                 postSave: handleSaveSettings,
                 postIsSaveDisable: isEditing || !isFormDirty,
@@ -349,6 +340,14 @@ const QuestVotingPage = () => {
               onRefresh={ handleRefresh }
               onDeactivate={ handleDeactivate }
             />
+
+            {hasPartyError && (
+              <L.section>
+                <L.p color="error" textAlign="center">
+                  <b>You must be in a party to use this tool.</b>
+                </L.p>
+              </L.section>
+            )}
 
             {!questVoting?.leader_user_id && isToolActive && (
               <L.section>
