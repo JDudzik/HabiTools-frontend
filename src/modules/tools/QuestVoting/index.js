@@ -93,10 +93,11 @@ const QuestVotingPage = () => {
 
   const {
     openConfirmation,
+    pageError,
   } = usePageManager({
     defaultHandleApiError: {
       returnPath: '/tools/quest-voting',
-      handledErrors: [ 'HABITICA_USER_NOT_FOUND', 'HABITICA_PARTY_NOT_FOUND' ],
+      handledErrors: [ 'HABITICA_USER_NOT_FOUND', 'HABITICA_PARTY_NOT_FOUND', 'QUEST_VOTING_NOT_IN_PARTY' ],
     },
     defaultRoutingPath: '/tools/quest-voting',
     defaultPageStage: 'loading',
@@ -221,6 +222,9 @@ const QuestVotingPage = () => {
 
   const isLoading = isLoadingHabitica || isLoadingQuestVoting || isActivating || isEditing || isDisabling || isRefreshing || isPausing || isUnpausing;
 
+  
+  const hasPartyError = [ 'HABITICA_PARTY_NOT_FOUND', 'QUEST_VOTING_NOT_IN_PARTY' ].includes(pageError?.status);
+
   const controls = (
     <Stack spacing={ 4 } width="100%" maxWidth="500px">
       <FormControl fullWidth size="small">
@@ -292,6 +296,13 @@ const QuestVotingPage = () => {
             )}
           </Stack>
         </>
+      )}
+      {hasPartyError && (
+        <L.section>
+          <L.p color="error">
+            <b>You must be in a party to use this tool.</b>
+          </L.p>
+        </L.section>
       )}
     </Stack>
   );
