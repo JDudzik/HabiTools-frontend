@@ -1,0 +1,28 @@
+{
+  "name": "HabiTools",
+  "id": "com.habitools.online",
+  "short_name": "HabiTools",
+  "theme_color": "#0094A2",
+  "background_color": "#cfd8dc",
+  "display": "minimal-ui",
+  "scope": "https://habitools.online/",
+  "start_url": "/",
+  "dir": "auto",
+  "lang": "en-US",
+  "description": "A suite of tools to automate and expand Habitica",
+  "icons": [
+    {
+        "purpose": "maskable",
+        "sizes": "512x512",
+        "src": "images/icons/icon512_maskable.png",
+        "type": "image/png"
+    },
+    {
+        "purpose": "any",
+        "sizes": "512x512",
+        "src": "images/icons/icon512_rounded.png",
+        "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
