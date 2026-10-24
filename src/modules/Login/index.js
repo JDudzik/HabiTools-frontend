@@ -8,6 +8,7 @@ import { usePageManager } from 'lib/hooks';
 import { useMutateLogin } from 'lib/api/methods/userApi';
 import { getQueryString } from 'lib/utils/misc';
 import { appConfig } from 'lib/data';
+import { useRouter } from 'next/router';
 
 
 const Login = () => {
@@ -15,6 +16,9 @@ const Login = () => {
   const { mutate: mutateLogin } = useMutateLogin();
   const [ heldEmail, setHeldEmail ] = useState('');
   const [ hasLoggedOut, setHasLoggedOut ] = useState(false);
+  const router = useRouter();
+  
+  const calculatedReturnPath = router.query.return_path ? `?return_path=${ encodeURIComponent(router.query.return_path) }` : '';
 
   const {
     activateRouting,
@@ -63,7 +67,7 @@ const Login = () => {
       <Stack direction={{ xxs: 'column', xs: 'row' }} spacing={ 1 } justifyContent="center">
         <L.p mt={ 2 } mb={ 0.5 } fontSize="1.25em">
           New here?{' '}
-          <Link href="/sign-up">Create an account</Link>
+          <Link href={ `/sign-up${ calculatedReturnPath }` }>Create an account</Link>
         </L.p>
       </Stack>
 
