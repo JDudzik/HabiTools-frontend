@@ -28,14 +28,14 @@ import {
 } from 'lib/api/methods/habiticaApi';
 import { ToolCockpit, ToolEventMessagesTable } from '../components';
 import toolDescriptionContent from './content/toolDescription.md';
-// import advancedDetailsContent from './content/advancedTechnicalDetails.md';
+import advancedDetailsContent from './content/advancedTechnicalDetails.md';
 
 
 const TOOL_SLUG = 'quest-voting';
 
 const FILTER_OPTIONS = [
-  { value: 'normal', label: 'Normal' },
-  { value: 'pets', label: 'Pets' },
+  { value: 'normal', label: 'Mainline' },
+  { value: 'pets', label: 'Eggs & Potions' },
   { value: 'time-traveler', label: 'Time Travelers' },
 ];
 
@@ -228,13 +228,13 @@ const QuestVotingPage = () => {
   const controls = (
     <Stack spacing={ 4 } width="100%" maxWidth="500px">
       <FormControl fullWidth size="small">
-        <InputLabel id="quest-voting-filter-categories-label">My Allowed Categories</InputLabel>
+        <InputLabel id="quest-voting-filter-categories-label">My Allowed Quest Categories</InputLabel>
         <Select
           multiple
           labelId="quest-voting-filter-categories-label"
           id="quest-voting-filter-categories"
           value={ filterCategories }
-          label="My Allowed Categories"
+          label="My Allowed Quest Categories"
           onChange={ ({ target }) => setFilterCategories(normalizeFilters(target.value)) }
         >
           {FILTER_OPTIONS.map(option => (
@@ -247,13 +247,17 @@ const QuestVotingPage = () => {
       <FormGroup>
         <FormControlLabel
           control={ <Checkbox checked={ leaveOnePerQuest } onChange={ e => setLeaveOnePerQuest(e.target.checked) } /> }
-          label="Always keep 1 copy of each quest in my inventory"
+          label="Keep 1 copy of my quests"
         />
         <L.p color="grey">If enabled, you will always keep 1 copy of each quest in your inventory.</L.p>
       </FormGroup>
 
       {isPartyLeaderForTool && (
         <>
+          <L.h3
+            color="text.darkGrey"
+            sx={{ borderTop: '1px solid', borderColor: 'divider', paddingTop: 2 }}
+          >Party-Leader Controls:</L.h3>
           <FormControl fullWidth size="small">
             <InputLabel id="quest-voting-party-filter-label">Party-Wide Filter</InputLabel>
             <Select
@@ -361,6 +365,49 @@ const QuestVotingPage = () => {
 
             <L.section>
               <Accordion
+                expanded={ expandedAccordion === 'advanced' }
+                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'advanced' : false) }
+              >
+                <AccordionSummary
+                  expandIcon={ <ExpandMoreIcon /> }
+                  aria-controls="advanced-details"
+                  id="advanced-details-header"
+                >
+                  <L.h3 sx={{ m: 0 }}>The Technical Details</L.h3>
+                </AccordionSummary>
+                <AccordionDetails sx={{ pt: 2 }}>
+                  <MarkdownMui.Markdown>{ advancedDetailsContent }</MarkdownMui.Markdown>
+                </AccordionDetails>
+              </Accordion>
+            </L.section>
+
+            <L.section>
+              <Accordion
+                expanded={ expandedAccordion === 'roster' }
+                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'roster' : false) }
+              >
+                <AccordionSummary
+                  expandIcon={ <ExpandMoreIcon /> }
+                  aria-controls="roster-details"
+                  id="roster-details-header"
+                >
+                  <L.h3 sx={{ m: 0 }}>Current Quest Volunteers</L.h3>
+                </AccordionSummary>
+                <AccordionDetails sx={{ pt: 2 }}>
+                  {roster.length === 0 && <L.p>No volunteers are currently in the roster.</L.p>}
+                  {roster.length > 0 && (
+                    <L.ul sx={{ textAlign: 'left' }}>
+                      {roster.map(member => (
+                        <L.li key={ member.key }>{ member.label }</L.li>
+                      ))}
+                    </L.ul>
+                  )}
+                </AccordionDetails>
+              </Accordion>
+            </L.section>
+
+            <L.section>
+              <Accordion
                 expanded={ expandedAccordion === 'events' }
                 onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'events' : false) }
               >
@@ -376,32 +423,6 @@ const QuestVotingPage = () => {
                     activeToolInstance={ eventResourceInstance }
                     toolSlug={ TOOL_SLUG }
                   />
-                </AccordionDetails>
-              </Accordion>
-            </L.section>
-
-            <L.section>
-              <Accordion
-                expanded={ expandedAccordion === 'roster' }
-                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'roster' : false) }
-              >
-                <AccordionSummary
-                  expandIcon={ <ExpandMoreIcon /> }
-                  aria-controls="roster-details"
-                  id="roster-details-header"
-                >
-                  <L.h3 sx={{ m: 0 }}>Current Participant Roster</L.h3>
-                </AccordionSummary>
-                <AccordionDetails sx={{ pt: 2 }}>
-                  {roster.length === 0 && <L.p>No participants are currently in the roster.</L.p>}
-                  {roster.length > 0 && (
-                    <L.ul sx={{ textAlign: 'left' }}>
-                      {roster.map(member => (
-                        // Display each participant in the roster will colored bullets. Each.
-                        <L.li key={ member.key }>{ member.label }</L.li>
-                      ))}
-                    </L.ul>
-                  )}
                 </AccordionDetails>
               </Accordion>
             </L.section>
