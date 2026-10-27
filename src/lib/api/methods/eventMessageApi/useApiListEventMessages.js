@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAxios } from 'lib/hooks/useAxios';
 import { sanitizeProperties } from 'lib/utils/validations';
 import { optional, isNumeric, isUUID } from 'property-validator';
@@ -7,6 +7,7 @@ import { optional, isNumeric, isUUID } from 'property-validator';
 export const useApiListEventMessages = (payload, config) => {
   const { enabled = true, instance } = config || {};
 
+  const queryClient = useQueryClient();
   const axios = useAxios();
 
   const sanitizedPagination = sanitizeProperties(payload.pagination, {
@@ -38,6 +39,10 @@ export const useApiListEventMessages = (payload, config) => {
     ],
   });
 
+  const refetchMessages = () => {
+    queryClient.refetchQueries({ queryKey: [ 'useApiListEventMessages', instance, sanitizedFilters.properties ]});
+  };
+
   const queryFn = () => axios
     .get('/v1/auth/event-messages/list', {
       params: {
@@ -54,13 +59,16 @@ export const useApiListEventMessages = (payload, config) => {
       }};
     });
 
-  return useQuery({
-    queryKey: [ 'useApiListEventMessages', instance, sanitizedFilters.properties, sanitizedPagination.properties ],
-    queryFn,
-    enabled,
-    refetchOnWindowFocus: true,
-    refetchIntervalInBackground: true,
-    refetchInterval: 60000,
-    staleTime: 60000,
-  });
+  return {
+    refetchMessages,
+    ...useQuery({
+      queryKey: [ 'useApiListEventMessages', instance, sanitizedFilters.properties, sanitizedPagination.properties ],
+      queryFn,
+      enabled,
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
+      refetchInterval: 60000,
+      staleTime: 60000,
+    }),
+  };
 };

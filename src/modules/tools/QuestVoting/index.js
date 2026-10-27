@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react';
 import {
   Stack,
   Accordion,
@@ -53,6 +53,7 @@ const QuestVotingPage = () => {
   const [ leaveOnePerQuest, setLeaveOnePerQuest ] = useState(false);
   const [ partyWideFilter, setPartyWideFilter ] = useState('all');
   const [ secureVoting, setSecureVoting ] = useState(true);
+  const eventsTableRef = useRef(null);
 
   const { data: habiticaData, isLoading: isLoadingHabitica, error: habiticaError, isEnabled: isEnabledHabitica } = useApiGetHabitica();
   const { data: questVotingState, isLoading: isLoadingQuestVoting, error: questVotingError } = useApiGetQuestVotingState();
@@ -185,10 +186,11 @@ const QuestVotingPage = () => {
         onSuccess: () => {
           openConfirmation?.({
             title: 'Quest Voting Unpaused',
-            content: 'Quest Voting is active again and a new ballot has been created.',
+            content: 'Quest Voting has resumed. If your party isn\'t in a quest, the ballot will conclude and launch the quest immediately.',
             primaryButtonText: 'Done',
             removeSecondaryAction: true,
           });
+          eventsTableRef?.current?.refresh?.();
         },
       });
       return;
@@ -198,10 +200,11 @@ const QuestVotingPage = () => {
       onSuccess: () => {
         openConfirmation?.({
           title: 'Quest Voting Paused',
-          content: 'Quest Voting is paused until the party leader unpauses it.',
+          content: 'Quest Voting has paused. Members can still vote on the current ballot, but it will not conclude until the party leader resumes.',
           primaryButtonText: 'Done',
           removeSecondaryAction: true,
         });
+        eventsTableRef?.current?.refresh?.();
       },
     });
   }, [ isPartyLeaderForTool, mutatePause, mutateUnpause, openConfirmation, questVoting ]);
@@ -420,6 +423,7 @@ const QuestVotingPage = () => {
                 </AccordionSummary>
                 <AccordionDetails sx={{ pt: 2 }}>
                   <ToolEventMessagesTable
+                    ref={ eventsTableRef }
                     activeToolInstance={ eventResourceInstance }
                     toolSlug={ TOOL_SLUG }
                   />

@@ -1,4 +1,4 @@
-import { useMemo, useState, useContext } from 'react';
+import { useMemo, useState, useContext, useImperativeHandle } from 'react';
 import { L, VirtualizedTableSimple, MarkdownMui, SquareIconButton } from 'components';
 import {
   Stack,
@@ -14,12 +14,13 @@ export const ToolEventMessagesTable = (props) => {
   const {
     activeToolInstance,
     toolSlug,
+    ref,
   } = props;
-  
+
   const { userState } = useContext(userContext);
   const [ currentMessagesPage, setCurrentMessagesPage ] = useState(1);
 
-  const { data: eventMessagesData, isLoading: isLoadingMessages } = useApiListEventMessages(
+  const { data: eventMessagesData, isLoading: isLoadingMessages, refetchMessages } = useApiListEventMessages(
     {
       filters: {
         resource_id: activeToolInstance?.id,
@@ -35,6 +36,14 @@ export const ToolEventMessagesTable = (props) => {
     },
   );
   const totalMessagesPages = eventMessagesData?.pagination?.totalPages || 1;
+
+
+  useImperativeHandle(ref, () => ({
+    refresh: () => {
+      setCurrentMessagesPage(1);
+      refetchMessages();
+    },
+  }), [ refetchMessages ]);
 
   const memoizedMessageRows = useMemo(() => {
     return eventMessagesData?.messages?.map?.(message => ({
