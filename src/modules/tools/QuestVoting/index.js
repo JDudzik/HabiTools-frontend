@@ -24,6 +24,7 @@ import {
   useMutateDisableQuestVoting,
   useMutatePauseQuestVoting,
   useMutateUnpauseQuestVoting,
+  useMutateStartQuestVotingBallot,
   useMutateRefreshTool,
 } from 'lib/api/methods/habiticaApi';
 import { ToolCockpit, ToolEventMessagesTable } from '../components';
@@ -73,6 +74,7 @@ const QuestVotingPage = () => {
   const { mutate: mutateDisable, isPending: isDisabling, error: disableError } = useMutateDisableQuestVoting();
   const { mutate: mutatePause, isPending: isPausing, error: pauseError } = useMutatePauseQuestVoting();
   const { mutate: mutateUnpause, isPending: isUnpausing, error: unpauseError } = useMutateUnpauseQuestVoting();
+  const { mutate: mutateNewBallot, isPending: isStartingBallot, error: newBallotError } = useMutateStartQuestVotingBallot();
   const { mutate: mutateRefresh, isPending: isRefreshing, error: refreshError } = useMutateRefreshTool();
 
   const isFormDirty = useMemo(() => {
@@ -103,7 +105,15 @@ const QuestVotingPage = () => {
     defaultRoutingPath: '/tools/quest-voting',
     defaultPageStage: 'loading',
     apiIsLoading: isLoadingHabitica || isLoadingQuestVoting,
-    apiErrors: habiticaError || questVotingError || activationError || editError || disableError || pauseError || unpauseError || refreshError,
+    apiErrors: habiticaError
+      || questVotingError
+      || activationError
+      || editError
+      || disableError
+      || pauseError
+      || unpauseError
+      || newBallotError
+      || refreshError,
   });
 
   useEffect(() => {
@@ -178,34 +188,70 @@ const QuestVotingPage = () => {
     });
   }, [ activeToolInstance?.id, mutateRefresh ]);
 
-  const handlePauseToggle = useCallback(() => {
+  const handleNewBallot = useCallback(() => {
     if (!isPartyLeaderForTool || !questVoting) { return; }
 
-    if (questVoting.paused) {
-      mutateUnpause(undefined, {
+    openConfirmation?.({
+      title: 'Start New Ballot?',
+      content: questVoting?.paused
+        ? 'This will abandon the current ballot, unpause Quest Voting, and immediately create a new ballot for the party.'
+        : 'This will abandon the current ballot and immediately create a new ballot for the party.',
+      primaryButtonText: 'Start New Ballot',
+      secondaryButtonText: 'Cancel',
+      onRequestSubmit: () => mutateNewBallot(undefined, {
         onSuccess: () => {
           openConfirmation?.({
-            title: 'Quest Voting Unpaused',
-            content: 'Quest Voting has resumed. If your party isn\'t in a quest, the ballot will conclude and launch the quest immediately.',
+            title: 'New Ballot Started',
+            content: 'The current ballot was abandoned and a new ballot is now open for the party.',
             primaryButtonText: 'Done',
             removeSecondaryAction: true,
           });
           eventsTableRef?.current?.refresh?.();
         },
+      }),
+    });
+  }, [ isPartyLeaderForTool, mutateNewBallot, openConfirmation, questVoting ]);
+
+  const handlePauseToggle = useCallback(() => {
+    if (!isPartyLeaderForTool || !questVoting) { return; }
+
+    if (questVoting.paused) {
+      openConfirmation?.({
+        title: 'Unpause Quest Voting?',
+        content: 'This will resume Quest Voting. If your party isn\'t in a quest, the ballot will conclude and launch the quest immediately.',
+        primaryButtonText: 'Unpause',
+        secondaryButtonText: 'Cancel',
+        onRequestSubmit: () => mutateUnpause(undefined, {
+          onSuccess: () => {
+            openConfirmation?.({
+              title: 'Quest Voting Unpaused',
+              content: 'Quest Voting has resumed. If your party isn\'t in a quest, the ballot will conclude and launch the quest immediately.',
+              primaryButtonText: 'Done',
+              removeSecondaryAction: true,
+            });
+            eventsTableRef?.current?.refresh?.();
+          },
+        }),
       });
       return;
     }
 
-    mutatePause(undefined, {
-      onSuccess: () => {
-        openConfirmation?.({
-          title: 'Quest Voting Paused',
-          content: 'Quest Voting has paused. Members can still vote on the current ballot, but it will not conclude until the party leader resumes.',
-          primaryButtonText: 'Done',
-          removeSecondaryAction: true,
-        });
-        eventsTableRef?.current?.refresh?.();
-      },
+    openConfirmation?.({
+      title: 'Pause Quest Voting?',
+      content: 'This will pause Quest Voting. Members can still vote on the current ballot, but it will not conclude until the party leader unpauses.',
+      primaryButtonText: 'Pause',
+      secondaryButtonText: 'Cancel',
+      onRequestSubmit: () => mutatePause(undefined, {
+        onSuccess: () => {
+          openConfirmation?.({
+            title: 'Quest Voting Paused',
+            content: 'Quest Voting has paused. Members can still vote on the current ballot, but it will not conclude until the party leader unpauses.',
+            primaryButtonText: 'Done',
+            removeSecondaryAction: true,
+          });
+          eventsTableRef?.current?.refresh?.();
+        },
+      }),
     });
   }, [ isPartyLeaderForTool, mutatePause, mutateUnpause, openConfirmation, questVoting ]);
 
@@ -223,9 +269,16 @@ const QuestVotingPage = () => {
     return { id: questVoting.id };
   }, [ questVoting?.id ]);
 
-  const isLoading = isLoadingHabitica || isLoadingQuestVoting || isActivating || isEditing || isDisabling || isRefreshing || isPausing || isUnpausing;
+  const isLoading = isLoadingHabitica
+    || isLoadingQuestVoting
+    || isActivating
+    || isEditing
+    || isDisabling
+    || isRefreshing
+    || isPausing
+    || isUnpausing
+    || isStartingBallot;
 
-  
   const hasPartyError = [ 'HABITICA_PARTY_NOT_FOUND', 'QUEST_VOTING_NOT_IN_PARTY' ].includes(pageError?.status);
 
   const controls = (
@@ -288,19 +341,31 @@ const QuestVotingPage = () => {
           </Stack>
 
           <Stack direction="column" spacing={ 1 }>
-            <Button
-              variant="outlined"
-              color={ questVoting?.paused ? 'success' : 'warning' }
-              disabled={ isFormDirty }
-              onClick={ handlePauseToggle }
-            >
-              {questVoting?.paused ? 'Unpause' : 'Pause'}
-            </Button>
             {isFormDirty && (
-              <L.p color="info">
-                You cannot {questVoting?.paused ? 'unpause' : 'pause'} until you save your changes.
+              <L.p color="secondary.veryLight">
+                You must save your changes before you can start a new ballot or {questVoting?.paused ? 'unpause' : 'pause'}.
               </L.p>
             )}
+            <Stack direction="row" spacing={ 1 }>
+              <Button
+                sx={{ flex: 1 }}
+                variant="outlined"
+                color="secondary"
+                disabled={ isFormDirty || isStartingBallot || !questVoting }
+                onClick={ handleNewBallot }
+              >
+                New Ballot
+              </Button>
+              <Button
+                sx={{ flex: 1 }}
+                variant="outlined"
+                color={ questVoting?.paused ? 'success' : 'warning' }
+                disabled={ isFormDirty || isPausing || isUnpausing || !questVoting }
+                onClick={ handlePauseToggle }
+              >
+                {questVoting?.paused ? 'Unpause' : 'Pause'}
+              </Button>
+            </Stack>
           </Stack>
         </>
       )}

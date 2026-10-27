@@ -12,6 +12,7 @@ export * from './useMutateEditQuestVoting';
 export * from './useMutateDisableQuestVoting';
 export * from './useMutatePauseQuestVoting';
 export * from './useMutateUnpauseQuestVoting';
+export * from './useMutateStartQuestVotingBallot';
 export * from './useMutateLinkHabitica';
 export * from './useMutateRefreshTool';
 export * from './useMutateTeardownTool';
