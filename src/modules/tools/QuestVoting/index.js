@@ -474,27 +474,11 @@ const QuestVotingPage = () => {
               </Accordion>
             </L.section>
 
-            <L.section>
-              <Accordion
-                expanded={ expandedAccordion === 'events' }
-                onChange={ (e, isExpanded) => setExpandedAccordion(isExpanded ? 'events' : false) }
-              >
-                <AccordionSummary
-                  expandIcon={ <ExpandMoreIcon /> }
-                  aria-controls="events-details"
-                  id="events-details-header"
-                >
-                  <L.h3 sx={{ m: 0 }}>Event Messages</L.h3>
-                </AccordionSummary>
-                <AccordionDetails sx={{ pt: 2 }}>
-                  <ToolEventMessagesTable
-                    ref={ eventsTableRef }
-                    activeToolInstance={ eventResourceInstance }
-                    toolSlug={ TOOL_SLUG }
-                  />
-                </AccordionDetails>
-              </Accordion>
-            </L.section>
+            <ToolEventMessagesTable
+              ref={ eventsTableRef }
+              activeToolInstance={ eventResourceInstance }
+              toolSlug={ TOOL_SLUG }
+            />
           </Stack>
         </Stack>
       </Stack>
