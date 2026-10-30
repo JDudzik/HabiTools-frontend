@@ -45,7 +45,6 @@ export const defaultNavItems = {
           text: 'Quest Voting',
           link: '/tools/quest-voting',
           ariaLabel: 'Navigate to Quest Voting tool page',
-          requiredPermission: 'quest_voting_early_access',
         },
         {
           text: 'Party Broadcast',
