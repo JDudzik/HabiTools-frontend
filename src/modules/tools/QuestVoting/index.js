@@ -421,7 +421,7 @@ const QuestVotingPage = () => {
               </L.section>
             )}
 
-            {!questVoting?.leader_user_id && isToolActive && (
+            {questVoting && !questVoting?.leader_user_id && isToolActive && (
               <L.section>
                 <L.p color="warning.dark">
                   You are set up, but the party leader still needs to enable Quest Voting before ballots can run automatically.
