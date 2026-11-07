@@ -19,6 +19,10 @@ jobs:
     environment: ${{ inputs.github_environment }}
     env:
       # Note: All public variables must be listed here:
+      NODE_ENV: ${{ vars.NODE_ENV }}
+      POSTHOG_ENV_ID: ${{ secrets.POSTHOG_ENV_ID }}
+      POSTHOG_SOURCEMAPS_API_KEY: ${{ secrets.POSTHOG_SOURCEMAPS_API_KEY }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NEXT_PUBLIC_BACKEND_HOST: ${{ vars.NEXT_PUBLIC_BACKEND_HOST }}
       NEXT_PUBLIC_POSTHOG_URL: ${{ vars.NEXT_PUBLIC_POSTHOG_URL }}
       NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}

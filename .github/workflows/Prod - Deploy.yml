@@ -9,6 +9,7 @@ on:
 jobs:
   build-and-push:
     uses: ./.github/workflows/Build and Push Static Files.yml
+    secrets: inherit
     with:
       github_environment: production
       source_branch: production-deployed
