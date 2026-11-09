@@ -1,0 +1,67 @@
+{
+  "name": "Enveloped",
+  "short_name": "Enveloped",
+  "theme_color": "#00897b",
+  "background_color": "#cfd8dc",
+  "display": "minimal-ui",
+  "Scope": "/",
+  "start_url": "/",
+  "splash_pages": null,
+  "orientation": "portrait",
+  "dir": "ltr",
+  "scope": "https://enveloped.app/",
+  "lang": "en",
+  "display_override": [
+    "minimal-ui",
+    "browser",
+    "window-controls-overlay"
+  ],
+  "description": "Enveloped is a personal finance management application that focuses on simplicity using the envelope system.\nEnveloped also works with credit as a core mechanism for folks who use credit for their daily spending.",
+  "shortcuts": [
+    {
+      "name": "View Bank Accounts",
+      "url": "https://enveloped.app/",
+      "description": ""
+    },
+    {
+      "name": "Create Bank Account",
+      "url": "https://enveloped.app/accounts/create-account/",
+      "description": ""
+    }
+  ],
+  "categories": [
+    "finance",
+    "productivity"
+  ],
+  "screenshots" : [
+    {
+      "src": "images/screenshots/1-bank-accounts-view.png",
+      "sizes": "1400x800",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Viewing All Bank Accounts"
+    }
+  ],
+  "icons": [
+    {
+      "src": "images/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icons/windows11/SmallTile.scale-100.png",
+      "sizes": "71x71"
+    },
+    {
+      "src": "images/icons/windows11/SmallTile.scale-125.png",
+      "sizes": "89x89"
+    }
+  ]  
+}
