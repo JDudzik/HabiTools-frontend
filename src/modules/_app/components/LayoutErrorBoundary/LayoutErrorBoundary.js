@@ -16,7 +16,7 @@ export class LayoutErrorBoundary extends PureComponent {
     return { hasError: true };
   }
   componentDidCatch(error) {
-    const messageJson = error.stack || error.toString();
+    const messageJson = JSON.stringify({ stack: error.stack, fullError: error.toString() });
     posthog.captureException(error);
     this.props.mutateSubmitError({ source: 'LayoutErrorBoundary', message: error.message, message_json: messageJson }, { sendToPosthog: false });
   }

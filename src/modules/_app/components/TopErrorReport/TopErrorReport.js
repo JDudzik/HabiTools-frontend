@@ -4,7 +4,7 @@ import posthog from 'posthog-js';
 
 export class TopErrorReport extends PureComponent {
   componentDidCatch(error) {
-    const messageJson = error.stack || error.toString();
+    const messageJson = JSON.stringify({ stack: error.stack, fullError: error.toString() });
     posthog.captureException(error);
     this.props.mutateSubmitError({ source: 'TopErrorReport', message: error.message, message_json: messageJson }, { sendToPosthog: false });
 
