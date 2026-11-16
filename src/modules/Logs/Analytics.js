@@ -152,11 +152,11 @@ const AnalyticLogs = () => {
                 headers={ [{
                   label: 'Timestamp',
                   key: 'timestamp',
-                  width: '100px',
+                  width: '120px',
                 }, {
                   label: 'Source',
                   key: 'source',
-                  width: '70px',
+                  width: '90px',
                 }, {
                   label: 'Action Name',
                   key: 'action-name',
@@ -164,7 +164,7 @@ const AnalyticLogs = () => {
                 }, {
                   label: 'Value Preview',
                   key: 'value-preview',
-                  width: '180px',
+                  width: '200px',
                 }] }
                 rows={ analyticLogs?.map?.(analyticLog => ({
                   onClick: () => setSelectedLogId(analyticLog.id),
